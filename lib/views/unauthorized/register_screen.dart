@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:test_chart/controllers/auth/register_controller.dart';
 import 'package:test_chart/shared/constants/local_images_path.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends GetView<RegisterController> {
   const RegisterScreen({super.key});
 
   @override
@@ -21,8 +23,8 @@ class RegisterScreen extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(right: 10),
                   width: double.infinity,
-                  child: const Text(
-                    'version 1.1',
+                  child: Text(
+                    '${'version'.tr} 1.1',
                     textAlign: TextAlign.end,
                   ),
                 ),
@@ -30,7 +32,7 @@ class RegisterScreen extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   child: Text(
-                    'Thị trường điện'.toUpperCase(),
+                    'title_app'.tr.toUpperCase(),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         fontSize: 22,
@@ -42,7 +44,7 @@ class RegisterScreen extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   child: Text(
-                    'Đăng ký'.toUpperCase(),
+                    'Đăng ký'.tr.toUpperCase(),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         fontSize: 18,
@@ -51,7 +53,11 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const _FormRegister()
+                _FormRegister(
+                  register: () {
+                    controller.handleRegister();
+                  },
+                )
               ],
             )),
       ),
@@ -60,7 +66,9 @@ class RegisterScreen extends StatelessWidget {
 }
 
 class _FormRegister extends StatefulWidget {
-  const _FormRegister({super.key});
+  const _FormRegister({super.key, this.register});
+
+  final Function()? register;
 
   @override
   State<_FormRegister> createState() => __FormRegisterState();
@@ -83,9 +91,9 @@ class __FormRegisterState extends State<_FormRegister> {
           children: [
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Tên đăng nhập',
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                hintText: 'user_login'.tr,
               ),
             ),
             const SizedBox(height: 10),
@@ -93,9 +101,9 @@ class __FormRegisterState extends State<_FormRegister> {
               children: [
                 TextField(
                   controller: passController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Mật khẩu',
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: 'password'.tr,
                   ),
                   obscureText: showPassword,
                 ),
@@ -124,9 +132,9 @@ class __FormRegisterState extends State<_FormRegister> {
               children: [
                 TextField(
                   controller: passConfirmController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Xác nhận mật khẩu',
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: '${'confirm'.tr} ${'password'.tr.toLowerCase()}',
                   ),
                   obscureText: showConfirmPass,
                 ),
@@ -166,11 +174,11 @@ class __FormRegisterState extends State<_FormRegister> {
                     ),
                   ]),
               child: TextButton(
-                child: const Text(
-                  'Đăng ký',
-                  style: TextStyle(color: Colors.white),
+                child: Text(
+                  'register'.tr.toUpperCase(),
+                  style: const TextStyle(color: Colors.white),
                 ),
-                onPressed: () {},
+                onPressed: widget.register,
               ),
             ),
           ],

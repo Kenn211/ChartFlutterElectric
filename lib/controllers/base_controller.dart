@@ -7,26 +7,26 @@ import '/services/storage/storage_service.dart';
 import '/shared/app_shared.dart';
 
 abstract class BaseController extends GetxController {
-  final _formKey = GlobalKey<FormState>();
-  GlobalKey<FormState> get formKey => _formKey;
+  // final _formKey = GlobalKey<FormState>();
+  // GlobalKey<FormState> get formKey => _formKey;
 
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-  GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
+  // final _scaffoldKey = GlobalKey<ScaffoldState>();
+  // GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
 
-  final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  GlobalKey<RefreshIndicatorState> get refreshIndicatorKey =>
-      _refreshIndicatorKey;
+  // final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  // GlobalKey<RefreshIndicatorState> get refreshIndicatorKey =>
+  //     _refreshIndicatorKey;
 
   final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
   final setStorage = Get.find<StorageService>();
 
-  final _scrollController = ScrollController();
-  ScrollController get scrollController => _scrollController;
+  // final _scrollController = ScrollController();
+  // ScrollController get scrollController => _scrollController;
 
-  final _userNameController = TextEditingController(text: 'Vanhvanh');
+  final _userNameController = TextEditingController();
   TextEditingController get userNameController => _userNameController;
 
-  final _passwordController = TextEditingController(text: 'Admin123');
+  final _passwordController = TextEditingController();
   TextEditingController get passwordController => _passwordController;
 
   final _rePasswordController = TextEditingController();

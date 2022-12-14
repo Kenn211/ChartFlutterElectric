@@ -7,10 +7,11 @@ class AppBarCustom extends StatelessWidget {
       this.canBack = false,
       this.leading,
       this.title,
-      this.elevationCus});
+      this.elevationCus,
+      this.actions});
 
   final bool canBack;
-  final Widget? leading;
+  final Widget? leading, actions;
   final String? title;
   final double? elevationCus;
 
@@ -32,8 +33,20 @@ class AppBarCustom extends StatelessWidget {
                 },
                 icon: Icon(Icons.arrow_back_ios, color: AppColors.secondColor))
             : leading,
+        actions: [
+          actions ??
+              IconButton(
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  disabledColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onPressed: () {},
+                  icon: Icon(Icons.arrow_back_ios, color: Colors.transparent))
+        ],
         title: Container(
           width: double.infinity,
+          alignment: Alignment.center,
           child: Text(
             title ?? '',
             style: TextStyle(color: AppColors.secondColor),

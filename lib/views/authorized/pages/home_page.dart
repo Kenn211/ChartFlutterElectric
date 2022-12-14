@@ -1,26 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:test_chart/controllers/home/home_controller.dart';
 import 'package:test_chart/shared/app_shared.dart';
 import 'package:test_chart/views/authorized/pages/lake_level_evolution.dart';
 import 'package:test_chart/views/authorized/screens/quantity_product.dart';
 import 'package:test_chart/views/authorized/screens/tonnage_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class HomePage extends GetView<HomeController> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +16,34 @@ class _HomePageState extends State<HomePage> {
       _scaffoldKey.currentState!.closeDrawer();
     }
 
+    // final controller = Get.put(LanguagesController());
+
+    bool changeFlag = true;
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
         flexibleSpace: AppBarCustom(
+            title: 'home'.tr,
             leading: IconButton(
-          onPressed: () {
-            _scaffoldKey.currentState!.openDrawer();
-          },
-          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-          color: AppColors.secondColor,
-          icon: const Icon(Icons.menu_rounded),
-        )),
+              onPressed: () {
+                _scaffoldKey.currentState!.openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              color: AppColors.secondColor,
+              icon: const Icon(Icons.menu_rounded),
+            ),
+            actions: InkWell(
+              onTap: () {
+                controller.handleChangLang();
+                changeFlag = !changeFlag;
+              },
+              child: Image.asset(
+                changeFlag == false ? Assets.icFlagVn : Assets.icFlagUSA,
+              ),
+            )),
       ),
       drawer: Drawer(
           child: Column(
@@ -55,9 +57,9 @@ class _HomePageState extends State<HomePage> {
               )),
               child: Container(
                 alignment: Alignment.bottomLeft,
-                child: const Text(
-                  'Thị trường điện',
-                  style: TextStyle(
+                child: Text(
+                  'title_app'.tr,
+                  style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
                       color: Colors.white),

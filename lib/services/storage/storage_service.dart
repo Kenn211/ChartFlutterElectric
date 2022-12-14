@@ -10,21 +10,21 @@ class StorageService extends GetxService {
 
   Future<StorageService> init() async {
     final SharedPreferences storage = await prefs;
-    languageCode = storage.getString(Constants.languageCode) ?? 'vi';
+    languageCode = storage.getString(Constants.languageCode) ?? 'vn';
     countryCode = storage.getString(Constants.countryCode) ?? 'VN';
     return this;
   }
 
-  static void saveToken({String? tokenString}) async {
-    // Obtain shared preferences.
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', tokenString!);
-  }
+  // static void saveToken({String? tokenString}) async {
+  //   // Obtain shared preferences.
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.setString('token', tokenString!);
+  // }
 
-  static Future<String?> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString("token");
-  }
+  // static Future<String?> getToken() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs.getString("token");
+  // }
 
   void write(String key, dynamic value) async {
     final SharedPreferences storage = await prefs;
