@@ -16,8 +16,6 @@ class HomePage extends GetView<HomeController> {
       _scaffoldKey.currentState!.closeDrawer();
     }
 
-    // final controller = Get.put(LanguagesController());
-
     bool changeFlag = true;
 
     return Scaffold(
@@ -106,10 +104,13 @@ class HomePage extends GetView<HomeController> {
               onTap: () {
                 closeDrawer();
               }),
-          const _ItemDrawer(
+          _ItemDrawer(
             text: 'Đăng xuất',
             logout: true,
             iconItem: Icons.logout,
+            onTap: () {
+              controller.handleLogout();
+            },
           ),
         ],
       )),

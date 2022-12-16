@@ -44,7 +44,7 @@ class RegisterScreen extends GetView<RegisterController> {
                 Container(
                   width: double.infinity,
                   child: Text(
-                    'Đăng ký'.tr.toUpperCase(),
+                    'register'.tr.toUpperCase(),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         fontSize: 18,
