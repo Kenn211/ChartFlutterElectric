@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:test_chart/shared/widgets/app_bar_custom.dart';
+import 'package:get/get.dart';
 
 class TonnagePage extends StatefulWidget {
   const TonnagePage({super.key});
@@ -16,9 +17,9 @@ class _TonnagePageState extends State<TonnagePage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        flexibleSpace: const AppBarCustom(
+        flexibleSpace: AppBarCustom(
           canBack: true,
-          title: 'Phụ tải',
+          title: 'load'.tr,
         ),
       ),
       body: SingleChildScrollView(
@@ -39,7 +40,7 @@ class _TonnagePageState extends State<TonnagePage> {
                 ),
               ),
               const SizedBox(height: 20),
-              ChartTonnage()
+              const ChartTonnage()
             ],
           ),
         ),

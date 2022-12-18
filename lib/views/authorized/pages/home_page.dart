@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/controllers/home/home_controller.dart';
-import 'package:test_chart/shared/app_shared.dart';
+import 'package:test_chart/core.dart';
 import 'package:test_chart/views/authorized/pages/lake_level_evolution.dart';
 import 'package:test_chart/views/authorized/screens/quantity_product.dart';
 import 'package:test_chart/views/authorized/screens/tonnage_page.dart';
@@ -35,12 +35,12 @@ class HomePage extends GetView<HomeController> {
             ),
             actions: InkWell(
               onTap: () {
-                controller.handleChangLang();
+                controller.handleChangeLang();
                 changeFlag = !changeFlag;
               },
-              child: Image.asset(
-                changeFlag == false ? Assets.icFlagVn : Assets.icFlagUSA,
-              ),
+              child: changeFlag == true
+                  ? Image.asset(Assets.icFlagVn)
+                  : Image.asset(Assets.icFlagUSA),
             )),
       ),
       drawer: Drawer(
@@ -65,10 +65,10 @@ class HomePage extends GetView<HomeController> {
               )),
           const SizedBox(height: 20),
           _ItemDrawer(
-            text: 'Phụ tải',
+            text: 'load'.tr,
             iconItem: CupertinoIcons.hammer,
             onTap: () {
-              Get.to(() => TonnagePage());
+              Get.to(() => const TonnagePage());
               closeDrawer();
             },
           ),
@@ -79,33 +79,33 @@ class HomePage extends GetView<HomeController> {
                 closeDrawer();
               }),
           _ItemDrawer(
-            text: 'Sản lượng',
+            text: 'output'.tr,
             iconItem: CupertinoIcons.arrowtriangle_up,
             onTap: () {
-              Get.to(QuantityProduct());
+              Get.to(() => const QuantityProduct());
               closeDrawer();
             },
           ),
           _ItemDrawer(
-              text: 'Thủy văn',
+              text: 'hydrological'.tr,
               iconItem: CupertinoIcons.cloud_drizzle_fill,
               onTap: () {
                 closeDrawer();
               }),
           _ItemDrawer(
-              text: 'Doanh thu',
+              text: 'revenue'.tr,
               iconItem: CupertinoIcons.money_dollar,
               onTap: () {
                 closeDrawer();
               }),
           _ItemDrawer(
-              text: 'Kế hoạch nguồn',
+              text: 'sourcePlan'.tr,
               iconItem: CupertinoIcons.chart_bar,
               onTap: () {
                 closeDrawer();
               }),
           _ItemDrawer(
-            text: 'Đăng xuất',
+            text: 'logout'.tr,
             logout: true,
             iconItem: Icons.logout,
             onTap: () {
@@ -126,9 +126,10 @@ class HomePage extends GetView<HomeController> {
             children: [
               Container(
                 alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Xin chào! Vanh',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                child: Text(
+                  '${'hello'.tr}! Vanh',
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w500),
                 ),
               ),
               const SizedBox(height: 20),
@@ -137,16 +138,16 @@ class HomePage extends GetView<HomeController> {
                 children: [
                   _ItemDisplayBody(
                     colorBackground: AppColors.secondColor,
-                    text: 'Công suất hiện tại',
+                    text: 'currentCapacity'.tr,
                     numData: '150 MW',
                     onTap: () {
-                      Get.to(LakeLevelEvolution());
+                      Get.to(const LakeLevelEvolution());
                     },
                     icon: CupertinoIcons.chart_bar,
                   ),
                   _ItemDisplayBody(
                     colorBackground: AppColors.secondColor,
-                    text: 'Mực nước',
+                    text: 'waterlevel'.tr,
                     numData: '150 m',
                     icon: CupertinoIcons.bars,
                     onTap: () {},
@@ -156,24 +157,25 @@ class HomePage extends GetView<HomeController> {
               const SizedBox(height: 40),
               Container(
                 alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Sản lượng và doanh thu',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                child: Text(
+                  '${'output'.tr} ${'and'.tr} ${'revenue'.tr}',
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   _ItemDisplayBody(
-                    colorBackground: Color.fromARGB(255, 45, 175, 50),
-                    text: 'Sản lượng',
+                    colorBackground: const Color.fromARGB(255, 45, 175, 50),
+                    text: 'output'.tr,
                     numData: '150 M',
                     icon: CupertinoIcons.bolt_fill,
                   ),
                   _ItemDisplayBody(
                     colorBackground: Color.fromARGB(255, 45, 175, 50),
-                    text: 'Doanh thu',
+                    text: 'revenue'.tr,
                     numData: '150 m',
                     icon: CupertinoIcons.money_dollar_circle,
                   ),
@@ -182,22 +184,26 @@ class HomePage extends GetView<HomeController> {
               const SizedBox(height: 40),
               Container(
                 alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Chức năng',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                child: Text(
+                  'function'.tr,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ),
               const SizedBox(height: 20),
-              const _ItemFunctions(
-                text: 'Sửa chữa',
-                textDesc: 'Theo dõi lịch sử chỉnh sửa',
+              _ItemFunctions(
+                text: 'repair'.tr,
+                textDesc: 'trackEditHistory'.tr,
                 icon: CupertinoIcons.hammer_fill,
               ),
               const SizedBox(height: 10),
-              const _ItemFunctions(
-                text: 'Hệ thống',
-                textDesc: 'Cập nhật thông tin',
+              _ItemFunctions(
+                text: 'system'.tr,
+                textDesc: 'updateinfo'.tr,
                 icon: Icons.settings,
+                onTap: () {
+                  Get.toNamed(Routes.systemPage);
+                },
               ),
             ],
           ),
@@ -290,9 +296,17 @@ class _ItemFunctions extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         width: double.infinity,
         height: 65,
-        decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 218, 217, 217),
-            borderRadius: BorderRadius.all(Radius.circular(8))),
+        decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 218, 217, 217),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 3,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ]),
         child: Row(
           children: [
             Container(

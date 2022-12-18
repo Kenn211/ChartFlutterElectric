@@ -3,10 +3,10 @@ import 'package:test_chart/controllers/base_controller.dart';
 import 'package:test_chart/core.dart';
 
 class HomeController extends BaseController {
-  void handleChangLang() {
+  void handleChangeLang() {
     showLoading();
     Future.delayed(const Duration(seconds: 2), () async {
-      LanguagesController().updateLocale('en');
+      LanguagesController().updateLocale('en_US');
       hideLoading();
     });
   }

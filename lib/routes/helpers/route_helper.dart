@@ -36,7 +36,6 @@ class RouterHelper {
     storage.remove(Constants.refreshToken);
     storage.remove(Constants.accessToken);
     storage.remove(Constants.provinceCache);
-    storage.remove(Constants.customerIdClient);
     storage.remove(Constants.salesLocationCache);
     Get.offAndToNamed(Routes.login);
   }

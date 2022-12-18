@@ -12,7 +12,6 @@ class Constants {
   static const salesLocationCache = 'salesLocationCache';
   static const rememberPassword = 'rememberPassword';
   static const cartNoUser = 'cartNoUser';
-  static const customerIdClient = 'customerIdClient';
   static const fontFamily = 'Roboto';
   static double height = MediaQuery.of(Get.context!).size.height;
   static double width = MediaQuery.of(Get.context!).size.width;

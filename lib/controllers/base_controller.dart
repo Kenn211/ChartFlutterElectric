@@ -7,8 +7,11 @@ import '/services/storage/storage_service.dart';
 import '/shared/app_shared.dart';
 
 abstract class BaseController extends GetxController {
-  // final _formKey = GlobalKey<FormState>();
-  // GlobalKey<FormState> get formKey => _formKey;
+  // final _flagVN = GlobalKey<ScaffoldState>();
+  // GlobalKey<ScaffoldState> get flagVN => _flagVN;
+
+  // final _flagEN = GlobalKey<ScaffoldState>();
+  // GlobalKey<ScaffoldState> get flagEN => _flagVN;
 
   // final _scaffoldKey = GlobalKey<ScaffoldState>();
   // GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
