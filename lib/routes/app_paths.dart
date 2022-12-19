@@ -13,7 +13,15 @@ abstract class Routes {
   //home
   static const homePage = _Paths.home;
 
+  //system
   static const systemPage = _Paths.system;
+
+  //account
+  static const accountPage = _Paths.account;
+
+  //Page drawer
+  static const tonnagePage = _Paths.tonnage;
+  static const outputPage = _Paths.output;
 }
 
 abstract class _Paths {
@@ -23,4 +31,10 @@ abstract class _Paths {
   static const home = '/home';
 
   static const system = '/system';
+
+  static const account = '/account';
+
+  //Page Drawer
+  static const tonnage = '/tonnage';
+  static const output = '/output';
 }

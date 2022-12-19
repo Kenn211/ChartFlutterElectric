@@ -1,10 +1,16 @@
 import 'package:get/get.dart';
+import 'package:test_chart/routes/bindings/account/account_binding.dart';
 import 'package:test_chart/routes/bindings/auth/login_binding.dart';
 import 'package:test_chart/routes/bindings/auth/register_binding.dart';
+import 'package:test_chart/routes/bindings/drawer/output_binding.dart';
+import 'package:test_chart/routes/bindings/drawer/tonnage_binding.dart';
 import 'package:test_chart/routes/bindings/home/home_binding.dart';
 import 'package:test_chart/routes/bindings/home/system_binding.dart';
 import 'package:test_chart/views/authorized/pages/home_page.dart';
 import 'package:test_chart/views/authorized/pages/system_page.dart';
+import 'package:test_chart/views/authorized/screens/account_screen.dart';
+import 'package:test_chart/views/authorized/screens/output_page.dart';
+import 'package:test_chart/views/authorized/screens/tonnage_page.dart';
 import 'package:test_chart/views/not_found/not_found.dart';
 import 'package:test_chart/views/unauthorized/login_screen.dart';
 import 'package:test_chart/views/unauthorized/register_screen.dart';
@@ -45,11 +51,34 @@ class AppPages {
       page: () => SystemPage(),
       binding: SystemBinding());
 
+  static final accountPage = GetPage(
+      name: Routes.accountPage,
+      transition: Transition.native,
+      page: () => AccountScreen(),
+      binding: AccountBinding());
+
+  static final tonnagePage = GetPage(
+      name: Routes.tonnagePage,
+      transition: Transition.native,
+      page: () => TonnagePage(),
+      binding: TonnageBinding());
+
+  static final outputPage = GetPage(
+      name: Routes.outputPage,
+      transition: Transition.native,
+      page: () => OutputScreen(),
+      binding: OutputBinding());
+
   static final List<GetPage> getPages = [
     unknownRoute,
     homePage,
     loginPage,
     registerPage,
-    systemPage
+    systemPage,
+    accountPage,
+
+    //Page Drawer
+    tonnagePage,
+    outputPage
   ];
 }

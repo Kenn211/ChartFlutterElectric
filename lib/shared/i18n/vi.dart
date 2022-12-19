@@ -25,6 +25,7 @@ const Map<String, String> viVN = {
   'login': 'Đăng nhập',
   'logout': 'Đăng xuất',
   'load': 'Phụ tải',
+  'loading': 'Đang tải',
 
   //O
   'output': 'Sản lượng',
@@ -39,6 +40,7 @@ const Map<String, String> viVN = {
 
   //P
   'password': 'Mật khẩu',
+  'profile': 'Hồ sơ',
 
   //S
   'system': 'Hệ thống',
@@ -50,6 +52,9 @@ const Map<String, String> viVN = {
 
   //V
   'version': 'Phiên bản',
+
+  //S
+  'success': 'Thành công',
 
   //W
   'waterlevel': 'Mực nước',

@@ -30,6 +30,7 @@ const Map<String, String> enEN = {
   'login': 'Log in',
   'logout': 'Log out',
   'load': 'Load',
+  'loading': 'Loading',
 
   //O
   'output': 'Output',
@@ -41,6 +42,7 @@ const Map<String, String> enEN = {
 
   //P
   'password': 'Password',
+  'profile': 'Profile',
 
   //S
   'system': 'System',
@@ -52,6 +54,9 @@ const Map<String, String> enEN = {
 
   //V
   'version': 'Version',
+
+  //S
+  'success': 'Success',
 
   //W
   'waterlevel': 'Water level',

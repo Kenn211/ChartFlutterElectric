@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:test_chart/controllers/drawer/tonnage_controller.dart';
 import 'package:test_chart/shared/widgets/app_bar_custom.dart';
 import 'package:get/get.dart';
 
-class TonnagePage extends StatefulWidget {
-  const TonnagePage({super.key});
-
-  @override
-  State<TonnagePage> createState() => _TonnagePageState();
-}
-
-class _TonnagePageState extends State<TonnagePage> {
+class TonnagePage extends GetView<TonnageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

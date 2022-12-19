@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/controllers/auth/register_controller.dart';
 import 'package:test_chart/shared/constants/local_images_path.dart';
+import 'package:test_chart/shared/widgets/txt_button.dart';
 
 class RegisterScreen extends GetView<RegisterController> {
   const RegisterScreen({super.key});
@@ -159,28 +160,11 @@ class __FormRegisterState extends State<_FormRegister> {
               ],
             ),
             const SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              height: 50,
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 63, 160, 239),
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 3,
-                      offset: const Offset(0, 3), // changes position of shadow
-                    ),
-                  ]),
-              child: TextButton(
-                child: Text(
-                  'register'.tr.toUpperCase(),
-                  style: const TextStyle(color: Colors.white),
-                ),
-                onPressed: widget.register,
-              ),
-            ),
+            Button(
+                text: 'register'.tr.toUpperCase(),
+                onTap: () {
+                  widget.register;
+                }),
           ],
         ));
   }

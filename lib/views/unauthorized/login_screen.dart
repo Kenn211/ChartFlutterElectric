@@ -4,6 +4,7 @@ import 'package:test_chart/controllers/auth/login_controller.dart';
 import 'package:test_chart/routes/app_routes.dart';
 import 'package:test_chart/shared/constants/local_images_path.dart';
 import 'package:get/get.dart';
+import 'package:test_chart/shared/widgets/txt_button.dart';
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({Key? key}) : super(key: key);
@@ -132,29 +133,11 @@ class __FormLoginState extends State<_FormLogin> {
               ),
             ),
             const SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              height: 50,
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 63, 160, 239),
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 3,
-                      offset: const Offset(0, 3), // changes position of shadow
-                    ),
-                  ]),
-              child: TextButton(
-                  child: Text(
-                    'login'.tr.toUpperCase(),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () {
-                    controller.submitLogin();
-                  }),
-            ),
+            Button(
+                text: 'login'.tr.toUpperCase(),
+                onTap: () {
+                  controller.submitLogin();
+                }),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

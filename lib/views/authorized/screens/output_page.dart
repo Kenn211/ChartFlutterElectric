@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:test_chart/controllers/drawer/output_controller.dart';
 import 'package:test_chart/shared/constants/colors.dart';
 import 'package:test_chart/shared/widgets/app_bar_custom.dart';
 import 'package:test_chart/shared/widgets/table_custom.dart';
 
-class QuantityProduct extends StatelessWidget {
-  const QuantityProduct({super.key});
+class OutputScreen extends GetView<OutputController> {
+  const OutputScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class QuantityProduct extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              _ChartQuantityProduct(),
+              const _ChartQuantityProduct(),
               Container(
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [

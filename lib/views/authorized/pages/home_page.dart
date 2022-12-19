@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:test_chart/controllers/home/home_controller.dart';
 import 'package:test_chart/core.dart';
 import 'package:test_chart/views/authorized/pages/lake_level_evolution.dart';
-import 'package:test_chart/views/authorized/screens/quantity_product.dart';
-import 'package:test_chart/views/authorized/screens/tonnage_page.dart';
 
 class HomePage extends GetView<HomeController> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -33,7 +31,7 @@ class HomePage extends GetView<HomeController> {
               color: AppColors.secondColor,
               icon: const Icon(Icons.menu_rounded),
             ),
-            actions: InkWell(
+            actions: GestureDetector(
               onTap: () {
                 controller.handleChangeLang();
                 changeFlag = !changeFlag;
@@ -65,10 +63,18 @@ class HomePage extends GetView<HomeController> {
               )),
           const SizedBox(height: 20),
           _ItemDrawer(
+            text: 'Your account'.tr,
+            iconItem: CupertinoIcons.hammer,
+            onTap: () {
+              Get.toNamed(Routes.accountPage);
+              closeDrawer();
+            },
+          ),
+          _ItemDrawer(
             text: 'load'.tr,
             iconItem: CupertinoIcons.hammer,
             onTap: () {
-              Get.to(() => const TonnagePage());
+              Get.toNamed(Routes.tonnagePage);
               closeDrawer();
             },
           ),
@@ -82,7 +88,7 @@ class HomePage extends GetView<HomeController> {
             text: 'output'.tr,
             iconItem: CupertinoIcons.arrowtriangle_up,
             onTap: () {
-              Get.to(() => const QuantityProduct());
+              Get.toNamed(Routes.outputPage);
               closeDrawer();
             },
           ),

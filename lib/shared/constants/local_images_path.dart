@@ -7,4 +7,6 @@ class Assets {
 
   static const icFlagVn = '${icAccount}ic_flag_VN.png';
   static const icFlagUSA = '${icAccount}ic_flag_USA.png';
+
+  static const imgAvatar = '${icRoot}img_avatar.png';
 }
