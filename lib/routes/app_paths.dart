@@ -22,6 +22,7 @@ abstract class Routes {
   //Page drawer
   static const tonnagePage = _Paths.tonnage;
   static const outputPage = _Paths.output;
+  static const marginalPrice = _Paths.marginalPrice;
 }
 
 abstract class _Paths {
@@ -37,4 +38,5 @@ abstract class _Paths {
   //Page Drawer
   static const tonnage = '/tonnage';
   static const output = '/output';
+  static const marginalPrice = '/MarginalPrice';
 }

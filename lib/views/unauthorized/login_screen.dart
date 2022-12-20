@@ -55,7 +55,7 @@ class LoginScreen extends GetView<LoginController> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _FormLogin()
+                const _FormLogin()
               ],
             )),
       ),

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:test_chart/routes/bindings/account/account_binding.dart';
 import 'package:test_chart/routes/bindings/auth/login_binding.dart';
 import 'package:test_chart/routes/bindings/auth/register_binding.dart';
+import 'package:test_chart/routes/bindings/drawer/marginal_price_binding.dart';
 import 'package:test_chart/routes/bindings/drawer/output_binding.dart';
 import 'package:test_chart/routes/bindings/drawer/tonnage_binding.dart';
 import 'package:test_chart/routes/bindings/home/home_binding.dart';
@@ -9,6 +10,7 @@ import 'package:test_chart/routes/bindings/home/system_binding.dart';
 import 'package:test_chart/views/authorized/pages/home_page.dart';
 import 'package:test_chart/views/authorized/pages/system_page.dart';
 import 'package:test_chart/views/authorized/screens/account_screen.dart';
+import 'package:test_chart/views/authorized/screens/marginal_price.dart';
 import 'package:test_chart/views/authorized/screens/output_page.dart';
 import 'package:test_chart/views/authorized/screens/tonnage_page.dart';
 import 'package:test_chart/views/not_found/not_found.dart';
@@ -69,6 +71,12 @@ class AppPages {
       page: () => OutputScreen(),
       binding: OutputBinding());
 
+  static final marginalPricePage = GetPage(
+      name: Routes.marginalPrice,
+      transition: Transition.native,
+      page: () => MarginalPriceScreen(),
+      binding: MarginalPriceBinding());
+
   static final List<GetPage> getPages = [
     unknownRoute,
     homePage,
@@ -79,6 +87,7 @@ class AppPages {
 
     //Page Drawer
     tonnagePage,
-    outputPage
+    outputPage,
+    marginalPricePage
   ];
 }

@@ -82,6 +82,7 @@ class HomePage extends GetView<HomeController> {
               text: 'Giá biên',
               iconItem: CupertinoIcons.arrowtriangle_up,
               onTap: () {
+                Get.toNamed(Routes.marginalPrice);
                 closeDrawer();
               }),
           _ItemDrawer(
