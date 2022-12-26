@@ -16,21 +16,18 @@ class PriceModel {
     required this.ngay,
     required this.chuky,
     required this.giatri,
-    required this.toMay,
   });
 
   int idNode;
   DateTime ngay;
   int chuky;
   double giatri;
-  String toMay;
 
   factory PriceModel.fromJson(Map<String, dynamic> json) => PriceModel(
         idNode: json["ID_NODE"],
         ngay: DateTime.parse(json["NGAY"]),
         chuky: json["CHUKY"],
         giatri: json["GIATRI"].toDouble(),
-        toMay: json["TO_MAY"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -38,6 +35,5 @@ class PriceModel {
         "NGAY": ngay.toIso8601String(),
         "CHUKY": chuky,
         "GIATRI": giatri,
-        "TO_MAY": toMay,
       };
 }

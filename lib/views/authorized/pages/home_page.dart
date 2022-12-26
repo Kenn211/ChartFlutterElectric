@@ -6,18 +6,12 @@ import 'package:test_chart/core.dart';
 import 'package:test_chart/views/authorized/pages/lake_level_evolution.dart';
 
 class HomePage extends GetView<HomeController> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
-    void closeDrawer() {
-      _scaffoldKey.currentState!.closeDrawer();
-    }
-
     bool changeFlag = true;
 
     return Scaffold(
-      key: _scaffoldKey,
+      key: controller.scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
@@ -25,7 +19,7 @@ class HomePage extends GetView<HomeController> {
             title: 'home'.tr,
             leading: IconButton(
               onPressed: () {
-                _scaffoldKey.currentState!.openDrawer();
+                controller.openDrawer();
               },
               tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
               color: AppColors.secondColor,
@@ -67,7 +61,7 @@ class HomePage extends GetView<HomeController> {
             iconItem: CupertinoIcons.hammer,
             onTap: () {
               Get.toNamed(Routes.accountPage);
-              closeDrawer();
+              controller.closeDrawer();
             },
           ),
           _ItemDrawer(
@@ -75,7 +69,7 @@ class HomePage extends GetView<HomeController> {
             iconItem: CupertinoIcons.hammer,
             onTap: () {
               Get.toNamed(Routes.tonnagePage);
-              closeDrawer();
+              controller.closeDrawer();
             },
           ),
           _ItemDrawer(
@@ -83,33 +77,33 @@ class HomePage extends GetView<HomeController> {
               iconItem: CupertinoIcons.arrowtriangle_up,
               onTap: () {
                 Get.toNamed(Routes.marginalPrice);
-                closeDrawer();
+                controller.closeDrawer();
               }),
           _ItemDrawer(
             text: 'output'.tr,
             iconItem: CupertinoIcons.arrowtriangle_up,
             onTap: () {
               Get.toNamed(Routes.outputPage);
-              closeDrawer();
+              controller.closeDrawer();
             },
           ),
           _ItemDrawer(
               text: 'hydrological'.tr,
               iconItem: CupertinoIcons.cloud_drizzle_fill,
               onTap: () {
-                closeDrawer();
+                controller.closeDrawer();
               }),
           _ItemDrawer(
               text: 'revenue'.tr,
               iconItem: CupertinoIcons.money_dollar,
               onTap: () {
-                closeDrawer();
+                controller.closeDrawer();
               }),
           _ItemDrawer(
               text: 'sourcePlan'.tr,
               iconItem: CupertinoIcons.chart_bar,
               onTap: () {
-                closeDrawer();
+                controller.closeDrawer();
               }),
           _ItemDrawer(
             text: 'logout'.tr,

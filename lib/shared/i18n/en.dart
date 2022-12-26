@@ -16,6 +16,7 @@ const Map<String, String> enEN = {
 
   //E
   'edit': 'chỉnh sửa',
+  'error': 'Error',
 
   //H
   'hello': 'Hello',

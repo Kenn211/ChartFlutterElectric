@@ -13,8 +13,8 @@ abstract class BaseController extends GetxController {
   // final _flagEN = GlobalKey<ScaffoldState>();
   // GlobalKey<ScaffoldState> get flagEN => _flagVN;
 
-  // final _scaffoldKey = GlobalKey<ScaffoldState>();
-  // GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
 
   // final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   // GlobalKey<RefreshIndicatorState> get refreshIndicatorKey =>
@@ -73,6 +73,11 @@ abstract class BaseController extends GetxController {
       text: 'Quan Hoa - Nhan Chinh - Thanh Xuan - Ha Noi');
   TextEditingController get addressController => _addressController;
 
+  final today =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
+  late String dateSelected = '${today}';
+
   final _userName = ''.obs;
   RxString get userName => _userName;
 
@@ -130,20 +135,13 @@ abstract class BaseController extends GetxController {
   late TabController tabController;
   late ImageProvider<Object> oBackground;
 
-  // void onChangeDate() {
-  //   Helpers.closeKeyboard();
-  //   FunctionHelper.showDate(
-  //     Helpers.dateExtension.dateToDateOnly(DateTime.now()),
-  //     onConfirm: (date) {
-  //       _dob.value = Helpers.dateExtension.dateToDateOnly(date);
-  //       _dobController.text = _dob.value;
-  //     },
-  //   );
-  // }
+  void closeDrawer() {
+    scaffoldKey.currentState!.closeDrawer();
+  }
 
-  // void onChangeGender(Gender? value) {
-  //   _groupValue.value = value!;
-  // }
+  void openDrawer() {
+    scaffoldKey.currentState!.openDrawer();
+  }
 
   void onChecked(bool? value) {
     if (value != null) _checked.value = value;

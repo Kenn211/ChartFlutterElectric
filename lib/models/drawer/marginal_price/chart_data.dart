@@ -1,6 +1,7 @@
 class ChartData {
-  ChartData({required this.x, required this.y});
+  ChartData({this.x, this.y, this.y1});
 
-  final String x;
-  final double y;
+  final String? x;
+  final double? y;
+  final double? y1;
 }

@@ -11,6 +11,7 @@ const Map<String, String> viVN = {
 
   //E
   'edit': 'chỉnh sửa',
+  'error': 'Lỗi',
 
   //H
   'hello': 'Xin chào',
