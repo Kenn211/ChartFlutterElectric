@@ -160,11 +160,14 @@ class __FormRegisterState extends State<_FormRegister> {
               ],
             ),
             const SizedBox(height: 10),
-            Button(
-                text: 'register'.tr.toUpperCase(),
-                onTap: () {
-                  widget.register;
-                }),
+            Container(
+                height: 50,
+                child: Button(
+                    showIcon: false,
+                    text: 'register'.tr.toUpperCase(),
+                    onTap: () {
+                      widget.register;
+                    })),
           ],
         ));
   }

@@ -6,7 +6,7 @@ import '../app_shared.dart';
 class CustomSnackbar {
   static void snackBar(String type, String message) async {
     Get.snackbar(type == 'error' ? 'error'.tr : 'success'.tr, message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: type == 'error' ? Colors.red : Colors.green,
         colorText: Colors.white,
         icon: const Icon(Icons.error, color: Colors.white),

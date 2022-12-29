@@ -24,10 +24,8 @@ class AppPages {
 
   static String initial = Routes.notFound;
 
-  static final unknownRoute = GetPage(
-      name: Routes.notFound,
-      page: () => const NotFoundScreen(),
-      binding: BindingsBuilder(() => const NotFoundScreen()));
+  static final unknownRoute =
+      GetPage(name: Routes.notFound, page: () => const NotFoundScreen());
 
   static final homePage = GetPage(
       name: Routes.homePage,

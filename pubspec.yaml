@@ -27,9 +27,6 @@ dependencies:
   # State Management
   get: ^4.6.5
 
-  # format
-  numeral: ^2.0.1
-
 
 dev_dependencies:
   flutter_test:

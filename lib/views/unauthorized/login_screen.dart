@@ -15,7 +15,7 @@ class LoginScreen extends GetView<LoginController> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-            margin: const EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.only(top: 50),
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,7 +55,7 @@ class LoginScreen extends GetView<LoginController> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const _FormLogin()
+                _FormLogin()
               ],
             )),
       ),
@@ -71,34 +71,45 @@ class _FormLogin extends StatefulWidget {
 }
 
 class __FormLoginState extends State<_FormLogin> {
-  var controller = Get.put(LoginController());
+  final controller = Get.put(LoginController());
 
-  var showPassword = true;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool showPassword = true;
+
     return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TextField(
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            child: TextField(
               controller: controller.userNameController,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 hintText: 'user_login'.tr,
               ),
             ),
-            const SizedBox(height: 10),
-            Stack(
+          ),
+          const SizedBox(height: 10),
+          Container(
+            child: Stack(
               children: [
-                TextField(
-                  controller: controller.passwordController,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: 'password'.tr,
+                Container(
+                  child: TextField(
+                    controller: controller.passwordController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      hintText: 'password'.tr,
+                    ),
+                    obscureText: showPassword,
                   ),
-                  obscureText: showPassword,
                 ),
                 Positioned(
                     top: 0,
@@ -120,48 +131,54 @@ class __FormLoginState extends State<_FormLogin> {
                             : const Icon(CupertinoIcons.eye_slash_fill)))
               ],
             ),
-            const SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              child: const Text(
-                'Quên mật khẩu?',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Color.fromARGB(255, 63, 160, 239),
-                    fontWeight: FontWeight.w400),
-              ),
+          ),
+          const SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            child: const Text(
+              'Quên mật khẩu?',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 15,
+                  color: Color.fromARGB(255, 63, 160, 239),
+                  fontWeight: FontWeight.w400),
             ),
-            const SizedBox(height: 10),
-            Button(
+          ),
+          const SizedBox(height: 10),
+          Container(
+            height: 50,
+            child: Button(
                 text: 'login'.tr.toUpperCase(),
+                showIcon: false,
                 onTap: () {
                   controller.submitLogin();
                 }),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  child: const Text('Bạn không có tài khoản?'),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                child: const Text('Bạn không có tài khoản?'),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 15),
+                child: TextButton(
+                  child: Text('register'.tr,
+                      style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w500)),
+                  onPressed: () {
+                    Get.toNamed(Routes.register);
+                  },
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 15),
-                  child: TextButton(
-                    child: Text('register'.tr,
-                        style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w500)),
-                    onPressed: () {
-                      Get.toNamed(Routes.register);
-                    },
-                  ),
-                )
-              ],
-            )
-          ],
-        ));
+              )
+            ],
+          )
+        ],
+      ),
+    );
   }
 }

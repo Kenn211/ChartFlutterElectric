@@ -7,6 +7,7 @@ import '/services/storage/storage_service.dart';
 import '/shared/app_shared.dart';
 
 abstract class BaseController extends GetxController {
+  var dateSelectSnackbar = '';
   // final _flagVN = GlobalKey<ScaffoldState>();
   // GlobalKey<ScaffoldState> get flagVN => _flagVN;
 
@@ -74,9 +75,11 @@ abstract class BaseController extends GetxController {
   TextEditingController get addressController => _addressController;
 
   final today =
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .toString();
 
-  late String dateSelected = '${today}';
+  late String dateSelected = today;
+  late String dateSelectedNextDay = today;
 
   final _userName = ''.obs;
   RxString get userName => _userName;

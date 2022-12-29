@@ -13,64 +13,63 @@ class OutputScreen extends GetView<OutputController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          flexibleSpace: AppBarCustom(
-            canBack: true,
-            title: 'Sản lượng',
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        flexibleSpace: AppBarCustom(
+          canBack: true,
+          title: 'Sản lượng',
+        ),
+      ),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              // const _ChartQuantityProduct(),
+              _ChartQuantityProduct(),
+              Container(
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Column(
+                    children: [
+                      Container(
+                        height: 8,
+                        width: 25,
+                        color: Colors.purple,
+                      ),
+                      const SizedBox(height: 5),
+                      const Text(
+                        'Qmq',
+                        style: TextStyle(fontSize: 14),
+                      )
+                    ],
+                  ),
+                  const SizedBox(width: 20),
+                  Column(
+                    children: [
+                      Container(
+                        height: 8,
+                        width: 25,
+                        color: Colors.amber,
+                      ),
+                      const SizedBox(height: 5),
+                      const Text(
+                        'Qlltt',
+                        style: TextStyle(fontSize: 14),
+                      )
+                    ],
+                  )
+                ]),
+              ),
+              const SizedBox(height: 30),
+              // _TableQuantityProduct()
+            ],
           ),
         ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                // const _ChartQuantityProduct(),
-                _ChartQuantityProduct(),
-                Container(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            Container(
-                              height: 8,
-                              width: 25,
-                              color: Colors.purple,
-                            ),
-                            const SizedBox(height: 5),
-                            const Text(
-                              'Qmq',
-                              style: TextStyle(fontSize: 14),
-                            )
-                          ],
-                        ),
-                        const SizedBox(width: 20),
-                        Column(
-                          children: [
-                            Container(
-                              height: 8,
-                              width: 25,
-                              color: Colors.amber,
-                            ),
-                            const SizedBox(height: 5),
-                            const Text(
-                              'Qlltt',
-                              style: TextStyle(fontSize: 14),
-                            )
-                          ],
-                        )
-                      ]),
-                ),
-                const SizedBox(height: 30),
-                // _TableQuantityProduct()
-              ],
-            ),
-          ),
-        ),
-        bottomNavigationBar: Button(text: 'ok', onTap: () {}));
+      ),
+    );
   }
 }
 

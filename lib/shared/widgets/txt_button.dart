@@ -1,16 +1,22 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  const Button({super.key, required this.text, required this.onTap});
+  const Button(
+      {super.key,
+      required this.text,
+      required this.onTap,
+      this.showIcon = true});
 
   final String text;
   final Function()? onTap;
+  final bool? showIcon;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 50,
+      height: double.infinity,
       decoration: BoxDecoration(
           color: const Color.fromARGB(255, 63, 160, 239),
           borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -23,11 +29,20 @@ class Button extends StatelessWidget {
             ),
           ]),
       child: ElevatedButton(
-          child: Text(
-            text,
-            style: const TextStyle(color: Colors.white),
-          ),
-          onPressed: onTap),
+        onPressed: onTap,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            showIcon == true
+                ? const Icon(CupertinoIcons.refresh_circled)
+                : const SizedBox(height: 0, width: 0),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(text)
+          ],
+        ),
+      ),
     );
   }
 }
