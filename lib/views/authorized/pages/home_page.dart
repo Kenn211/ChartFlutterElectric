@@ -57,14 +57,6 @@ class HomePage extends GetView<HomeController> {
               )),
           const SizedBox(height: 20),
           _ItemDrawer(
-            text: 'Your account'.tr,
-            iconItem: CupertinoIcons.hammer,
-            onTap: () {
-              Get.toNamed(Routes.accountPage);
-              controller.closeDrawer();
-            },
-          ),
-          _ItemDrawer(
             text: 'load'.tr,
             iconItem: CupertinoIcons.hammer,
             onTap: () {
@@ -151,7 +143,9 @@ class HomePage extends GetView<HomeController> {
                     text: 'waterlevel'.tr,
                     numData: '150 m',
                     icon: CupertinoIcons.bars,
-                    onTap: () {},
+                    onTap: () {
+                      controller.developing();
+                    },
                   ),
                 ],
               ),

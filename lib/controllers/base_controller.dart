@@ -2,12 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_chart/shared/helpers/function_helper.dart';
+import 'package:test_chart/shared/widgets/custom_snackbar.dart';
 
 import '/services/storage/storage_service.dart';
 import '/shared/app_shared.dart';
 
 abstract class BaseController extends GetxController {
   var dateSelectSnackbar = '';
+
+  TableRow buildRow(List<String> cells, {bool isHeader = false}) {
+    final style = TextStyle(
+      fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
+      fontSize: 15,
+    );
+
+    return TableRow(
+        children: cells
+            .map((cell) => Container(
+                  color: isHeader ? Colors.blue.shade200 : Colors.white,
+                  alignment: Alignment.center,
+                  height: 40,
+                  child: Text(cell, style: style),
+                ))
+            .toList());
+  }
   // final _flagVN = GlobalKey<ScaffoldState>();
   // GlobalKey<ScaffoldState> get flagVN => _flagVN;
 
@@ -208,6 +226,11 @@ abstract class BaseController extends GetxController {
     final hasLogedIn =
         (storageValue != null && storageValue == true) ? true : false;
     return hasLogedIn;
+  }
+
+  // features developing
+  void developing() {
+    CustomSnackbar.snackBar('error', 'Tính năng đang phát triển');
   }
 
   @override

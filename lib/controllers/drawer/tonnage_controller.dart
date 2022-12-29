@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/core.dart';
 import 'package:test_chart/models/drawer/tonnage/chart_dart_tonnage.dart';
 import 'package:test_chart/models/drawer/tonnage/tonnage_model.dart';
 import 'package:test_chart/shared/widgets/custom_snackbar.dart';
@@ -25,23 +22,6 @@ class TonnageController extends BaseController {
     "Quốc Gia",
   ];
 
-  TableRow buildRow(List<String> cells, {bool isHeader = false}) {
-    final style = TextStyle(
-      fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
-      fontSize: 15,
-    );
-
-    return TableRow(
-        children: cells
-            .map((cell) => Container(
-                  color: isHeader ? AppColors.primaryColor : Colors.white,
-                  alignment: Alignment.center,
-                  height: 40,
-                  child: Text(cell, style: style),
-                ))
-            .toList());
-  }
-
   @override
   void onInit() {
     super.onInit();
@@ -62,30 +42,40 @@ class TonnageController extends BaseController {
       }
 
       _dataChartCk.value = [];
+      _dataChartDay.value = [];
+
       await http
           .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_IAHByDay?NGAY=${dateSelected}&ID_NODE=${indexDropdownValue.toInt()}'))
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_IAHByDay?NGAY=${dateSelected.toString()}&ID_NODE=${indexDropdownValue.toInt()}'))
           .then((value) {
         List<TonnageModel> _tonnageModel = tonnageModelFromJson(value.body);
         if (_tonnageModel.isEmpty) {
-          CustomSnackbar.snackBar(
-              'error', 'Không có dữ liệu giá biên ngày ${dateSelectSnackbar}');
+          hideLoading();
+          CustomSnackbar.snackBar('error',
+              'Không có dữ liệu phụ tải ${dropdownvalue.toString()} ngày này');
         } else {
           _tonnageModel.forEach((e) {
             _dataChartCk.add(ChartDataTonnage(x: e.chuky, y2: e.giatri));
           });
+          http
+              .get(Uri.parse(
+                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_DAHByDay?NGAY=${dateSelectedNextDay.toString()}&ID_NODE=${indexDropdownValue.toInt()}'))
+              .then((value) {
+            List<TonnageModel> _tonnageModel1 =
+                tonnageModelFromJson(value.body);
+            if (_tonnageModel1.isEmpty) {
+              print('empty');
+            } else {
+              _tonnageModel1.forEach((e) {
+                _dataChartDay.add(ChartDataTonnage(x: e.chuky, y1: e.giatri));
+              });
+              hideLoading();
+              CustomSnackbar.showSuccessToast(
+                  'Thành công', 'Dữ liệu phụ tải ${dropdownvalue.toString()}');
+            }
+            update();
+          });
         }
-      });
-
-      _dataChartDay.value = [];
-      await http
-          .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_DAHByDay?NGAY=${dateSelectedNextDay}&ID_NODE=${indexDropdownValue.toInt()}'))
-          .then((value) {
-        List<TonnageModel> _tonnageModel1 = tonnageModelFromJson(value.body);
-        _tonnageModel1.forEach((e) {
-          _dataChartDay.add(ChartDataTonnage(x: e.chuky, y1: e.giatri));
-        });
       });
     } catch (e) {
       print(e);

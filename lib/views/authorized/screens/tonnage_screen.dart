@@ -40,33 +40,28 @@ class TonnagePage extends GetView<TonnageController> {
               const SizedBox(height: 20),
               const ChartTonnage(),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _DropDownSelect(),
-                  Stack(
-                    children: [
-                      SelectDate(),
-                      Positioned(
-                        right: 4,
-                        bottom: 4,
-                        top: 4,
-                        child: Container(
-                          width: 130,
-                          height: 40,
-                          alignment: Alignment.centerLeft,
-                          child: Button(
-                              text: 'Lấy dữ liệu',
-                              onTap: () {
-                                controller.fetchTonnage();
-                                print(controller.dateSelected);
-                                print(controller.dateSelectedNextDay);
-                              }),
-                        ),
-                      )
-                    ],
+                  const _DropDownSelect(),
+                  Container(
+                    width: 220,
+                    child: const SelectDate(),
                   ),
                 ],
               ),
-              _TableTonnage()
+              const SizedBox(height: 10),
+              Container(
+                width: 150,
+                height: 50,
+                alignment: Alignment.centerLeft,
+                child: Button(
+                    text: 'Lấy dữ liệu',
+                    onTap: () {
+                      controller.fetchTonnage();
+                    }),
+              ),
+              const SizedBox(height: 20),
+              const _TableTonnage()
             ],
           ),
         ),
@@ -89,15 +84,15 @@ class _ChartTonnageState extends State<ChartTonnage> {
   void initState() {
     _trackball = TrackballBehavior(
         enable: true,
-        lineWidth: 5,
+        lineWidth: 3,
         tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
         lineColor: AppColors.secondColor,
-        activationMode: ActivationMode.longPress,
+        activationMode: ActivationMode.singleTap,
         markerSettings: const TrackballMarkerSettings(
             markerVisibility: TrackballVisibilityMode.visible),
         tooltipSettings: InteractiveTooltip(
             canShowMarker: false,
-            format: 'series.name: point.y đồng/kWh',
+            format: 'series.name: point.y MW',
             color: const Color.fromARGB(255, 181, 180, 180),
             textStyle: TextStyle(color: AppColors.secondColor)));
     super.initState();
@@ -115,14 +110,12 @@ class _ChartTonnageState extends State<ChartTonnage> {
             trackballBehavior: _trackball,
             series: <ChartSeries<ChartDataTonnage, int>>[
               StackedAreaSeries<ChartDataTonnage, int>(
-                  markerSettings: const MarkerSettings(isVisible: false),
                   dataSource: controller.dataChartCk,
                   name: 'Chu kỳ tới',
                   xValueMapper: (ChartDataTonnage data, _) => data.x,
                   yValueMapper: (ChartDataTonnage data, _) => data.y2,
                   color: Colors.blue),
               StackedAreaSeries<ChartDataTonnage, int>(
-                  markerSettings: const MarkerSettings(isVisible: false),
                   dataSource: controller.dataChartDay,
                   name: 'Ngày tới',
                   xValueMapper: (ChartDataTonnage data, _) => data.x,
@@ -145,33 +138,36 @@ class __DropDownSelectState extends State<_DropDownSelect> {
   final controller = Get.put(TonnageController());
   @override
   Widget build(BuildContext context) {
-    return DropdownButton(
-        value: controller.dropdownvalue,
-        focusColor: Colors.transparent,
-        // Down Arrow Icon
-        icon: Container(
-          alignment: Alignment.centerRight,
-          child: Icon(
-            Icons.keyboard_arrow_down,
-            color: AppColors.primaryColor,
-          ),
-        ),
-
-        // Array list of items
-        items: controller.ragion.map((String items) {
-          return DropdownMenuItem(
-            value: items,
-            child: Text(items,
-                style: TextStyle(color: Colors.black.withOpacity(0.5))),
-          );
-        }).toList(),
-        // After selecting the desired option,it will
-        // change button value to selected value
-        onChanged: (String? newValue) {
-          setState(() {
-            controller.dropdownvalue = newValue!;
-          });
-        });
+    return Container(
+      height: 50,
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          border: Border.all(width: 1, color: AppColors.secondColor)),
+      child: DropdownButton(
+          underline: const SizedBox(width: 0),
+          value: controller.dropdownvalue,
+          focusColor: Colors.transparent,
+          // Down Arrow Icon
+          icon: Icon(Icons.keyboard_arrow_down, color: AppColors.primaryColor),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          dropdownColor: Colors.blue.shade200,
+          // Array list of items
+          items: controller.ragion.map((String items) {
+            return DropdownMenuItem(
+              value: items,
+              child: Text(items,
+                  style: TextStyle(color: Colors.black.withOpacity(0.5))),
+            );
+          }).toList(),
+          // After selecting the desired option,it will
+          // change button value to selected value
+          onChanged: (String? newValue) {
+            setState(() {
+              controller.dropdownvalue = newValue!;
+            });
+          }),
+    );
   }
 }
 
@@ -184,30 +180,17 @@ class _TableTonnage extends StatelessWidget {
         init: TonnageController(),
         builder: (controller) {
           return Table(
-              border: TableBorder.all(width: 1.0, color: Colors.black),
+              border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
               children: [
-                controller
-                    .buildRow(['CK', 'Chu kì tới', 'Ngày tới'], isHeader: true),
+                controller.buildRow(
+                    ['CK', 'Chu kì tới (IAH)', 'Ngày tới (DAH)'],
+                    isHeader: true),
                 for (var e = 0; e < controller.dataChartDay.length; e++)
-                  TableRow(
-                    children: [
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child: Text(controller.dataChartDay[e].x.toString()),
-                      ),
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child: Text(controller.dataChartCk[e].y2.toString()),
-                      ),
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child: Text(controller.dataChartDay[e].y1.toString()),
-                      ),
-                    ],
-                  ),
+                  controller.buildRow([
+                    '${controller.dataChartDay[e].x}',
+                    '${controller.dataChartCk[e].y2}',
+                    '${controller.dataChartDay[e].y1}'
+                  ]),
               ]);
         });
   }

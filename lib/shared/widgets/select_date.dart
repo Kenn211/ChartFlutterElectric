@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:test_chart/controllers/drawer/marginal_price_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:test_chart/controllers/drawer/tonnage_controller.dart';
+import 'package:test_chart/core.dart';
 
 class SelectDate extends StatefulWidget {
-  const SelectDate({super.key, this.restorationId});
+  const SelectDate({super.key, this.restorationId, this.isStack = false});
 
   final String? restorationId;
+  final bool? isStack;
 
   @override
   State<SelectDate> createState() => _SelectDateState();
@@ -84,15 +86,15 @@ class _SelectDateState extends State<SelectDate> with RestorationMixin {
           _restorableDatePickerRouteFuture.present();
         },
         child: Container(
-          width: 245,
           height: 50,
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              border:
-                  Border.all(width: 1, color: Colors.black.withOpacity(0.5))),
+              border: Border.all(width: 1, color: AppColors.secondColor)),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: widget.isStack == false
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.start,
             children: [
               Icon(
                 CupertinoIcons.calendar,

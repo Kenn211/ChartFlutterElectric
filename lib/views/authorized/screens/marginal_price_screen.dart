@@ -57,26 +57,28 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
                     ],
                   )),
                   const SizedBox(height: 20),
-                  Stack(
-                    children: [
-                      const SelectDate(),
-                      Positioned(
-                        right: 4,
-                        bottom: 4,
-                        top: 4,
-                        child: Container(
-                          width: 130,
-                          height: 40,
-                          alignment: Alignment.centerLeft,
-                          child: Button(
-                              text: 'Lấy dữ liệu',
-                              onTap: () {
-                                controller.fetchPriceData();
-                                print(controller.dateSelectedNextDay);
-                              }),
-                        ),
-                      )
-                    ],
+                  Container(
+                    width: 250,
+                    child: Stack(
+                      children: [
+                        SelectDate(isStack: true),
+                        Positioned(
+                          right: 4,
+                          bottom: 4,
+                          top: 4,
+                          child: Container(
+                            width: 130,
+                            height: 40,
+                            alignment: Alignment.centerLeft,
+                            child: Button(
+                                text: 'Lấy dữ liệu',
+                                onTap: () {
+                                  controller.fetchPriceData();
+                                }),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 20),
                   const _TableMarginalIAH()
@@ -341,44 +343,18 @@ class _TableMarginalDAH extends StatelessWidget {
         init: MarginalPriceController(),
         builder: (controller) {
           return Table(
-              border: TableBorder.all(width: 1.0, color: Colors.black),
+              border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
               children: [
                 controller
                     .buildRow(['CK', 'MB', 'MT', 'MN', 'GBM'], isHeader: true),
                 for (var e = 0; e < controller.dataChartCentralDAH.length; e++)
-                  TableRow(
-                    children: [
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child: Text(controller.dataTableIAH[e].ck.toString()),
-                      ),
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child:
-                            Text(controller.dataChartNorthDAH[e].y1.toString()),
-                      ),
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child: Text(
-                            controller.dataChartCentralDAH[e].y2.toString()),
-                      ),
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child:
-                            Text(controller.dataChartSouthDAH[e].y3.toString()),
-                      ),
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child: Text(
-                            controller.dataChartNationDAH[e].y4.toString()),
-                      ),
-                    ],
-                  ),
+                  controller.buildRow([
+                    '${controller.dataTableIAH[e].ck}',
+                    '${controller.dataChartNorthDAH[e].y1}',
+                    '${controller.dataChartCentralDAH[e].y2}',
+                    '${controller.dataChartSouthDAH[e].y3}',
+                    '${controller.dataChartNationDAH[e].y4}'
+                  ])
               ]);
         });
   }
