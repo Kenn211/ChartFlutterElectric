@@ -106,10 +106,10 @@ class MarginalPriceController extends BaseController {
                       .add(ChartData(x: 'Chu kỳ ${e.chuky}', y4: e.giatri));
                 }
               });
-              hideLoading();
-              CustomSnackbar.showSuccessToast('Thành công',
-                  'Dữ liệu giá biên ngày ${dateSelectSnackbar.toString()}');
             }
+            hideLoading();
+            CustomSnackbar.showSuccessToast('Thành công',
+                'Dữ liệu giá biên ngày ${dateSelectSnackbar.toString()}');
             update();
           });
         }

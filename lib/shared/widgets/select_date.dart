@@ -48,7 +48,7 @@ class _SelectDateState extends State<SelectDate> with RestorationMixin {
           initialEntryMode: DatePickerEntryMode.calendarOnly,
           initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
           firstDate: DateTime(2021),
-          lastDate: DateTime(2023),
+          lastDate: DateTime(2024),
         );
       },
     );

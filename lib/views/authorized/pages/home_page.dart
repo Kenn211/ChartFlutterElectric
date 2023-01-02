@@ -60,7 +60,7 @@ class HomePage extends GetView<HomeController> {
             text: 'load'.tr,
             iconItem: CupertinoIcons.hammer,
             onTap: () {
-              Get.toNamed(Routes.tonnagePage);
+              Get.toNamed(Routes.tonnageScreen);
               controller.closeDrawer();
             },
           ),
@@ -68,14 +68,14 @@ class HomePage extends GetView<HomeController> {
               text: 'Giá biên',
               iconItem: CupertinoIcons.arrowtriangle_up,
               onTap: () {
-                Get.toNamed(Routes.marginalPrice);
+                Get.toNamed(Routes.marginalPriceScreen);
                 controller.closeDrawer();
               }),
           _ItemDrawer(
             text: 'output'.tr,
             iconItem: CupertinoIcons.arrowtriangle_up,
             onTap: () {
-              Get.toNamed(Routes.outputPage);
+              Get.toNamed(Routes.outputScreen);
               controller.closeDrawer();
             },
           ),
@@ -95,6 +95,7 @@ class HomePage extends GetView<HomeController> {
               text: 'sourcePlan'.tr,
               iconItem: CupertinoIcons.chart_bar,
               onTap: () {
+                Get.toNamed(Routes.sourcePlanScreen);
                 controller.closeDrawer();
               }),
           _ItemDrawer(

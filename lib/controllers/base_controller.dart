@@ -26,18 +26,9 @@ abstract class BaseController extends GetxController {
                 ))
             .toList());
   }
-  // final _flagVN = GlobalKey<ScaffoldState>();
-  // GlobalKey<ScaffoldState> get flagVN => _flagVN;
-
-  // final _flagEN = GlobalKey<ScaffoldState>();
-  // GlobalKey<ScaffoldState> get flagEN => _flagVN;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
-
-  // final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  // GlobalKey<RefreshIndicatorState> get refreshIndicatorKey =>
-  //     _refreshIndicatorKey;
 
   final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
   final setStorage = Get.find<StorageService>();

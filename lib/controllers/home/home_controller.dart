@@ -3,6 +3,9 @@ import 'package:test_chart/core.dart';
 import 'package:test_chart/routes/helpers/route_helper.dart';
 
 class HomeController extends BaseController {
+  @override
+  void onInit() async {}
+
   void handleChangeLang() {
     showLoading();
     Future.delayed(const Duration(seconds: 2), () async {

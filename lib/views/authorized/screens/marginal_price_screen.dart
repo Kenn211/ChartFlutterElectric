@@ -61,7 +61,7 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
                     width: 250,
                     child: Stack(
                       children: [
-                        SelectDate(isStack: true),
+                        const SelectDate(isStack: true),
                         Positioned(
                           right: 4,
                           bottom: 4,
@@ -296,39 +296,13 @@ class _TableMarginalIAH extends StatelessWidget {
                 controller
                     .buildRow(['CK', 'MB', 'MT', 'MN', 'GBM'], isHeader: true),
                 for (var e = 0; e < controller.dataChartCentralIAH.length; e++)
-                  TableRow(
-                    children: [
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child: Text(controller.dataTableIAH[e].ck.toString()),
-                      ),
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child:
-                            Text(controller.dataChartNorthIAH[e].y1.toString()),
-                      ),
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child: Text(
-                            controller.dataChartCentralIAH[e].y2.toString()),
-                      ),
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child:
-                            Text(controller.dataChartSouthIAH[e].y3.toString()),
-                      ),
-                      Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        child: Text(
-                            controller.dataChartNationIAH[e].y4.toString()),
-                      ),
-                    ],
-                  ),
+                  controller.buildRow([
+                    '${controller.dataTableIAH[e].ck}',
+                    '${controller.dataChartNorthIAH[e].y1}',
+                    '${controller.dataChartCentralIAH[e].y2}',
+                    '${controller.dataChartSouthIAH[e].y3}',
+                    '${controller.dataChartNationIAH[e].y4}'
+                  ])
               ]);
         });
   }

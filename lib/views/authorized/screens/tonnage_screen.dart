@@ -110,17 +110,20 @@ class _ChartTonnageState extends State<ChartTonnage> {
             trackballBehavior: _trackball,
             series: <ChartSeries<ChartDataTonnage, int>>[
               StackedAreaSeries<ChartDataTonnage, int>(
+                  dataLabelSettings: const DataLabelSettings(
+                      isVisible: false, useSeriesColor: true),
                   dataSource: controller.dataChartCk,
                   name: 'Chu kỳ tới',
                   xValueMapper: (ChartDataTonnage data, _) => data.x,
-                  yValueMapper: (ChartDataTonnage data, _) => data.y2,
-                  color: Colors.blue),
+                  yValueMapper: (ChartDataTonnage data, _) => data.y2),
               StackedAreaSeries<ChartDataTonnage, int>(
-                  dataSource: controller.dataChartDay,
-                  name: 'Ngày tới',
-                  xValueMapper: (ChartDataTonnage data, _) => data.x,
-                  yValueMapper: (ChartDataTonnage data, _) => data.y1,
-                  color: Colors.amber),
+                dataLabelSettings: const DataLabelSettings(
+                    isVisible: false, useSeriesColor: true),
+                dataSource: controller.dataChartDay,
+                name: 'Ngày tới',
+                xValueMapper: (ChartDataTonnage data, _) => data.x,
+                yValueMapper: (ChartDataTonnage data, _) => data.y1,
+              ),
             ],
           );
         });
@@ -187,7 +190,7 @@ class _TableTonnage extends StatelessWidget {
                     isHeader: true),
                 for (var e = 0; e < controller.dataChartDay.length; e++)
                   controller.buildRow([
-                    '${controller.dataChartDay[e].x}',
+                    '${controller.dataChartCk[e].x}',
                     '${controller.dataChartCk[e].y2}',
                     '${controller.dataChartDay[e].y1}'
                   ]),
