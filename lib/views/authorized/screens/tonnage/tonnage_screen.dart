@@ -8,6 +8,7 @@ import 'package:test_chart/shared/widgets/select_date.dart';
 import 'package:test_chart/shared/widgets/txt_button.dart';
 
 class TonnagePage extends GetView<TonnageController> {
+  const TonnagePage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,33 +101,31 @@ class _ChartTonnageState extends State<ChartTonnage> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TonnageController>(
-        init: TonnageController(),
-        builder: (controller) {
-          return SfCartesianChart(
-            primaryXAxis: CategoryAxis(
-                labelStyle:
-                    const TextStyle(fontSize: 12, color: Colors.transparent)),
-            trackballBehavior: _trackball,
-            series: <ChartSeries<ChartDataTonnage, int>>[
-              StackedAreaSeries<ChartDataTonnage, int>(
-                  dataLabelSettings: const DataLabelSettings(
-                      isVisible: false, useSeriesColor: true),
-                  dataSource: controller.dataChartCk,
-                  name: 'Chu kỳ tới',
-                  xValueMapper: (ChartDataTonnage data, _) => data.x,
-                  yValueMapper: (ChartDataTonnage data, _) => data.y2),
-              StackedAreaSeries<ChartDataTonnage, int>(
-                dataLabelSettings: const DataLabelSettings(
-                    isVisible: false, useSeriesColor: true),
-                dataSource: controller.dataChartDay,
-                name: 'Ngày tới',
-                xValueMapper: (ChartDataTonnage data, _) => data.x,
-                yValueMapper: (ChartDataTonnage data, _) => data.y1,
-              ),
-            ],
-          );
-        });
+    return GetBuilder<TonnageController>(builder: (controller) {
+      return SfCartesianChart(
+        primaryXAxis: CategoryAxis(
+            labelStyle:
+                const TextStyle(fontSize: 12, color: Colors.transparent)),
+        trackballBehavior: _trackball,
+        series: <ChartSeries<ChartDataTonnage, int>>[
+          StackedAreaSeries<ChartDataTonnage, int>(
+              dataLabelSettings: const DataLabelSettings(
+                  isVisible: false, useSeriesColor: true),
+              dataSource: controller.dataChartCk,
+              name: 'Chu kỳ tới',
+              xValueMapper: (ChartDataTonnage data, _) => data.x,
+              yValueMapper: (ChartDataTonnage data, _) => data.y2),
+          StackedAreaSeries<ChartDataTonnage, int>(
+            dataLabelSettings:
+                const DataLabelSettings(isVisible: false, useSeriesColor: true),
+            dataSource: controller.dataChartDay,
+            name: 'Ngày tới',
+            xValueMapper: (ChartDataTonnage data, _) => data.x,
+            yValueMapper: (ChartDataTonnage data, _) => data.y1,
+          ),
+        ],
+      );
+    });
   }
 }
 
@@ -179,22 +178,19 @@ class _TableTonnage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TonnageController>(
-        init: TonnageController(),
-        builder: (controller) {
-          return Table(
-              border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
-              children: [
-                controller.buildRow(
-                    ['CK', 'Chu kì tới (IAH)', 'Ngày tới (DAH)'],
-                    isHeader: true),
-                for (var e = 0; e < controller.dataChartDay.length; e++)
-                  controller.buildRow([
-                    '${controller.dataChartCk[e].x}',
-                    '${controller.dataChartCk[e].y2}',
-                    '${controller.dataChartDay[e].y1}'
-                  ]),
-              ]);
-        });
+    return GetBuilder<TonnageController>(builder: (controller) {
+      return Table(
+          border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
+          children: [
+            controller.buildRow(['CK', 'Chu kì tới (IAH)', 'Ngày tới (DAH)'],
+                isHeader: true),
+            for (var e = 0; e < controller.dataChartDay.length; e++)
+              controller.buildRow([
+                '${controller.dataChartCk[e].x}',
+                '${controller.dataChartCk[e].y2}',
+                '${controller.dataChartDay[e].y1}'
+              ]),
+          ]);
+    });
   }
 }

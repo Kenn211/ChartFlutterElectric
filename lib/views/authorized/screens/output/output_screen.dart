@@ -16,7 +16,7 @@ class OutputScreen extends GetView<OutputController> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        flexibleSpace: AppBarCustom(
+        flexibleSpace: const AppBarCustom(
           canBack: true,
           title: 'Sản lượng',
         ),

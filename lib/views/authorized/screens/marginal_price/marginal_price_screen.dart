@@ -163,7 +163,6 @@ class _ChartColumnIAHState extends State<_ChartColumnIAH> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MarginalPriceController>(
-      init: MarginalPriceController(),
       builder: (controller) {
         return SfCartesianChart(
             primaryXAxis: CategoryAxis(
@@ -239,7 +238,6 @@ class _ChartColumnDAHState extends State<_ChartColumnDAH> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MarginalPriceController>(
-      init: MarginalPriceController(),
       builder: (controller) {
         return SfCartesianChart(
           primaryXAxis: CategoryAxis(
@@ -287,24 +285,22 @@ class _TableMarginalIAH extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MarginalPriceController>(
-        init: MarginalPriceController(),
-        builder: (controller) {
-          return Table(
-              border: TableBorder.all(width: 1.0, color: Colors.black),
-              children: [
-                controller
-                    .buildRow(['CK', 'MB', 'MT', 'MN', 'GBM'], isHeader: true),
-                for (var e = 0; e < controller.dataChartCentralIAH.length; e++)
-                  controller.buildRow([
-                    '${controller.dataTableIAH[e].ck}',
-                    '${controller.dataChartNorthIAH[e].y1}',
-                    '${controller.dataChartCentralIAH[e].y2}',
-                    '${controller.dataChartSouthIAH[e].y3}',
-                    '${controller.dataChartNationIAH[e].y4}'
-                  ])
-              ]);
-        });
+    return GetBuilder<MarginalPriceController>(builder: (controller) {
+      return Table(
+          border: TableBorder.all(width: 1.0, color: Colors.black),
+          children: [
+            controller
+                .buildRow(['CK', 'MB', 'MT', 'MN', 'GBM'], isHeader: true),
+            for (var e = 0; e < controller.dataChartCentralIAH.length; e++)
+              controller.buildRow([
+                '${controller.dataTableIAH[e].ck}',
+                '${controller.dataChartNorthIAH[e].y1}',
+                '${controller.dataChartCentralIAH[e].y2}',
+                '${controller.dataChartSouthIAH[e].y3}',
+                '${controller.dataChartNationIAH[e].y4}'
+              ])
+          ]);
+    });
   }
 }
 
@@ -313,23 +309,21 @@ class _TableMarginalDAH extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MarginalPriceController>(
-        init: MarginalPriceController(),
-        builder: (controller) {
-          return Table(
-              border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
-              children: [
-                controller
-                    .buildRow(['CK', 'MB', 'MT', 'MN', 'GBM'], isHeader: true),
-                for (var e = 0; e < controller.dataChartCentralDAH.length; e++)
-                  controller.buildRow([
-                    '${controller.dataTableIAH[e].ck}',
-                    '${controller.dataChartNorthDAH[e].y1}',
-                    '${controller.dataChartCentralDAH[e].y2}',
-                    '${controller.dataChartSouthDAH[e].y3}',
-                    '${controller.dataChartNationDAH[e].y4}'
-                  ])
-              ]);
-        });
+    return GetBuilder<MarginalPriceController>(builder: (controller) {
+      return Table(
+          border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
+          children: [
+            controller
+                .buildRow(['CK', 'MB', 'MT', 'MN', 'GBM'], isHeader: true),
+            for (var e = 0; e < controller.dataChartCentralDAH.length; e++)
+              controller.buildRow([
+                '${controller.dataTableIAH[e].ck}',
+                '${controller.dataChartNorthDAH[e].y1}',
+                '${controller.dataChartCentralDAH[e].y2}',
+                '${controller.dataChartSouthDAH[e].y3}',
+                '${controller.dataChartNationDAH[e].y4}'
+              ])
+          ]);
+    });
   }
 }

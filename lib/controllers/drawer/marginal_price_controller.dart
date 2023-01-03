@@ -41,6 +41,11 @@ class MarginalPriceController extends BaseController {
     super.onInit();
   }
 
+  @override
+  void onReady() async {
+    super.onReady();
+  }
+
   Future<void> fetchPriceData() async {
     showLoading();
     try {

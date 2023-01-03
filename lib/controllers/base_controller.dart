@@ -226,10 +226,10 @@ abstract class BaseController extends GetxController {
 
   @override
   void onInit() async {
-    if (await hasLoggedIn()) {
-      _isLoggedIn.value = true;
-      update();
-    }
+    // if (await hasLoggedIn()) {
+    //   _isLoggedIn.value = true;
+    //   update();
+    // }
     super.onInit();
   }
 

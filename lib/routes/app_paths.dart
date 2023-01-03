@@ -39,6 +39,6 @@ abstract class _Paths {
   //Page Drawer
   static const tonnage = '/tonnage';
   static const output = '/output';
-  static const marginalPrice = '/MarginalPrice';
+  static const marginalPrice = '/marginalPrice';
   static const sourcePlan = '/sourcePlan';
 }

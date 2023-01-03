@@ -27,6 +27,11 @@ class TonnageController extends BaseController {
     super.onInit();
   }
 
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
   Future<void> fetchTonnage() async {
     showLoading();
     try {

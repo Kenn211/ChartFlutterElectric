@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/controllers/drawer/marginal_price_controller.dart';
 import 'package:intl/intl.dart';
+import 'package:test_chart/controllers/drawer/source_plan_controller.dart';
 import 'package:test_chart/controllers/drawer/tonnage_controller.dart';
 import 'package:test_chart/core.dart';
 
@@ -17,9 +18,10 @@ class SelectDate extends StatefulWidget {
 }
 
 class _SelectDateState extends State<SelectDate> with RestorationMixin {
-  final controller = Get.put(MarginalPriceController());
-  final controller1 = Get.put(TonnageController());
-  var formatter = DateFormat('yyyy-MM-dd');
+  // final controllerMarginal = Get.put(MarginalPriceController());
+  // final controllerTonnage = Get.put(TonnageController());
+  // final controllerPlan = Get.put(SourcePlanController());
+  // var formatter = DateFormat('yyyy-MM-dd');
 
   @override
   String? get restorationId => widget.restorationId;
@@ -65,16 +67,19 @@ class _SelectDateState extends State<SelectDate> with RestorationMixin {
     if (newSelectedDate != null) {
       setState(() {
         _selectedDate.value = newSelectedDate;
-        controller.dateSelectSnackbar =
-            '${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}';
+        // controllerMarginal.dateSelectSnackbar =
+        //     '${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}';
 
-        controller.dateSelected = formatter.format(_selectedDate.value);
-        controller1.dateSelected = formatter.format(_selectedDate.value);
+        // controllerMarginal.dateSelected = formatter.format(_selectedDate.value);
+        // controllerTonnage.dateSelected = formatter.format(_selectedDate.value);
+        // controllerPlan.dateSelected = formatter.format(_selectedDate.value);
 
-        controller.dateSelectedNextDay =
-            formatter.format(_selectedDate.value.add(const Duration(days: 1)));
-        controller1.dateSelectedNextDay =
-            formatter.format(_selectedDate.value.add(const Duration(days: 1)));
+        // controllerMarginal.dateSelectedNextDay =
+        //     formatter.format(_selectedDate.value.add(const Duration(days: 1)));
+        // controllerTonnage.dateSelectedNextDay =
+        //     formatter.format(_selectedDate.value.add(const Duration(days: 1)));
+        // controllerPlan.dateSelectedNextDay =
+        //     formatter.format(_selectedDate.value.add(const Duration(days: 1)));
       });
     }
   }
