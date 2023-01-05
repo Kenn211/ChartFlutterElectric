@@ -5,18 +5,16 @@ import 'package:test_chart/models/drawer/source_plan/list_factory_model.dart';
 import 'package:test_chart/models/drawer/source_plan/source_plan_model.dart';
 import 'package:test_chart/shared/widgets/custom_snackbar.dart';
 
-class SourcePlanController extends BaseController with StateMixin {
+class SourcePlanController extends BaseController {
   //Categories Factory
   List<ListFactoryModel> dataFactory = [];
   int indexFactory = 0;
   List<String> listFactory = ['Nhà máy'];
   String dropdownvalueFactory = 'Nhà máy';
 
-  //Data respon
+  //Data response
   var _dataToMayIAH = <ToMay>[].obs;
   RxList<ToMay> get dataToMayIAH => _dataToMayIAH;
-
-  //Data respon
   var _dataToMayDAH = <ToMay>[].obs;
   RxList<ToMay> get dataToMayDAH => _dataToMayDAH;
 
@@ -81,7 +79,7 @@ class SourcePlanController extends BaseController with StateMixin {
           .get(Uri.parse(
               'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_IAHByDay2?NGAY=${formatDateAPITomorrow.toString()}&ID_NM=${indexFactory.toInt()}'))
           .then((value) {
-        final _planModel = sourcePlanModelFromJson(value.body);
+        SourcePlanModel _planModel = sourcePlanModelFromJson(value.body);
 
         if (_planModel.toMay.isEmpty) {
           hideLoading();
@@ -96,10 +94,12 @@ class SourcePlanController extends BaseController with StateMixin {
               .get(Uri.parse(
                   'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_DAHByDay2?NGAY=${formatDateAPIToday.toString()}&ID_NM=${indexFactory.toInt()}'))
               .then((value) {
-            final _planModel1 = sourcePlanModelFromJson(value.body);
+            SourcePlanModel _planModel1 = sourcePlanModelFromJson(value.body);
             _planModel1.toMay.forEach((e) {
               _dataToMayDAH.add(e);
             });
+            CustomSnackbar.showSuccessToast('Thành công',
+                'Dữ liệu kế hoạch nhà máy ${dropdownvalueFactory.toString()}');
             update();
           });
         }

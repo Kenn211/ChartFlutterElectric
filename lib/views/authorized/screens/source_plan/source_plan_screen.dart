@@ -84,8 +84,12 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
                       ])),
               const SizedBox(height: 20),
               const _ChartSourcePlanIAH(),
+              Row(children: [
+                Expanded(child: const _TableSourcePlanIAH()),
+              ]),
               const SizedBox(height: 20),
-              const _ChartSourcePlanDAH()
+              const _ChartSourcePlanDAH(),
+              const _TableSourcePlanDAH()
             ],
           ),
         ));
@@ -269,5 +273,60 @@ class __CheckBoxWidgetState extends State<_CheckBoxWidget> {
         });
       },
     );
+  }
+}
+
+class _TableSourcePlanIAH extends StatelessWidget {
+  const _TableSourcePlanIAH({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SourcePlanController>(builder: (controller) {
+      return Container(
+        child: Table(
+            border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
+            children: [
+              controller.buildRow([
+                'CK',
+                '00:30',
+              ], isHeader: true),
+              // for (var e = 0; e < controller.dataChartCentralDAH.length; e++)
+              //   controller.buildRow([
+              //     '${controller.dataTableIAH[e].ck}',
+              //     '${controller.dataChartNorthDAH[e].y1}',
+              //     '${controller.dataChartCentralDAH[e].y2}',
+              //     '${controller.dataChartSouthDAH[e].y3}',
+              //     '${controller.dataChartNationDAH[e].y4}'
+              //   ])
+            ]),
+      );
+    });
+  }
+}
+
+class _TableSourcePlanDAH extends StatelessWidget {
+  const _TableSourcePlanDAH({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SourcePlanController>(builder: (controller) {
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Table(
+            border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
+            children: [
+              controller
+                  .buildRow(['CK', 'MB', 'MT', 'MN', 'GBM'], isHeader: true),
+              // for (var e = 0; e < controller.dataChartCentralDAH.length; e++)
+              //   controller.buildRow([
+              //     '${controller.dataTableIAH[e].ck}',
+              //     '${controller.dataChartNorthDAH[e].y1}',
+              //     '${controller.dataChartCentralDAH[e].y2}',
+              //     '${controller.dataChartSouthDAH[e].y3}',
+              //     '${controller.dataChartNationDAH[e].y4}'
+              //   ])
+            ]),
+      );
+    });
   }
 }

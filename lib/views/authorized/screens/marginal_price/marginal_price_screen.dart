@@ -137,38 +137,8 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
   }
 }
 
-class _ChartColumnIAH extends StatefulWidget {
+class _ChartColumnIAH extends StatelessWidget {
   const _ChartColumnIAH({Key? key}) : super(key: key);
-
-  @override
-  _ChartColumnIAHState createState() => _ChartColumnIAHState();
-}
-
-class _ChartColumnIAHState extends State<_ChartColumnIAH> {
-  late TrackballBehavior _trackball;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _trackball = TrackballBehavior(
-        enable: true,
-        lineWidth: 3,
-        tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-        tooltipAlignment: ChartAlignment.center,
-        lineColor: AppColors.secondColor,
-        hideDelay: 1,
-        activationMode: ActivationMode.singleTap,
-        markerSettings: const TrackballMarkerSettings(
-            height: 10,
-            width: 10,
-            markerVisibility: TrackballVisibilityMode.visible),
-        tooltipSettings: InteractiveTooltip(
-            canShowMarker: false,
-            format: 'series.name: point.y đồng/kWh',
-            color: const Color.fromARGB(255, 181, 180, 180),
-            textStyle: TextStyle(color: AppColors.secondColor)));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +148,27 @@ class _ChartColumnIAHState extends State<_ChartColumnIAH> {
             primaryXAxis: CategoryAxis(
                 labelStyle:
                     const TextStyle(fontSize: 12, color: Colors.transparent)),
-            trackballBehavior: _trackball,
+            legend: Legend(
+                isVisible: true,
+                alignment: ChartAlignment.center,
+                position: LegendPosition.bottom),
+            trackballBehavior: TrackballBehavior(
+                enable: true,
+                lineWidth: 3,
+                tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
+                tooltipAlignment: ChartAlignment.center,
+                lineColor: AppColors.secondColor,
+                hideDelay: 1,
+                activationMode: ActivationMode.singleTap,
+                markerSettings: const TrackballMarkerSettings(
+                    height: 10,
+                    width: 10,
+                    markerVisibility: TrackballVisibilityMode.visible),
+                tooltipSettings: InteractiveTooltip(
+                    canShowMarker: false,
+                    format: 'series.name: point.y đồng/kWh',
+                    color: const Color.fromARGB(255, 181, 180, 180),
+                    textStyle: TextStyle(color: AppColors.secondColor))),
             series: <ChartSeries<ChartData, String>>[
               SplineSeries<ChartData, String>(
                   markerSettings: const MarkerSettings(isVisible: false),
@@ -214,42 +204,34 @@ class _ChartColumnIAHState extends State<_ChartColumnIAH> {
   }
 }
 
-class _ChartColumnDAH extends StatefulWidget {
+class _ChartColumnDAH extends StatelessWidget {
   const _ChartColumnDAH({Key? key}) : super(key: key);
-
-  @override
-  _ChartColumnDAHState createState() => _ChartColumnDAHState();
-}
-
-class _ChartColumnDAHState extends State<_ChartColumnDAH> {
-  late TrackballBehavior _trackball;
-
-  @override
-  void initState() {
-    _trackball = TrackballBehavior(
-        enable: true,
-        lineWidth: 3,
-        tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-        tooltipAlignment: ChartAlignment.center,
-        lineColor: AppColors.secondColor,
-        activationMode: ActivationMode.singleTap,
-        markerSettings: const TrackballMarkerSettings(
-            height: 10,
-            width: 10,
-            markerVisibility: TrackballVisibilityMode.visible),
-        tooltipSettings: InteractiveTooltip(
-            canShowMarker: false,
-            format: 'series.name: point.y đồng/kWh',
-            color: const Color.fromARGB(255, 181, 180, 180),
-            textStyle: TextStyle(color: AppColors.secondColor)));
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MarginalPriceController>(
       builder: (controller) {
         return SfCartesianChart(
+          legend: Legend(
+              isVisible: true,
+              alignment: ChartAlignment.center,
+              position: LegendPosition.bottom),
+          trackballBehavior: TrackballBehavior(
+              enable: true,
+              lineWidth: 3,
+              tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
+              tooltipAlignment: ChartAlignment.center,
+              lineColor: AppColors.secondColor,
+              activationMode: ActivationMode.singleTap,
+              markerSettings: const TrackballMarkerSettings(
+                  height: 10,
+                  width: 10,
+                  markerVisibility: TrackballVisibilityMode.visible),
+              tooltipSettings: InteractiveTooltip(
+                  canShowMarker: false,
+                  format: 'series.name: point.y đồng/kWh',
+                  color: const Color.fromARGB(255, 181, 180, 180),
+                  textStyle: TextStyle(color: AppColors.secondColor))),
           primaryXAxis: CategoryAxis(
               labelStyle:
                   const TextStyle(fontSize: 12, color: Colors.transparent)),
@@ -280,10 +262,9 @@ class _ChartColumnDAHState extends State<_ChartColumnDAH> {
                 dataSource: controller.dataChartNationDAH,
                 xValueMapper: (ChartData data, _) => data.x,
                 yValueMapper: (ChartData data, _) => data.y4,
-                name: 'Quốc gia',
+                name: 'Giá bên mua',
                 color: Colors.amberAccent)
           ],
-          trackballBehavior: _trackball,
         );
       },
     );

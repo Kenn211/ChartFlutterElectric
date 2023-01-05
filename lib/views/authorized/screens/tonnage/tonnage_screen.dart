@@ -80,33 +80,8 @@ class TonnagePage extends GetView<TonnageController> {
   }
 }
 
-class ChartTonnage extends StatefulWidget {
+class ChartTonnage extends StatelessWidget {
   const ChartTonnage({super.key});
-
-  @override
-  State<ChartTonnage> createState() => _ChartTonnageState();
-}
-
-class _ChartTonnageState extends State<ChartTonnage> {
-  late TrackballBehavior _trackball;
-
-  @override
-  void initState() {
-    _trackball = TrackballBehavior(
-        enable: true,
-        lineWidth: 3,
-        tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-        lineColor: AppColors.secondColor,
-        activationMode: ActivationMode.singleTap,
-        markerSettings: const TrackballMarkerSettings(
-            markerVisibility: TrackballVisibilityMode.visible),
-        tooltipSettings: InteractiveTooltip(
-            canShowMarker: false,
-            format: 'series.name: point.y MW',
-            color: const Color.fromARGB(255, 181, 180, 180),
-            textStyle: TextStyle(color: AppColors.secondColor)));
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +90,23 @@ class _ChartTonnageState extends State<ChartTonnage> {
         primaryXAxis: CategoryAxis(
             labelStyle:
                 const TextStyle(fontSize: 12, color: Colors.transparent)),
-        trackballBehavior: _trackball,
+        trackballBehavior: TrackballBehavior(
+            enable: true,
+            lineWidth: 3,
+            tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
+            lineColor: AppColors.secondColor,
+            activationMode: ActivationMode.singleTap,
+            markerSettings: const TrackballMarkerSettings(
+                markerVisibility: TrackballVisibilityMode.visible),
+            tooltipSettings: InteractiveTooltip(
+                canShowMarker: false,
+                format: 'series.name: point.y MW',
+                color: const Color.fromARGB(255, 181, 180, 180),
+                textStyle: TextStyle(color: AppColors.secondColor))),
+        legend: Legend(
+            isVisible: true,
+            alignment: ChartAlignment.center,
+            position: LegendPosition.bottom),
         series: <ChartSeries<ChartDataTonnage, int>>[
           StackedAreaSeries<ChartDataTonnage, int>(
               dataLabelSettings: const DataLabelSettings(
@@ -194,12 +185,14 @@ class _TableTonnage extends StatelessWidget {
           children: [
             controller.buildRow(['CK', 'Chu kì tới (IAH)', 'Ngày tới (DAH)'],
                 isHeader: true),
-            for (var e = 0; e < controller.dataChartDay.length; e++)
+            for (var e = 0; e < controller.dataChartCk.length; e++)
               controller.buildRow([
                 '${controller.dataChartCk[e].x}',
                 '${controller.dataChartCk[e].y2}',
-                '${controller.dataChartDay[e].y1}'
-              ]),
+                controller.dataChartDay.length <= e
+                    ? ''
+                    : controller.dataChartDay[e].y1.toString()
+              ])
           ]);
     });
   }

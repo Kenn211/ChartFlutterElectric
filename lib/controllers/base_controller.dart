@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:test_chart/shared/helpers/function_helper.dart';
 import 'package:test_chart/shared/widgets/custom_snackbar.dart';
 import 'package:intl/intl.dart';
