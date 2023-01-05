@@ -7,6 +7,7 @@ import 'package:test_chart/models/drawer/marginal_price/chart_data.dart';
 import 'package:test_chart/shared/widgets/item_region.dart';
 import 'package:test_chart/shared/widgets/select_date.dart';
 import 'package:test_chart/shared/widgets/txt_button.dart';
+import 'package:intl/intl.dart';
 
 class MarginalPriceScreen extends GetView<MarginalPriceController> {
   const MarginalPriceScreen({super.key});
@@ -61,7 +62,16 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
                     width: 250,
                     child: Stack(
                       children: [
-                        const SelectDate(isStack: true),
+                        Obx(() {
+                          return SelectDate(
+                            text: DateFormat("dd-MM-yyyy")
+                                .format(controller.selectedDateTime.value)
+                                .toString(),
+                            onTap: () {
+                              controller.chooseDate();
+                            },
+                          );
+                        }),
                         Positioned(
                           right: 4,
                           bottom: 4,

@@ -4,50 +4,81 @@
 
 import 'dart:convert';
 
-List<SourcePlanModel> sourcePlanModelFromJson(String str) =>
-    List<SourcePlanModel>.from(
-        json.decode(str).map((x) => SourcePlanModel.fromJson(x)));
+SourcePlanModel sourcePlanModelFromJson(String str) =>
+    SourcePlanModel.fromJson(json.decode(str));
 
-String sourcePlanModelToJson(List<SourcePlanModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String sourcePlanModelToJson(SourcePlanModel data) =>
+    json.encode(data.toJson());
 
 class SourcePlanModel {
   SourcePlanModel({
+    required this.toMay,
     required this.idNm,
     required this.tenNm,
-    required this.idTm,
-    required this.tenTm,
     required this.ngay,
-    required this.chuky,
-    required this.giatri,
   });
 
+  List<ToMay> toMay;
   int idNm;
   String tenNm;
-  int idTm;
-  String tenTm;
   DateTime ngay;
-  int chuky;
-  double giatri;
 
   factory SourcePlanModel.fromJson(Map<String, dynamic> json) =>
       SourcePlanModel(
+        toMay: List<ToMay>.from(json["TO_MAY"].map((x) => ToMay.fromJson(x))),
         idNm: json["ID_NM"],
         tenNm: json["TEN_NM"],
-        idTm: json["ID_TM"],
-        tenTm: json["TEN_TM"],
         ngay: DateTime.parse(json["NGAY"]),
-        chuky: json["CHUKY"],
-        giatri: json["GIATRI"],
       );
 
   Map<String, dynamic> toJson() => {
+        "TO_MAY": List<dynamic>.from(toMay.map((x) => x.toJson())),
         "ID_NM": idNm,
         "TEN_NM": tenNm,
+        "NGAY": ngay.toIso8601String(),
+      };
+}
+
+class ToMay {
+  ToMay({
+    required this.chuky,
+    required this.idTm,
+    required this.tenTm,
+  });
+
+  List<Chuky> chuky;
+  int idTm;
+  String tenTm;
+
+  factory ToMay.fromJson(Map<String, dynamic> json) => ToMay(
+        chuky: List<Chuky>.from(json["CHUKY"].map((x) => Chuky.fromJson(x))),
+        idTm: json["ID_TM"],
+        tenTm: json["TEN_TM"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "CHUKY": List<dynamic>.from(chuky.map((x) => x.toJson())),
         "ID_TM": idTm,
         "TEN_TM": tenTm,
-        "NGAY": ngay.toIso8601String(),
-        "CHUKY": chuky,
-        "GIATRI": giatri,
+      };
+}
+
+class Chuky {
+  Chuky({
+    required this.chuKyDesc,
+    required this.giaTri,
+  });
+
+  int chuKyDesc;
+  double giaTri;
+
+  factory Chuky.fromJson(Map<String, dynamic> json) => Chuky(
+        chuKyDesc: json["CHU_KY"],
+        giaTri: json["GIA_TRI"].toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "CHU_KY": chuKyDesc,
+        "GIA_TRI": giaTri,
       };
 }

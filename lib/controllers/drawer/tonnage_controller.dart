@@ -51,7 +51,7 @@ class TonnageController extends BaseController {
 
       await http
           .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_IAHByDay?NGAY=${dateSelected.toString()}&ID_NODE=${indexDropdownValue.toInt()}'))
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_IAHByDay?NGAY=${formatDateAPIToday.toString()}&ID_NODE=${indexDropdownValue.toInt()}'))
           .then((value) {
         List<TonnageModel> _tonnageModel = tonnageModelFromJson(value.body);
         if (_tonnageModel.isEmpty) {
@@ -64,7 +64,7 @@ class TonnageController extends BaseController {
           });
           http
               .get(Uri.parse(
-                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_DAHByDay?NGAY=${dateSelectedNextDay.toString()}&ID_NODE=${indexDropdownValue.toInt()}'))
+                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_DAHByDay?NGAY=${formatDateAPITomorrow.toString()}&ID_NODE=${indexDropdownValue.toInt()}'))
               .then((value) {
             List<TonnageModel> _tonnageModel1 =
                 tonnageModelFromJson(value.body);

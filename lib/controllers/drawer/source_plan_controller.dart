@@ -1,30 +1,24 @@
 import 'package:get/get.dart';
 import 'package:test_chart/controllers/base_controller.dart';
 import 'package:http/http.dart' as http;
-import 'package:test_chart/models/drawer/source_plan/chart_data_source_plan.dart';
 import 'package:test_chart/models/drawer/source_plan/list_factory_model.dart';
 import 'package:test_chart/models/drawer/source_plan/source_plan_model.dart';
 import 'package:test_chart/shared/widgets/custom_snackbar.dart';
 
 class SourcePlanController extends BaseController with StateMixin {
-  //IAH
-  final _dataChartIAHTM1 = <ChartDataSourcePlan>[].obs;
-  RxList<ChartDataSourcePlan> get dataChartIAHTM1 => _dataChartIAHTM1;
-
-  final _dataChartIAHTM2 = <ChartDataSourcePlan>[].obs;
-  RxList<ChartDataSourcePlan> get dataChartIAHTM2 => _dataChartIAHTM2;
-
-  //DAH
-  final _dataChartDAHTM1 = <ChartDataSourcePlan>[].obs;
-  RxList<ChartDataSourcePlan> get dataChartDAHTM1 => _dataChartDAHTM1;
-
-  final _dataChartDAHTM2 = <ChartDataSourcePlan>[].obs;
-  RxList<ChartDataSourcePlan> get dataChartDAHTM2 => _dataChartDAHTM2;
-
+  //Categories Factory
   List<ListFactoryModel> dataFactory = [];
   int indexFactory = 0;
   List<String> listFactory = ['Nhà máy'];
   String dropdownvalueFactory = 'Nhà máy';
+
+  //Data respon
+  var _dataToMayIAH = <ToMay>[].obs;
+  RxList<ToMay> get dataToMayIAH => _dataToMayIAH;
+
+  //Data respon
+  var _dataToMayDAH = <ToMay>[].obs;
+  RxList<ToMay> get dataToMayDAH => _dataToMayDAH;
 
   @override
   void onReady() {
@@ -62,13 +56,8 @@ class SourcePlanController extends BaseController with StateMixin {
   void getDisplayData() {
     indexFactory = 0;
     if (dropdownvalueFactory == 'Nhà máy') {
-      //IAH
-      _dataChartIAHTM1.value = [];
-      _dataChartIAHTM2.value = [];
-
-      //DAH
-      _dataChartDAHTM1.value = [];
-      _dataChartDAHTM2.value = [];
+      _dataToMayIAH.value = [];
+      _dataToMayDAH.value = [];
       update();
       CustomSnackbar.snackBar('error', 'Vui lòng chọn nhà máy');
     } else if (dropdownvalueFactory != 'Nhà máy') {
@@ -85,47 +74,31 @@ class SourcePlanController extends BaseController with StateMixin {
 
   Future<void> fetchPlan() async {
     try {
-      //IAH
-      _dataChartIAHTM1.value = [];
-      _dataChartIAHTM2.value = [];
+      _dataToMayIAH.value = [];
+      _dataToMayDAH.value = [];
 
-      //DAH
-      _dataChartDAHTM1.value = [];
-      _dataChartDAHTM2.value = [];
       await http
           .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_IAHByDay?NGAY=${dateSelected.toString()}&ID_NM=${indexFactory.toInt()}'))
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_IAHByDay2?NGAY=${formatDateAPITomorrow.toString()}&ID_NM=${indexFactory.toInt()}'))
           .then((value) {
-        List<SourcePlanModel> _planModel = sourcePlanModelFromJson(value.body);
-        if (_planModel.isEmpty) {
+        final _planModel = sourcePlanModelFromJson(value.body);
+
+        if (_planModel.toMay.isEmpty) {
           hideLoading();
           CustomSnackbar.snackBar('error', 'Không có dữ liệu ngày này');
         } else {
-          _planModel.forEach((e) {
-            if (e.tenTm == 'H1') {
-              _dataChartIAHTM1.add(
-                  ChartDataSourcePlan(x: e.chuky.toString(), y1: e.giatri));
-            } else if (e.tenTm == 'H2') {
-              _dataChartIAHTM2.add(
-                  ChartDataSourcePlan(x: e.chuky.toString(), y2: e.giatri));
-            }
+          _planModel.toMay.forEach((e) {
+            _dataToMayIAH.add(e);
           });
 
+          //Get Data DAH
           http
               .get(Uri.parse(
-                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_IAHByDay?NGAY=${dateSelectedNextDay.toString()}&ID_NM=${indexFactory.toInt()}'))
+                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_DAHByDay2?NGAY=${formatDateAPIToday.toString()}&ID_NM=${indexFactory.toInt()}'))
               .then((value) {
-            List<SourcePlanModel> _planModel1 =
-                sourcePlanModelFromJson(value.body);
-
-            _planModel1.forEach((e) {
-              if (e.tenTm == 'H1') {
-                _dataChartDAHTM1.add(
-                    ChartDataSourcePlan(x: e.chuky.toString(), y3: e.giatri));
-              } else if (e.tenTm == 'H2') {
-                _dataChartDAHTM2.add(
-                    ChartDataSourcePlan(x: e.chuky.toString(), y4: e.giatri));
-              }
+            final _planModel1 = sourcePlanModelFromJson(value.body);
+            _planModel1.toMay.forEach((e) {
+              _dataToMayDAH.add(e);
             });
             update();
           });
@@ -135,7 +108,6 @@ class SourcePlanController extends BaseController with StateMixin {
       print(e);
     }
     hideLoading();
-    update();
   }
 
   @override

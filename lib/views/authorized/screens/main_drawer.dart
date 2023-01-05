@@ -5,83 +5,84 @@ import 'package:test_chart/controllers/home/home_controller.dart';
 import 'package:test_chart/core.dart';
 
 class MainDrawer extends StatelessWidget {
-  final controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage(Assets.imgDrawer),
-              )),
-              child: Container(
-                alignment: Alignment.bottomLeft,
-                child: Text(
-                  'title_app'.tr,
-                  style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white),
-                ),
-              )),
-          const SizedBox(height: 20),
-          _ItemDrawer(
-            text: 'load'.tr,
-            iconItem: CupertinoIcons.hammer,
-            onTap: () {
-              Get.toNamed(Routes.tonnageScreen);
-              controller.closeDrawer();
-            },
-          ),
-          _ItemDrawer(
-              text: 'Giá biên',
+    return GetBuilder<HomeController>(builder: (controller) {
+      return Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: AssetImage(Assets.imgDrawer),
+                )),
+                child: Container(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    'title_app'.tr,
+                    style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
+                  ),
+                )),
+            const SizedBox(height: 20),
+            _ItemDrawer(
+              text: 'load'.tr,
+              iconItem: CupertinoIcons.hammer,
+              onTap: () {
+                Get.toNamed(Routes.tonnageScreen);
+                controller.closeDrawer();
+              },
+            ),
+            _ItemDrawer(
+                text: 'Giá biên',
+                iconItem: CupertinoIcons.arrowtriangle_up,
+                onTap: () {
+                  Get.toNamed(Routes.marginalPriceScreen);
+                  controller.closeDrawer();
+                }),
+            _ItemDrawer(
+              text: 'output'.tr,
               iconItem: CupertinoIcons.arrowtriangle_up,
               onTap: () {
-                Get.toNamed(Routes.marginalPriceScreen);
+                Get.toNamed(Routes.outputScreen);
                 controller.closeDrawer();
-              }),
-          _ItemDrawer(
-            text: 'output'.tr,
-            iconItem: CupertinoIcons.arrowtriangle_up,
-            onTap: () {
-              Get.toNamed(Routes.outputScreen);
-              controller.closeDrawer();
-            },
-          ),
-          _ItemDrawer(
-              text: 'hydrological'.tr,
-              iconItem: CupertinoIcons.cloud_drizzle_fill,
+              },
+            ),
+            _ItemDrawer(
+                text: 'hydrological'.tr,
+                iconItem: CupertinoIcons.cloud_drizzle_fill,
+                onTap: () {
+                  controller.closeDrawer();
+                }),
+            _ItemDrawer(
+                text: 'revenue'.tr,
+                iconItem: CupertinoIcons.money_dollar,
+                onTap: () {
+                  controller.closeDrawer();
+                }),
+            _ItemDrawer(
+                text: 'sourcePlan'.tr,
+                iconItem: CupertinoIcons.chart_bar,
+                onTap: () {
+                  Get.toNamed(Routes.sourcePlanScreen);
+                  controller.closeDrawer();
+                }),
+            _ItemDrawer(
+              text: 'logout'.tr,
+              logout: true,
+              iconItem: Icons.logout,
               onTap: () {
-                controller.closeDrawer();
-              }),
-          _ItemDrawer(
-              text: 'revenue'.tr,
-              iconItem: CupertinoIcons.money_dollar,
-              onTap: () {
-                controller.closeDrawer();
-              }),
-          _ItemDrawer(
-              text: 'sourcePlan'.tr,
-              iconItem: CupertinoIcons.chart_bar,
-              onTap: () {
-                Get.toNamed(Routes.sourcePlanScreen);
-                controller.closeDrawer();
-              }),
-          _ItemDrawer(
-            text: 'logout'.tr,
-            logout: true,
-            iconItem: Icons.logout,
-            onTap: () {
-              controller.handleLogout();
-            },
-          ),
-        ],
-      ),
-    );
+                controller.handleLogout();
+              },
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 

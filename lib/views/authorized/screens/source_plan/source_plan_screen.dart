@@ -3,12 +3,13 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:test_chart/controllers/drawer/source_plan_controller.dart';
 import 'package:test_chart/core.dart';
-import 'package:test_chart/models/drawer/source_plan/chart_data_source_plan.dart';
 import 'package:test_chart/shared/widgets/select_date.dart';
 import 'package:test_chart/shared/widgets/txt_button.dart';
+import 'package:intl/intl.dart';
 
 class SourcePlanScreen extends GetView<SourcePlanController> {
   const SourcePlanScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +18,7 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
           elevation: 0,
           flexibleSpace: AppBarCustom(
             canBack: true,
-            title: 'Kế hoạch nguồn'.tr,
+            title: 'Kế hoạch vận hành nguồn'.tr,
           ),
         ),
         body: SingleChildScrollView(
@@ -49,7 +50,16 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
                                   fontWeight: FontWeight.w500, fontSize: 18)),
                         ),
                         const SizedBox(height: 10),
-                        const SelectDate(),
+                        Obx(() {
+                          return SelectDate(
+                            text: DateFormat("dd-MM-yyyy")
+                                .format(controller.selectedDateTime.value)
+                                .toString(),
+                            onTap: () {
+                              controller.chooseDate();
+                            },
+                          );
+                        }),
                         const SizedBox(height: 10),
                         Row(
                           children: [
@@ -72,7 +82,9 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
                               }),
                         ),
                       ])),
+              const SizedBox(height: 20),
               const _ChartSourcePlanIAH(),
+              const SizedBox(height: 20),
               const _ChartSourcePlanDAH()
             ],
           ),
@@ -87,9 +99,16 @@ class _ChartSourcePlanIAH extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SourcePlanController>(builder: (controller) {
       return SfCartesianChart(
-        primaryXAxis: CategoryAxis(
-            labelStyle:
-                const TextStyle(fontSize: 12, color: Colors.transparent)),
+        title: ChartTitle(
+            text: 'Biểu đồ huy động công suất chu kì tới nhà máy điện',
+            textStyle:
+                const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),
+        zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
+        legend: Legend(
+            isVisible: true,
+            alignment: ChartAlignment.center,
+            position: LegendPosition.bottom),
         trackballBehavior: TrackballBehavior(
             enable: true,
             lineWidth: 3,
@@ -103,22 +122,16 @@ class _ChartSourcePlanIAH extends StatelessWidget {
                 format: 'series.name: point.y MW',
                 color: const Color.fromARGB(255, 181, 180, 180),
                 textStyle: TextStyle(color: AppColors.secondColor))),
-        series: <ChartSeries<ChartDataSourcePlan, String>>[
-          SplineSeries<ChartDataSourcePlan, String>(
+        series: [
+          for (var i = 0; i < controller.dataToMayIAH.length; i++)
+            SplineSeries(
               dataLabelSettings: const DataLabelSettings(
                   isVisible: false, useSeriesColor: true),
-              dataSource: controller.dataChartIAHTM1,
-              name: 'Tổ máy 1',
-              xValueMapper: (ChartDataSourcePlan data, _) => data.x,
-              yValueMapper: (ChartDataSourcePlan data, _) => data.y1),
-          SplineSeries<ChartDataSourcePlan, String>(
-            dataLabelSettings:
-                const DataLabelSettings(isVisible: false, useSeriesColor: true),
-            dataSource: controller.dataChartIAHTM2,
-            name: 'Tổ máy 2',
-            xValueMapper: (ChartDataSourcePlan data, _) => data.x,
-            yValueMapper: (ChartDataSourcePlan data, _) => data.y2,
-          ),
+              dataSource: controller.dataToMayIAH[i].chuky,
+              name: controller.dataToMayIAH[i].tenTm,
+              xValueMapper: (data, _) => 'CK ${data.chuKyDesc.toString()}',
+              yValueMapper: (data, _) => data.giaTri,
+            )
         ],
       );
     });
@@ -132,9 +145,16 @@ class _ChartSourcePlanDAH extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SourcePlanController>(builder: (controller) {
       return SfCartesianChart(
-        primaryXAxis: CategoryAxis(
-            labelStyle:
-                const TextStyle(fontSize: 12, color: Colors.transparent)),
+        title: ChartTitle(
+            text: 'Biểu đồ huy động công suất ngày tới nhà máy điện',
+            textStyle:
+                const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        legend: Legend(
+            isVisible: true,
+            alignment: ChartAlignment.center,
+            position: LegendPosition.bottom),
+        zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
+        primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),
         trackballBehavior: TrackballBehavior(
             enable: true,
             lineWidth: 3,
@@ -148,22 +168,16 @@ class _ChartSourcePlanDAH extends StatelessWidget {
                 format: 'series.name: point.y MW',
                 color: const Color.fromARGB(255, 181, 180, 180),
                 textStyle: TextStyle(color: AppColors.secondColor))),
-        series: <ChartSeries<ChartDataSourcePlan, String>>[
-          SplineSeries<ChartDataSourcePlan, String>(
+        series: [
+          for (var i = 0; i < controller.dataToMayDAH.length; i++)
+            SplineSeries(
               dataLabelSettings: const DataLabelSettings(
                   isVisible: false, useSeriesColor: true),
-              dataSource: controller.dataChartDAHTM1,
-              name: 'Tổ máy 1',
-              xValueMapper: (ChartDataSourcePlan data, _) => data.x,
-              yValueMapper: (ChartDataSourcePlan data, _) => data.y3),
-          SplineSeries<ChartDataSourcePlan, String>(
-            dataLabelSettings:
-                const DataLabelSettings(isVisible: false, useSeriesColor: true),
-            dataSource: controller.dataChartDAHTM2,
-            name: 'Tổ máy 2',
-            xValueMapper: (ChartDataSourcePlan data, _) => data.x,
-            yValueMapper: (ChartDataSourcePlan data, _) => data.y4,
-          ),
+              dataSource: controller.dataToMayDAH[i].chuky,
+              name: controller.dataToMayDAH[i].tenTm,
+              xValueMapper: (data, _) => 'CK ${data.chuKyDesc.toString()}',
+              yValueMapper: (data, _) => data.giaTri,
+            )
         ],
       );
     });

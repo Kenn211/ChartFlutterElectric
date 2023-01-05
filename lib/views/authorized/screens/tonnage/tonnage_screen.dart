@@ -5,10 +5,12 @@ import 'package:test_chart/core.dart';
 import 'package:test_chart/models/drawer/tonnage/chart_dart_tonnage.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/shared/widgets/select_date.dart';
+import 'package:intl/intl.dart';
 import 'package:test_chart/shared/widgets/txt_button.dart';
 
 class TonnagePage extends GetView<TonnageController> {
   const TonnagePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,49 +25,56 @@ class TonnagePage extends GetView<TonnageController> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              const SizedBox(height: 20),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Phụ tải chi tiết',
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const ChartTonnage(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const _DropDownSelect(),
-                  Container(
-                    width: 220,
-                    child: const SelectDate(),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Container(
-                width: 150,
-                height: 50,
-                alignment: Alignment.centerLeft,
-                child: Button(
-                    text: 'Lấy dữ liệu',
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                const SizedBox(height: 20),
+                const _DropDownSelect(),
+                const SizedBox(height: 20),
+                Obx(() {
+                  return SelectDate(
+                    text: DateFormat("dd-MM-yyyy")
+                        .format(controller.selectedDateTime.value)
+                        .toString(),
                     onTap: () {
-                      controller.fetchTonnage();
-                    }),
-              ),
-              const SizedBox(height: 20),
-              const _TableTonnage()
-            ],
-          ),
-        ),
+                      controller.chooseDate();
+                    },
+                  );
+                }),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      width: 150,
+                      height: 50,
+                      alignment: Alignment.centerRight,
+                      child: Button(
+                          text: 'Lấy dữ liệu',
+                          onTap: () {
+                            controller.fetchTonnage();
+                          }),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    'Phụ tải chi tiết',
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const ChartTonnage(),
+                const SizedBox(height: 20),
+                const _TableTonnage()
+              ],
+            )),
       ),
     );
   }
@@ -147,6 +156,7 @@ class __DropDownSelectState extends State<_DropDownSelect> {
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           border: Border.all(width: 1, color: AppColors.secondColor)),
       child: DropdownButton(
+          isExpanded: true,
           underline: const SizedBox(width: 0),
           value: controller.dropdownvalue,
           focusColor: Colors.transparent,

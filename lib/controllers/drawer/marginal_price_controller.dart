@@ -63,13 +63,13 @@ class MarginalPriceController extends BaseController {
       _dataChartNationDAH.value = [];
       await http
           .get(Uri.parse(
-              'http://103.78.88.74:207/api/API_GIABIEN_IAH/GetAllGIABIEN_IAHByDay?NGAY=${dateSelected.toString()}'))
+              'http://103.78.88.74:207/api/API_GIABIEN_IAH/GetAllGIABIEN_IAHByDay?NGAY=${formatDateAPIToday.toString()}'))
           .then((value) {
         List<PriceModel> _priceModel = priceModelFromJson(value.body);
         if (_priceModel.isEmpty) {
           hideLoading();
           CustomSnackbar.snackBar('error',
-              'Không có dữ liệu giá biên ngày ${dateSelectSnackbar.toString()}');
+              'Không có dữ liệu giá biên ngày ${formatDateAPIToday.toString()}');
         } else {
           _priceModel.forEach((e) {
             if (e.idNode == 1) {
@@ -90,7 +90,7 @@ class MarginalPriceController extends BaseController {
 
           http
               .get(Uri.parse(
-                  'http://103.78.88.74:207/api/API_GIABIEN_IAH/GetAllGIABIEN_IAHByDay?NGAY=${dateSelectedNextDay.toString()}'))
+                  'http://103.78.88.74:207/api/API_GIABIEN_IAH/GetAllGIABIEN_IAHByDay?NGAY=${formatDateAPITomorrow.toString()}'))
               .then((value) {
             List<PriceModel> _priceModel1 = priceModelFromJson(value.body);
             if (_priceModel1.isEmpty) {
@@ -114,7 +114,7 @@ class MarginalPriceController extends BaseController {
             }
             hideLoading();
             CustomSnackbar.showSuccessToast('Thành công',
-                'Dữ liệu giá biên ngày ${dateSelectSnackbar.toString()}');
+                'Dữ liệu giá biên ngày ${formatDateAPIToday.toString()}');
             update();
           });
         }

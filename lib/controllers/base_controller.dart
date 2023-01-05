@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:test_chart/shared/helpers/function_helper.dart';
 import 'package:test_chart/shared/widgets/custom_snackbar.dart';
+import 'package:intl/intl.dart';
 
 import '/services/storage/storage_service.dart';
 import '/shared/app_shared.dart';
 
 abstract class BaseController extends GetxController {
-  var dateSelectSnackbar = '';
-
+  //Table
   TableRow buildRow(List<String> cells, {bool isHeader = false}) {
     final style = TextStyle(
       fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
@@ -25,6 +26,29 @@ abstract class BaseController extends GetxController {
                   child: Text(cell, style: style),
                 ))
             .toList());
+  }
+
+  //DateTime picker
+  var selectedDateTime = DateTime.now().obs;
+  var formatDateAPIToday = '';
+  var formatDateAPITomorrow = '';
+
+  chooseDate() async {
+    DateTime? pickedDate = await showDatePicker(
+        context: Get.context!,
+        initialDate: selectedDateTime.value,
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2024),
+        initialEntryMode: DatePickerEntryMode.inputOnly,
+        initialDatePickerMode: DatePickerMode.year,
+        helpText: 'Chọn ngày');
+    if (pickedDate != null && pickedDate != selectedDateTime.value) {
+      selectedDateTime.value = pickedDate;
+      formatDateAPIToday =
+          DateFormat("yyyy-MM-dd").format(selectedDateTime.value);
+      formatDateAPITomorrow = DateFormat("yyyy-MM-dd")
+          .format(selectedDateTime.value.add(const Duration(days: 1)));
+    }
   }
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -82,13 +106,6 @@ abstract class BaseController extends GetxController {
   final _addressController = TextEditingController(
       text: 'Quan Hoa - Nhan Chinh - Thanh Xuan - Ha Noi');
   TextEditingController get addressController => _addressController;
-
-  final today =
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
-          .toString();
-
-  late String dateSelected = today;
-  late String dateSelectedNextDay = today;
 
   final _userName = ''.obs;
   RxString get userName => _userName;
