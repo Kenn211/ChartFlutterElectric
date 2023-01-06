@@ -93,8 +93,10 @@ class __FormRegisterState extends State<_FormRegister> {
             TextField(
               controller: emailController,
               decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                hintText: 'user_login'.tr,
+                labelText: 'user_login'.tr,
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
               ),
             ),
             const SizedBox(height: 10),
@@ -103,8 +105,10 @@ class __FormRegisterState extends State<_FormRegister> {
                 TextField(
                   controller: passController,
                   decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: 'password'.tr,
+                    labelText: 'password'.tr,
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
                   obscureText: showPassword,
                 ),
@@ -134,8 +138,10 @@ class __FormRegisterState extends State<_FormRegister> {
                 TextField(
                   controller: passConfirmController,
                   decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: '${'confirm'.tr} ${'password'.tr.toLowerCase()}',
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    labelText: '${'confirm'.tr} ${'password'.tr.toLowerCase()}',
                   ),
                   obscureText: showConfirmPass,
                 ),

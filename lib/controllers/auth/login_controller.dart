@@ -6,6 +6,7 @@ import 'package:test_chart/models/auth/authen_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:test_chart/models/base_url.dart';
 import 'package:test_chart/routes/helpers/route_helper.dart';
+import 'package:test_chart/shared/widgets/custom_snackbar.dart';
 
 class LoginController extends BaseController {
   Future<dynamic> handleLogin(String account, String password) async {
@@ -17,12 +18,12 @@ class LoginController extends BaseController {
     if (response.statusCode == 200) {
       if ((account == dataLogin.userName) && (password == dataLogin.password)) {
         StorageService.saveToken(tokenString: dataLogin.token);
+        userName.value = dataLogin.userName.toString();
         hideLoading();
         RouterHelper.getOffUntil();
       } else {
         hideLoading();
-        print(password);
-        print(account);
+        CustomSnackbar.snackBar('error', 'Sai tài khoản hoặc mật khẩu');
       }
     } else {
       print('Error');
@@ -30,8 +31,16 @@ class LoginController extends BaseController {
   }
 
   void submitLogin() {
-    String account = userNameController.text;
-    String password = passwordController.text;
-    handleLogin(account, password);
+    if (userNameController.text == '' && passwordController.text == '') {
+      CustomSnackbar.snackBar('error', 'Vui lòng nhập tài khoản và mật khẩu');
+    } else if (userNameController.text == '' && passwordController.text != '') {
+      CustomSnackbar.snackBar('error', 'Vui lòng nhập tài khoản');
+    } else if (userNameController.text != '' && passwordController.text == '') {
+      CustomSnackbar.snackBar('error', 'Vui lòng nhập mật khẩu');
+    } else {
+      String account = userNameController.text;
+      String password = passwordController.text;
+      handleLogin(account, password);
+    }
   }
 }

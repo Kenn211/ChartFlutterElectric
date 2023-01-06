@@ -20,7 +20,8 @@ class AppPages {
 
   static final loginPage = GetPage(
       name: Routes.login,
-      transition: Transition.native,
+      transition: Transition.downToUp,
+      transitionDuration: const Duration(milliseconds: 400),
       page: () => const LoginScreen(),
       binding: LoginBinding());
 
@@ -45,6 +46,8 @@ class AppPages {
   static final List<GetPage> getDrawerPages = [
     GetPage(
         name: Routes.tonnageScreen,
+        transition: Transition.rightToLeft,
+        transitionDuration: const Duration(milliseconds: 500),
         page: () => const TonnagePage(),
         binding: TonnageBinding()),
     GetPage(

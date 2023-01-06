@@ -55,7 +55,7 @@ class LoginScreen extends GetView<LoginController> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _FormLogin()
+                const _FormLogin()
               ],
             )),
       ),
@@ -72,6 +72,7 @@ class _FormLogin extends StatefulWidget {
 
 class __FormLoginState extends State<_FormLogin> {
   final controller = Get.put(LoginController());
+  bool showPassword = true;
 
   @override
   void initState() {
@@ -80,8 +81,6 @@ class __FormLoginState extends State<_FormLogin> {
 
   @override
   Widget build(BuildContext context) {
-    bool showPassword = true;
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
@@ -92,8 +91,10 @@ class __FormLoginState extends State<_FormLogin> {
             child: TextField(
               controller: controller.userNameController,
               decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                hintText: 'user_login'.tr,
+                labelText: 'user_login'.tr,
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
               ),
             ),
           ),
@@ -102,15 +103,16 @@ class __FormLoginState extends State<_FormLogin> {
             child: Stack(
               children: [
                 Container(
-                  child: TextField(
-                    controller: controller.passwordController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      hintText: 'password'.tr,
+                    child: TextField(
+                  controller: controller.passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'password'.tr,
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
-                    obscureText: showPassword,
                   ),
-                ),
+                  obscureText: showPassword,
+                )),
                 Positioned(
                     top: 0,
                     bottom: 0,

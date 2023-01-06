@@ -64,7 +64,6 @@ class SourcePlanController extends BaseController {
         if (dropdownvalueFactory == e.tenNm) {
           indexFactory = e.idNm;
           fetchPlan();
-          print(indexFactory);
         }
       });
     }

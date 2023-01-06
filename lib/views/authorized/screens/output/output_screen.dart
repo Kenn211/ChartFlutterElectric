@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:test_chart/controllers/drawer/output_controller.dart';
+import 'package:test_chart/models/drawer/output/chart_out_put.dart';
 import 'package:test_chart/shared/constants/colors.dart';
 import 'package:test_chart/shared/widgets/app_bar_custom.dart';
-import 'package:test_chart/shared/widgets/table_custom.dart';
+import 'package:test_chart/shared/widgets/select_date.dart';
 import 'package:test_chart/shared/widgets/txt_button.dart';
+import 'package:intl/intl.dart';
 
 class OutputScreen extends GetView<OutputController> {
   const OutputScreen({super.key});
@@ -23,205 +25,222 @@ class OutputScreen extends GetView<OutputController> {
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              // const _ChartQuantityProduct(),
-              _ChartQuantityProduct(),
-              Container(
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Column(
+        child: Column(
+          children: [
+            Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Container(
-                        height: 8,
-                        width: 25,
-                        color: Colors.purple,
+                        width: double.infinity,
+                        alignment: Alignment.centerLeft,
+                        child: const Text('Nhà máy',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 18)),
                       ),
-                      const SizedBox(height: 5),
-                      const Text(
-                        'Qmq',
-                        style: TextStyle(fontSize: 14),
-                      )
-                    ],
-                  ),
-                  const SizedBox(width: 20),
-                  Column(
-                    children: [
+                      const SizedBox(height: 10),
+                      const _DropDownSelect(),
+                      const SizedBox(height: 20),
                       Container(
-                        height: 8,
-                        width: 25,
-                        color: Colors.amber,
+                        width: double.infinity,
+                        alignment: Alignment.centerLeft,
+                        child: const Text('Ngày',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 18)),
                       ),
-                      const SizedBox(height: 5),
-                      const Text(
-                        'Qlltt',
-                        style: TextStyle(fontSize: 14),
-                      )
-                    ],
-                  )
-                ]),
-              ),
-              const SizedBox(height: 30),
-              // _TableQuantityProduct()
-            ],
-          ),
+                      const SizedBox(height: 10),
+                      Obx(() {
+                        return SelectDate(
+                          text: DateFormat("dd-MM-yyyy")
+                              .format(controller.selectedDateTime.value)
+                              .toString(),
+                          onTap: () {
+                            controller.chooseDate();
+                          },
+                        );
+                      }),
+                      const SizedBox(height: 10),
+                      Container(
+                        width: 160,
+                        height: 50,
+                        child: Button(
+                            text: 'Lấy dữ liệu',
+                            onTap: () {
+                              controller.getDisplayData();
+                            }),
+                      ),
+                    ])),
+
+            const _ChartOutPut(),
+            const _ChartOutPutQMQ()
+            // _TableQuantityProduct()
+          ],
         ),
       ),
     );
   }
 }
 
-class _ChartQuantityProduct extends StatefulWidget {
-  // ignore: prefer_const_constructors_in_immutables
-  _ChartQuantityProduct({Key? key}) : super(key: key);
+class _DropDownSelect extends StatefulWidget {
+  const _DropDownSelect({super.key});
 
   @override
-  _ChartQuantityProductState createState() => _ChartQuantityProductState();
+  State<_DropDownSelect> createState() => __DropDownSelectState();
 }
 
-class _ChartQuantityProductState extends State<_ChartQuantityProduct> {
-  late List<_ChartData> data;
-  late TooltipBehavior _tooltip;
-
+class __DropDownSelectState extends State<_DropDownSelect> {
   @override
-  void initState() {
-    data = [
-      _ChartData('${'Chu kỳ'}1', 1151.836),
-      _ChartData('${'Chu kỳ'}2', 1028.106),
-      _ChartData('${'Chu kỳ'}3', 1171.785),
-      _ChartData('${'Chu kỳ'}4', 2000.555),
-      _ChartData('${'Chu kỳ'}5', 5000.555),
-      _ChartData('${'Chu kỳ'}6', 5000.555),
-      _ChartData('${'Chu kỳ'}7', 5000.555),
-      _ChartData('${'Chu kỳ'}8', 5000.555),
-      _ChartData('${'Chu kỳ'}9', 5000.555),
-      _ChartData('${'Chu kỳ'}10', 5000.555),
-      _ChartData('${'Chu kỳ'}11', 5000.555),
-    ];
-    _tooltip = TooltipBehavior(enable: true);
-    super.initState();
+  Widget build(BuildContext context) {
+    return Container(
+        width: double.infinity,
+        height: 50,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            border: Border.all(width: 1, color: AppColors.secondColor)),
+        child: GetBuilder<OutputController>(builder: (controller) {
+          return DropdownButton(
+              underline: const SizedBox(width: 0),
+              value: controller.dropdownvalueFactory,
+              focusColor: Colors.transparent,
+              // Down Arrow Icon
+              icon: Container(
+                alignment: Alignment.centerRight,
+                child: Icon(Icons.keyboard_arrow_down,
+                    color: AppColors.primaryColor),
+              ),
+              isExpanded: true,
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              dropdownColor: Colors.blue.shade200,
+              // Array list of items
+              items: controller.listFactory.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items,
+                      style: TextStyle(color: Colors.black.withOpacity(0.5))),
+                );
+              }).toList(),
+              // After selecting the desired option,it will
+              // change button value to selected value
+              onChanged: (String? newValue) {
+                setState(() {
+                  controller.dropdownvalueFactory = newValue!;
+                });
+              });
+        }));
   }
+}
+
+class _ChartOutPut extends StatelessWidget {
+  const _ChartOutPut({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SfCartesianChart(
-        primaryXAxis: CategoryAxis(
-          labelStyle: const TextStyle(fontSize: 12),
-          maximumLabels: 100,
-          autoScrollingDelta: 4,
-          majorGridLines: const MajorGridLines(width: 0),
-          majorTickLines: const MajorTickLines(width: 0),
-        ),
-        zoomPanBehavior: ZoomPanBehavior(
-          enablePanning: true,
-        ),
-        primaryYAxis:
-            NumericAxis(minimum: 0, maximum: 10000.000, interval: 1000),
-        tooltipBehavior: _tooltip,
-        series: <ChartSeries<_ChartData, String>>[
-          ColumnSeries<_ChartData, String>(
-              dataSource: data,
-              xValueMapper: (_ChartData data, _) => data.x,
-              yValueMapper: (_ChartData data, _) => data.y,
-              name: 'Sản lượng',
-              color: AppColors.secondColor)
-        ]);
+    return GetBuilder<OutputController>(builder: (controller) {
+      return SfCartesianChart(
+          title: ChartTitle(
+              text: 'CAN & SMP',
+              textStyle:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+          primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),
+          zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
+          legend: Legend(
+              isVisible: true,
+              alignment: ChartAlignment.center,
+              position: LegendPosition.bottom),
+          trackballBehavior: TrackballBehavior(
+              enable: true,
+              lineWidth: 3,
+              tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
+              lineColor: AppColors.secondColor,
+              activationMode: ActivationMode.singleTap,
+              markerSettings: const TrackballMarkerSettings(
+                  markerVisibility: TrackballVisibilityMode.visible),
+              tooltipSettings: InteractiveTooltip(
+                  canShowMarker: false,
+                  format: 'series.name: point.y đồng/kWh',
+                  color: const Color.fromARGB(255, 181, 180, 180),
+                  textStyle: TextStyle(color: AppColors.secondColor))),
+          series: <ChartSeries<ChartOutput, String>>[
+            StackedColumnSeries<ChartOutput, String>(
+                groupName: 'Group A',
+                dataSource: controller.dataCAN,
+                name: 'CAN',
+                xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
+                yValueMapper: (ChartOutput data, _) => data.can),
+            StackedColumnSeries<ChartOutput, String>(
+                groupName: 'Group A',
+                dataSource: controller.dataSMP,
+                name: 'SMP',
+                xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
+                yValueMapper: (ChartOutput data, _) => data.smp),
+            SplineSeries<ChartOutput, String>(
+              markerSettings: const MarkerSettings(isVisible: false),
+              dataSource: controller.dataGCNN,
+              xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
+              yValueMapper: (ChartOutput data, _) => data.gcnn,
+              name: 'Giá chào nhỏ nhất',
+            ),
+            SplineSeries<ChartOutput, String>(
+              markerSettings: const MarkerSettings(isVisible: false),
+              dataSource: controller.dataGCLN,
+              xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
+              yValueMapper: (ChartOutput data, _) => data.gcln,
+              name: 'Giá chào lớn nhất',
+            ),
+          ]);
+    });
   }
 }
 
-class _ChartData {
-  _ChartData(this.x, this.y);
+class _ChartOutPutQMQ extends StatelessWidget {
+  const _ChartOutPutQMQ({super.key});
 
-  final String x;
-  final double y;
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<OutputController>(builder: (controller) {
+      return SfCartesianChart(
+          title: ChartTitle(
+              text: 'QMQ & Qlltt',
+              textStyle:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+          primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),
+          zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
+          legend: Legend(
+              isVisible: true,
+              alignment: ChartAlignment.center,
+              position: LegendPosition.bottom),
+          trackballBehavior: TrackballBehavior(
+              enable: true,
+              lineWidth: 3,
+              tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
+              lineColor: AppColors.secondColor,
+              activationMode: ActivationMode.singleTap,
+              markerSettings: const TrackballMarkerSettings(
+                  markerVisibility: TrackballVisibilityMode.visible),
+              tooltipSettings: InteractiveTooltip(
+                  canShowMarker: false,
+                  format: 'series.name: point.y MWh',
+                  color: const Color.fromARGB(255, 181, 180, 180),
+                  textStyle: TextStyle(color: AppColors.secondColor))),
+          series: <ChartSeries<ChartOutput, String>>[
+            SplineSeries<ChartOutput, String>(
+              markerSettings: const MarkerSettings(isVisible: false),
+              dataSource: controller.dataQCAN,
+              xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
+              yValueMapper: (ChartOutput data, _) => data.qcan,
+              name: 'Qmq',
+            ),
+            SplineSeries<ChartOutput, String>(
+              markerSettings: const MarkerSettings(isVisible: false),
+              dataSource: controller.dataQLLTT,
+              xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
+              yValueMapper: (ChartOutput data, _) => data.qlltt,
+              name: 'Qlltt',
+            ),
+          ]);
+    });
+  }
 }
-
-// class _ChartQuantityProduct extends StatefulWidget {
-//   const _ChartQuantityProduct({super.key});
-
-//   @override
-//   State<_ChartQuantityProduct> createState() => __ChartQuantityProductState();
-// }
-
-// class __ChartQuantityProductState extends State<_ChartQuantityProduct> {
-//   final List<ChartData> chartData = <ChartData>[
-//     ChartData('0', 2001, 1000),
-//     ChartData('5', 111, 1500),
-//     ChartData('10', 2000, 2001),
-//     ChartData('15', 2000, 2001),
-//     ChartData('20', 2000, 2001),
-//     ChartData('25', 2000, 2001),
-//     ChartData('30', 2000, 2001),
-//     ChartData('35', 2000, 2001),
-//     ChartData('35', 2000, 2001),
-//     ChartData('4548', 2000, 2001),
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//         child: SfCartesianChart(
-//             title: ChartTitle(
-//                 text: 'Qmp & Qlldt',
-//                 textStyle: TextStyle(
-//                     color: Colors.black.withOpacity(0.5), fontSize: 14)),
-//             primaryXAxis: CategoryAxis(),
-//             series: <ChartSeries>[
-//           StackedLineSeries<ChartData, String>(
-//               groupName: 'Group A',
-//               color: Colors.amber,
-//               dataSource: chartData,
-//               xValueMapper: (ChartData data, _) => data.x,
-//               yValueMapper: (ChartData data, _) => data.y1),
-//           StackedLineSeries<ChartData, String>(
-//               groupName: 'Group B',
-//               dataSource: chartData,
-//               color: Colors.purple,
-//               xValueMapper: (ChartData data, _) => data.x,
-//               yValueMapper: (ChartData data, _) => data.y2),
-//         ]));
-//   }
-// }
-
-// class ChartData {
-//   ChartData(this.x, this.y1, this.y2);
-//   final String x;
-//   final double y1;
-//   final double y2;
-// }
-
-// class _TableQuantityProduct extends StatefulWidget {
-//   const _TableQuantityProduct({super.key});
-
-//   @override
-//   State<_TableQuantityProduct> createState() => __TableQuantityProductState();
-// }
-
-// class __TableQuantityProductState extends State<_TableQuantityProduct> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: Table(
-//         border: TableBorder.all(color: Colors.black),
-//         children: [
-//           TableRow(
-//               decoration: BoxDecoration(color: AppColors.primaryColor),
-//               children: const [
-//                 TableCustom(textTable: 'Chu kỳ', colorText: true),
-//                 TableCustom(textTable: 'Qmq', colorText: true),
-//                 TableCustom(textTable: 'Qlltt', colorText: true),
-//               ]),
-//           const TableRow(
-//               decoration: BoxDecoration(color: Colors.white),
-//               children: [
-//                 TableCustom(textTable: '1'),
-//                 TableCustom(textTable: '-1'),
-//                 TableCustom(textTable: '-1'),
-//               ]),
-//         ],
-//       ),
-//     );
-//   }
-// }

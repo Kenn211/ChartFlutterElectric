@@ -38,8 +38,10 @@ abstract class BaseController extends GetxController {
         initialDate: selectedDateTime.value,
         firstDate: DateTime(2000),
         lastDate: DateTime(2024),
-        initialEntryMode: DatePickerEntryMode.inputOnly,
+        initialEntryMode: DatePickerEntryMode.input,
         initialDatePickerMode: DatePickerMode.year,
+        errorFormatText: 'Định dạng phải là tháng/ngày/năm',
+        cancelText: 'ĐÓNG',
         helpText: 'Chọn ngày');
     if (pickedDate != null && pickedDate != selectedDateTime.value) {
       selectedDateTime.value = pickedDate;
@@ -236,7 +238,7 @@ abstract class BaseController extends GetxController {
   }
 
   // features developing
-  void developing() {
+  void featureDeveloping() {
     CustomSnackbar.snackBar('error', 'Tính năng đang phát triển');
   }
 

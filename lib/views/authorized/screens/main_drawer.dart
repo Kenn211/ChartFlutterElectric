@@ -5,6 +5,7 @@ import 'package:test_chart/controllers/home/home_controller.dart';
 import 'package:test_chart/core.dart';
 
 class MainDrawer extends StatelessWidget {
+  const MainDrawer({super.key});
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (controller) {

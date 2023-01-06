@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         builder: (cxt, _) => GetMaterialApp(
-              navigatorKey: Get.key,
               debugShowCheckedModeBanner: false,
               title: 'Thị trường điện'.toUpperCase(),
               theme: ThemeData(

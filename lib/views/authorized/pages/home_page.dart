@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/controllers/home/home_controller.dart';
 import 'package:test_chart/core.dart';
-import 'package:test_chart/views/authorized/pages/lake_level_evolution.dart';
 import 'package:test_chart/views/authorized/screens/main_drawer.dart';
 
 class HomePage extends GetView<HomeController> {
@@ -48,13 +47,18 @@ class HomePage extends GetView<HomeController> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '${'hello'.tr}! Vanh',
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w500),
-                ),
-              ),
+                  alignment: Alignment.centerLeft,
+                  child: Obx(
+                    () {
+                      return Text(
+                        controller.userName.toString(),
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500),
+                      );
+                    },
+                  )),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,7 +78,7 @@ class HomePage extends GetView<HomeController> {
                     numData: '150 m',
                     icon: CupertinoIcons.bars,
                     onTap: () {
-                      controller.developing();
+                      controller.featureDeveloping();
                     },
                   ),
                 ],
