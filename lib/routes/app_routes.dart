@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import 'bindings/index.dart';
 import '/views/app_views.dart';
 
@@ -47,21 +48,39 @@ class AppPages {
     GetPage(
         name: Routes.tonnageScreen,
         transition: Transition.rightToLeft,
-        transitionDuration: const Duration(milliseconds: 500),
+        transitionDuration: const Duration(milliseconds: 300),
         page: () => const TonnagePage(),
         binding: TonnageBinding()),
     GetPage(
         name: Routes.outputScreen,
+        transition: Transition.rightToLeft,
+        transitionDuration: const Duration(milliseconds: 300),
         page: () => const OutputScreen(),
         binding: OutputBinding()),
     GetPage(
         name: Routes.marginalPriceScreen,
+        transition: Transition.rightToLeft,
+        transitionDuration: const Duration(milliseconds: 300),
         page: () => const MarginalPriceScreen(),
         binding: MarginalPriceBinding()),
     GetPage(
         name: Routes.sourcePlanScreen,
+        transition: Transition.rightToLeft,
+        transitionDuration: const Duration(milliseconds: 300),
         page: () => const SourcePlanScreen(),
-        binding: SourcePlanBinding())
+        binding: SourcePlanBinding()),
+    GetPage(
+        name: Routes.revenueScreen,
+        transition: Transition.rightToLeft,
+        transitionDuration: const Duration(milliseconds: 300),
+        page: () => const RevenueScreen(),
+        binding: RevenueBinding()),
+    GetPage(
+        name: Routes.hydrologicalScreen,
+        transition: Transition.rightToLeft,
+        transitionDuration: const Duration(milliseconds: 300),
+        page: () => const HydrologicalScreen(),
+        binding: HydrologicalBinding()),
   ];
 
   static final List<GetPage> getPages = [

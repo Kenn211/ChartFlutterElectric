@@ -50,12 +50,12 @@ class OutputController extends BaseController {
           .get(Uri.parse(
               'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_DONVIByID?UNITID=-1&UNIT_NAME='))
           .then((value) {
-        List<ListFactoryOutputModel> _dataFactory =
+        List<ListFactoryOutputModel> dataFactoryRes =
             listFactoryOutputModelFromJson(value.body);
-        _dataFactory.forEach((e) {
+        for (var e in dataFactoryRes) {
           listFactory.add(e.unitName);
           dataFactoryOutPut.add(e);
-        });
+        }
       });
     } catch (e) {
       print(e);
@@ -70,12 +70,12 @@ class OutputController extends BaseController {
       CustomSnackbar.snackBar('error', 'Vui lòng chọn nhà máy');
     } else if (dropdownvalueFactory != 'Nhà máy') {
       showLoading();
-      dataFactoryOutPut.forEach((e) {
+      for (var e in dataFactoryOutPut) {
         if (dropdownvalueFactory == e.unitName) {
           indexFactory = e.unitid;
           fetchOutput();
         }
-      });
+      }
     }
   }
 
@@ -90,40 +90,42 @@ class OutputController extends BaseController {
 
       await http
           .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHITRUONG_SAUVANHANHByDay2?NGAY=2022-12-28&UNITID=40055'))
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHITRUONG_SAUVANHANHByDay2?NGAY=${formatDateAPIToday.toString()}&UNITID=${indexFactory.toInt()}'))
           .then((value) {
-        OutPutModel _outputModel = outPutModelFromJson(value.body);
+        OutPutModel outputModel = outPutModelFromJson(value.body);
 
         //
-        _outputModel.can.forEach((e) {
+        for (var e in outputModel.can) {
           _dataCAN.add(ChartOutput(x: e.chuKy.toString(), can: e.giaTri));
-        });
+        }
 
-        _outputModel.smp.forEach((e) {
+        for (var e in outputModel.smp) {
           _dataSMP.add(ChartOutput(x: e.chuKy.toString(), smp: e.giaTri));
-        });
+        }
 
-        _outputModel.gcln.forEach((e) {
+        for (var e in outputModel.gcln) {
           _dataGCLN.add(ChartOutput(x: e.chuKy.toString(), gcln: e.giaTri));
-        });
+        }
 
-        _outputModel.gcnn.forEach((e) {
+        for (var e in outputModel.gcnn) {
           _dataGCNN.add(ChartOutput(x: e.chuKy.toString(), gcnn: e.giaTri));
-        });
+        }
 
-        _outputModel.qcan.forEach((e) {
+        for (var e in outputModel.qcan) {
           _dataQCAN.add(ChartOutput(x: e.chuKy.toString(), qcan: e.giaTri));
-        });
+        }
 
-        _outputModel.qlltt.forEach((e) {
+        for (var e in outputModel.qlltt) {
           _dataQLLTT.add(ChartOutput(x: e.chuKy.toString(), qlltt: e.giaTri));
-        });
-        update();
+        }
+        hideLoading();
+
+        CustomSnackbar.showSuccessToast('Thành công',
+            'Sản lượng nhà máy ${dropdownvalueFactory.toString()}');
       });
     } catch (e) {
       print(e);
     }
     update();
-    hideLoading();
   }
 }

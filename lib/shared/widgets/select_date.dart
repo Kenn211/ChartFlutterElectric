@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:test_chart/core.dart';
 
 class SelectDate extends StatelessWidget {
-  const SelectDate({super.key, this.isStack = true, this.onTap, this.text});
+  const SelectDate({super.key, this.isStack = false, this.onTap, this.text});
   final bool? isStack;
   final Function()? onTap;
   final String? text;
@@ -19,8 +19,8 @@ class SelectDate extends StatelessWidget {
               border: Border.all(width: 1, color: AppColors.secondColor)),
           child: Row(
             mainAxisAlignment: isStack == true
-                ? MainAxisAlignment.center
-                : MainAxisAlignment.start,
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.center,
             children: [
               Icon(
                 CupertinoIcons.calendar,

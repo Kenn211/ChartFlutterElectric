@@ -57,12 +57,14 @@ class MainDrawer extends StatelessWidget {
                 text: 'hydrological'.tr,
                 iconItem: CupertinoIcons.cloud_drizzle_fill,
                 onTap: () {
+                  Get.toNamed(Routes.hydrologicalScreen);
                   controller.closeDrawer();
                 }),
             _ItemDrawer(
                 text: 'revenue'.tr,
                 iconItem: CupertinoIcons.money_dollar,
                 onTap: () {
+                  Get.toNamed(Routes.revenueScreen);
                   controller.closeDrawer();
                 }),
             _ItemDrawer(

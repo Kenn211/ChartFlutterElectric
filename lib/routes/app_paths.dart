@@ -24,6 +24,8 @@ abstract class Routes {
   static const outputScreen = _Paths.output;
   static const marginalPriceScreen = _Paths.marginalPrice;
   static const sourcePlanScreen = _Paths.sourcePlan;
+  static const revenueScreen = _Paths.revenue;
+  static const hydrologicalScreen = _Paths.hydrological;
 }
 
 abstract class _Paths {
@@ -41,4 +43,6 @@ abstract class _Paths {
   static const output = '/output';
   static const marginalPrice = '/marginalPrice';
   static const sourcePlan = '/sourcePlan';
+  static const revenue = '/revenue';
+  static const hydrological = '/hydrological';
 }

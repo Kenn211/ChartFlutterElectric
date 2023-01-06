@@ -47,18 +47,6 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Container(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      ItemRegions(colorRe: Colors.green, text: 'Miền Bắc'),
-                      ItemRegions(colorRe: Colors.blue, text: 'Miền Trung'),
-                      ItemRegions(colorRe: Colors.black, text: 'Miền Nam'),
-                      ItemRegions(
-                          colorRe: Colors.amberAccent, text: 'Giá bên mua')
-                    ],
-                  )),
-                  const SizedBox(height: 20),
-                  Container(
                     width: 250,
                     child: Stack(
                       children: [
@@ -70,6 +58,7 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
                             onTap: () {
                               controller.chooseDate();
                             },
+                            isStack: true,
                           );
                         }),
                         Positioned(
@@ -113,21 +102,7 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      ItemRegions(colorRe: Colors.green, text: 'Miền Bắc'),
-                      ItemRegions(colorRe: Colors.blue, text: 'Miền Trung'),
-                      ItemRegions(colorRe: Colors.black, text: 'Miền Nam'),
-                      ItemRegions(
-                          colorRe: Colors.amberAccent, text: 'Giá bên mua')
-                    ],
-                  )),
-                  const SizedBox(height: 20),
-                  const _TableMarginalDAH()
-                ],
+                children: const [SizedBox(height: 20), _TableMarginalDAH()],
               ),
             )
           ],
@@ -151,6 +126,7 @@ class _ChartColumnIAH extends StatelessWidget {
             legend: Legend(
                 isVisible: true,
                 alignment: ChartAlignment.center,
+                shouldAlwaysShowScrollbar: true,
                 position: LegendPosition.bottom),
             trackballBehavior: TrackballBehavior(
                 enable: true,
@@ -214,6 +190,7 @@ class _ChartColumnDAH extends StatelessWidget {
         return SfCartesianChart(
           legend: Legend(
               isVisible: true,
+              shouldAlwaysShowScrollbar: true,
               alignment: ChartAlignment.center,
               position: LegendPosition.bottom),
           trackballBehavior: TrackballBehavior(

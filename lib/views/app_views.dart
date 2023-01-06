@@ -16,3 +16,5 @@ export 'authorized/screens/marginal_price/marginal_price_screen.dart';
 export 'authorized/screens/output/output_screen.dart';
 export 'authorized/screens/source_plan/source_plan_screen.dart';
 export 'authorized/screens/tonnage/tonnage_screen.dart';
+export 'authorized/screens/revenue/revenue_screen.dart';
+export 'authorized/screens/hydrological/hydrological_screen.dart';

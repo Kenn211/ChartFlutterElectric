@@ -72,9 +72,9 @@ class OutputScreen extends GetView<OutputController> {
                             }),
                       ),
                     ])),
-
+            const _ChartOutPutQMQ(),
+            const SizedBox(height: 20),
             const _ChartOutPut(),
-            const _ChartOutPutQMQ()
             // _TableQuantityProduct()
           ],
         ),
@@ -141,13 +141,15 @@ class _ChartOutPut extends StatelessWidget {
     return GetBuilder<OutputController>(builder: (controller) {
       return SfCartesianChart(
           title: ChartTitle(
-              text: 'CAN & SMP',
+              text: 'Biểu đồ CAN & SMP',
               textStyle:
                   const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
           primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),
           zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
           legend: Legend(
               isVisible: true,
+              isResponsive: true,
+              shouldAlwaysShowScrollbar: true,
               alignment: ChartAlignment.center,
               position: LegendPosition.bottom),
           trackballBehavior: TrackballBehavior(
@@ -166,29 +168,29 @@ class _ChartOutPut extends StatelessWidget {
           series: <ChartSeries<ChartOutput, String>>[
             StackedColumnSeries<ChartOutput, String>(
                 groupName: 'Group A',
-                dataSource: controller.dataCAN,
-                name: 'CAN',
-                xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartOutput data, _) => data.can),
-            StackedColumnSeries<ChartOutput, String>(
-                groupName: 'Group A',
                 dataSource: controller.dataSMP,
                 name: 'SMP',
                 xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
                 yValueMapper: (ChartOutput data, _) => data.smp),
-            SplineSeries<ChartOutput, String>(
-              markerSettings: const MarkerSettings(isVisible: false),
-              dataSource: controller.dataGCNN,
-              xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
-              yValueMapper: (ChartOutput data, _) => data.gcnn,
-              name: 'Giá chào nhỏ nhất',
-            ),
+            StackedColumnSeries<ChartOutput, String>(
+                groupName: 'Group A',
+                dataSource: controller.dataCAN,
+                name: 'CAN',
+                xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
+                yValueMapper: (ChartOutput data, _) => data.can),
             SplineSeries<ChartOutput, String>(
               markerSettings: const MarkerSettings(isVisible: false),
               dataSource: controller.dataGCLN,
               xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
               yValueMapper: (ChartOutput data, _) => data.gcln,
               name: 'Giá chào lớn nhất',
+            ),
+            SplineSeries<ChartOutput, String>(
+              markerSettings: const MarkerSettings(isVisible: false),
+              dataSource: controller.dataGCNN,
+              xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
+              yValueMapper: (ChartOutput data, _) => data.gcnn,
+              name: 'Giá chào nhỏ nhất',
             ),
           ]);
     });
@@ -203,7 +205,7 @@ class _ChartOutPutQMQ extends StatelessWidget {
     return GetBuilder<OutputController>(builder: (controller) {
       return SfCartesianChart(
           title: ChartTitle(
-              text: 'QMQ & Qlltt',
+              text: 'Biểu đồ QMQ & Qlltt',
               textStyle:
                   const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
           primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),

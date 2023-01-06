@@ -37,12 +37,12 @@ class SourcePlanController extends BaseController {
           .get(Uri.parse(
               'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_NHAMAYByID?ID_NM=-1&TEN_NM='))
           .then((value) {
-        List<ListFactoryModel> _dataFactory =
+        List<ListFactoryModel> dataFactoryRespon =
             listFactoryModelFromJson(value.body);
-        _dataFactory.forEach((e) {
+        for (var e in dataFactoryRespon) {
           listFactory.add(e.tenNm);
           dataFactory.add(e);
-        });
+        }
       });
     } catch (e) {
       print(e);
@@ -60,12 +60,12 @@ class SourcePlanController extends BaseController {
       CustomSnackbar.snackBar('error', 'Vui lòng chọn nhà máy');
     } else if (dropdownvalueFactory != 'Nhà máy') {
       showLoading();
-      dataFactory.forEach((e) {
+      for (var e in dataFactory) {
         if (dropdownvalueFactory == e.tenNm) {
           indexFactory = e.idNm;
           fetchPlan();
         }
-      });
+      }
     }
   }
 
@@ -76,27 +76,27 @@ class SourcePlanController extends BaseController {
 
       await http
           .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_IAHByDay2?NGAY=${formatDateAPITomorrow.toString()}&ID_NM=${indexFactory.toInt()}'))
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_IAHByDay2?NGAY=${formatDateAPIToday.toString()}&ID_NM=${indexFactory.toInt()}'))
           .then((value) {
-        SourcePlanModel _planModel = sourcePlanModelFromJson(value.body);
+        SourcePlanModel planModel = sourcePlanModelFromJson(value.body);
 
-        if (_planModel.toMay.isEmpty) {
+        if (planModel.toMay.isEmpty) {
           hideLoading();
           CustomSnackbar.snackBar('error', 'Không có dữ liệu ngày này');
         } else {
-          _planModel.toMay.forEach((e) {
+          for (var e in planModel.toMay) {
             _dataToMayIAH.add(e);
-          });
+          }
 
           //Get Data DAH
           http
               .get(Uri.parse(
-                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_DAHByDay2?NGAY=${formatDateAPIToday.toString()}&ID_NM=${indexFactory.toInt()}'))
+                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_DAHByDay2?NGAY=${formatDateAPITomorrow.toString()}&ID_NM=${indexFactory.toInt()}'))
               .then((value) {
-            SourcePlanModel _planModel1 = sourcePlanModelFromJson(value.body);
-            _planModel1.toMay.forEach((e) {
+            SourcePlanModel planModel1 = sourcePlanModelFromJson(value.body);
+            for (var e in planModel1.toMay) {
               _dataToMayDAH.add(e);
-            });
+            }
             CustomSnackbar.showSuccessToast('Thành công',
                 'Dữ liệu kế hoạch nhà máy ${dropdownvalueFactory.toString()}');
             update();
