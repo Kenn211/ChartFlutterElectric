@@ -152,9 +152,7 @@ class __FormLoginState extends State<_FormLogin> {
             child: Button(
                 text: 'login'.tr.toUpperCase(),
                 showIcon: false,
-                onTap: () {
-                  controller.submitLogin();
-                }),
+                onTap: controller.submitLogin),
           ),
           const SizedBox(height: 10),
           Row(

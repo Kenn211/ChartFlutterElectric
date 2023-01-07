@@ -2,7 +2,6 @@ import 'package:test_chart/controllers/base_controller.dart';
 import 'package:test_chart/core.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/routes/helpers/route_helper.dart';
-import 'package:test_chart/shared/widgets/custom_snackbar.dart';
 
 class HomeController extends BaseController {
   @override

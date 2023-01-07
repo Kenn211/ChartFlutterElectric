@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/controllers/account/account_controller.dart';
 import 'package:test_chart/core.dart';
-import 'package:test_chart/shared/widgets/txt_button.dart';
 import 'package:test_chart/views/authorized/widgets/text_field.dart';
 
 class AccountScreen extends GetView<AccountController> {

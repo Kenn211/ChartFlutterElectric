@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/controllers/home/home_controller.dart';
 import 'package:test_chart/core.dart';
 import 'package:test_chart/views/authorized/screens/main_drawer.dart';
 

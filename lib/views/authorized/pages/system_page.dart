@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/controllers/home/system_controller.dart';
 import 'package:test_chart/core.dart';
 
 class SystemPage extends GetView<SystemController> {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:test_chart/controllers/drawer/revenue_controller.dart';
 import 'package:test_chart/core.dart';
 import 'package:test_chart/models/drawer/revenue/chart_revenue.dart';
 

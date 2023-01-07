@@ -7,7 +7,6 @@ import 'package:test_chart/models/auth/authen_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:test_chart/models/base_url.dart';
 import 'package:test_chart/routes/helpers/route_helper.dart';
-import 'package:test_chart/shared/widgets/custom_snackbar.dart';
 
 class LoginController extends BaseController {
   Future<dynamic> handleLogin(String account, String password) async {

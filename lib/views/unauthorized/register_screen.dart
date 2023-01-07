@@ -171,9 +171,7 @@ class __FormRegisterState extends State<_FormRegister> {
                 child: Button(
                     showIcon: false,
                     text: 'register'.tr.toUpperCase(),
-                    onTap: () {
-                      widget.register;
-                    })),
+                    onTap: widget.register)),
           ],
         ));
   }
