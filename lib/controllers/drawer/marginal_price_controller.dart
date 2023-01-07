@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:test_chart/controllers/base_controller.dart';
@@ -36,16 +37,6 @@ class MarginalPriceController extends BaseController {
   final _dataTableIAH = <ItemTableMarginal>[].obs;
   RxList<ItemTableMarginal> get dataTableIAH => _dataTableIAH;
 
-  @override
-  void onInit() async {
-    super.onInit();
-  }
-
-  @override
-  void onReady() async {
-    super.onReady();
-  }
-
   Future<void> fetchPriceData() async {
     showLoading();
     try {
@@ -65,13 +56,13 @@ class MarginalPriceController extends BaseController {
           .get(Uri.parse(
               'http://103.78.88.74:207/api/API_GIABIEN_IAH/GetAllGIABIEN_IAHByDay?NGAY=${formatDateAPIToday.toString()}'))
           .then((value) {
-        List<PriceModel> _priceModel = priceModelFromJson(value.body);
-        if (_priceModel.isEmpty) {
+        List<PriceModel> priceModelRes = priceModelFromJson(value.body);
+        if (priceModelRes.isEmpty) {
           hideLoading();
           CustomSnackbar.snackBar('error',
               'Không có dữ liệu giá biên ngày ${formatDateAPIToday.toString()}');
         } else {
-          _priceModel.forEach((e) {
+          for (var e in priceModelRes) {
             if (e.idNode == 1) {
               _dataTableIAH.add(ItemTableMarginal(ck: e.chuky));
               _dataChartNorthIAH
@@ -86,17 +77,17 @@ class MarginalPriceController extends BaseController {
               _dataChartNationIAH
                   .add(ChartData(x: 'Chu kỳ ${e.chuky}', y4: e.giatri));
             }
-          });
+          }
 
           http
               .get(Uri.parse(
                   'http://103.78.88.74:207/api/API_GIABIEN_IAH/GetAllGIABIEN_IAHByDay?NGAY=${formatDateAPITomorrow.toString()}'))
               .then((value) {
-            List<PriceModel> _priceModel1 = priceModelFromJson(value.body);
-            if (_priceModel1.isEmpty) {
-              print('a');
+            List<PriceModel> priceModelRes1 = priceModelFromJson(value.body);
+            if (priceModelRes1.isEmpty) {
+              debugPrintStack();
             } else {
-              _priceModel1.forEach((e) {
+              for (var e in priceModelRes1) {
                 if (e.idNode == 1) {
                   _dataChartNorthDAH
                       .add(ChartData(x: 'Chu kỳ ${e.chuky}', y1: e.giatri));
@@ -110,7 +101,7 @@ class MarginalPriceController extends BaseController {
                   _dataChartNationDAH
                       .add(ChartData(x: 'Chu kỳ ${e.chuky}', y4: e.giatri));
                 }
-              });
+              }
             }
             hideLoading();
             CustomSnackbar.showSuccessToast('Thành công',
@@ -120,7 +111,7 @@ class MarginalPriceController extends BaseController {
         }
       });
     } catch (e) {
-      print(e);
+      debugPrintStack();
     }
     hideLoading();
     update();

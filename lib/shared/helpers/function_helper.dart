@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_chart/routes/helpers/route_helper.dart';
 import 'package:test_chart/shared/app_shared.dart';
 
 class FunctionHelper {
@@ -65,7 +63,7 @@ class FunctionHelper {
                   strokeWidth: 1,
                   color: AppColors.primaryColor,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   message ?? '${'loading'.tr}...',
                   style: const TextStyle(color: Colors.white),

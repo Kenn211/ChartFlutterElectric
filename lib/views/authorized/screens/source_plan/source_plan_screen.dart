@@ -63,7 +63,7 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
                         const SizedBox(height: 10),
                         Row(
                           children: [
-                            _CheckBoxWidget(),
+                            const _CheckBoxWidget(),
                             Container(
                               alignment: Alignment.centerLeft,
                               child: const Text(
@@ -72,7 +72,7 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
                             ),
                           ],
                         ),
-                        Container(
+                        SizedBox(
                           width: 160,
                           height: 50,
                           child: Button(
@@ -84,9 +84,7 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
                       ])),
               const SizedBox(height: 20),
               const _ChartSourcePlanIAH(),
-              Row(children: [
-                Expanded(child: const _TableSourcePlanIAH()),
-              ]),
+              Row(children: const [_TableSourcePlanIAH()]),
               const SizedBox(height: 20),
               const _ChartSourcePlanDAH(),
               const _TableSourcePlanDAH()
@@ -97,7 +95,7 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
 }
 
 class _ChartSourcePlanIAH extends StatelessWidget {
-  const _ChartSourcePlanIAH({super.key});
+  const _ChartSourcePlanIAH({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +141,7 @@ class _ChartSourcePlanIAH extends StatelessWidget {
 }
 
 class _ChartSourcePlanDAH extends StatelessWidget {
-  const _ChartSourcePlanDAH({super.key});
+  const _ChartSourcePlanDAH({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +187,7 @@ class _ChartSourcePlanDAH extends StatelessWidget {
 }
 
 class _DropDownSelect extends StatefulWidget {
-  const _DropDownSelect({super.key});
+  const _DropDownSelect({Key? key}) : super(key: key);
 
   @override
   State<_DropDownSelect> createState() => __DropDownSelectState();
@@ -240,7 +238,7 @@ class __DropDownSelectState extends State<_DropDownSelect> {
 }
 
 class _CheckBoxWidget extends StatefulWidget {
-  const _CheckBoxWidget({super.key});
+  const _CheckBoxWidget({Key? key}) : super(key: key);
 
   @override
   State<_CheckBoxWidget> createState() => __CheckBoxWidgetState();
@@ -277,12 +275,12 @@ class __CheckBoxWidgetState extends State<_CheckBoxWidget> {
 }
 
 class _TableSourcePlanIAH extends StatelessWidget {
-  const _TableSourcePlanIAH({super.key});
+  const _TableSourcePlanIAH({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SourcePlanController>(builder: (controller) {
-      return Container(
+      return SizedBox(
         child: Table(
             border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
             children: [
@@ -305,7 +303,7 @@ class _TableSourcePlanIAH extends StatelessWidget {
 }
 
 class _TableSourcePlanDAH extends StatelessWidget {
-  const _TableSourcePlanDAH({super.key});
+  const _TableSourcePlanDAH({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -17,12 +17,12 @@ class AuthenModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userName'] = this.userName;
-    data['updated_at'] = this.updatedAt;
-    data['token'] = this.token;
-    data['password'] = this.password;
-    data['chain_id'] = this.chainId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['userName'] = userName;
+    data['updated_at'] = updatedAt;
+    data['token'] = token;
+    data['password'] = password;
+    data['chain_id'] = chainId;
     return data;
   }
 }

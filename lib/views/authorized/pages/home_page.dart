@@ -6,6 +6,8 @@ import 'package:test_chart/core.dart';
 import 'package:test_chart/views/authorized/screens/main_drawer.dart';
 
 class HomePage extends GetView<HomeController> {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     bool changeFlag = true;
@@ -35,7 +37,7 @@ class HomePage extends GetView<HomeController> {
                   : Image.asset(Assets.icFlagUSA),
             )),
       ),
-      drawer: MainDrawer(),
+      drawer: const MainDrawer(),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
@@ -103,7 +105,7 @@ class HomePage extends GetView<HomeController> {
                     icon: CupertinoIcons.bolt_fill,
                   ),
                   _ItemDisplayBody(
-                    colorBackground: Color.fromARGB(255, 45, 175, 50),
+                    colorBackground: const Color.fromARGB(255, 45, 175, 50),
                     text: 'revenue'.tr,
                     numData: '150 m',
                     icon: CupertinoIcons.money_dollar_circle,
@@ -144,8 +146,7 @@ class HomePage extends GetView<HomeController> {
 
 class _ItemDisplayBody extends StatelessWidget {
   const _ItemDisplayBody(
-      {super.key,
-      required this.colorBackground,
+      {required this.colorBackground,
       required this.text,
       required this.numData,
       this.icon,
@@ -207,8 +208,7 @@ class _ItemDisplayBody extends StatelessWidget {
 
 class _ItemFunctions extends StatelessWidget {
   const _ItemFunctions(
-      {super.key,
-      required this.text,
+      {required this.text,
       required this.textDesc,
       this.onTap,
       required this.icon});

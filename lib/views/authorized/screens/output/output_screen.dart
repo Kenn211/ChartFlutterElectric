@@ -62,7 +62,7 @@ class OutputScreen extends GetView<OutputController> {
                         );
                       }),
                       const SizedBox(height: 10),
-                      Container(
+                      SizedBox(
                         width: 160,
                         height: 50,
                         child: Button(
@@ -84,7 +84,7 @@ class OutputScreen extends GetView<OutputController> {
 }
 
 class _DropDownSelect extends StatefulWidget {
-  const _DropDownSelect({super.key});
+  const _DropDownSelect({Key? key}) : super(key: key);
 
   @override
   State<_DropDownSelect> createState() => __DropDownSelectState();
@@ -134,7 +134,7 @@ class __DropDownSelectState extends State<_DropDownSelect> {
 }
 
 class _ChartOutPut extends StatelessWidget {
-  const _ChartOutPut({super.key});
+  const _ChartOutPut({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -198,8 +198,7 @@ class _ChartOutPut extends StatelessWidget {
 }
 
 class _ChartOutPutQMQ extends StatelessWidget {
-  const _ChartOutPutQMQ({super.key});
-
+  const _ChartOutPutQMQ({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OutputController>(builder: (controller) {

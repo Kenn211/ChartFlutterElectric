@@ -130,7 +130,7 @@ class ChartTonnage extends StatelessWidget {
 }
 
 class _DropDownSelect extends StatefulWidget {
-  const _DropDownSelect({super.key});
+  const _DropDownSelect({Key? key}) : super(key: key);
 
   @override
   State<_DropDownSelect> createState() => __DropDownSelectState();
@@ -175,7 +175,7 @@ class __DropDownSelectState extends State<_DropDownSelect> {
 }
 
 class _TableTonnage extends StatelessWidget {
-  const _TableTonnage({super.key});
+  const _TableTonnage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

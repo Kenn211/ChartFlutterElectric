@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:test_chart/controllers/base_controller.dart';
@@ -22,16 +23,6 @@ class TonnageController extends BaseController {
     "Quốc Gia",
   ];
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
   Future<void> fetchTonnage() async {
     showLoading();
     try {
@@ -53,27 +44,27 @@ class TonnageController extends BaseController {
           .get(Uri.parse(
               'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_IAHByDay?NGAY=${formatDateAPIToday.toString()}&ID_NODE=${indexDropdownValue.toInt()}'))
           .then((value) {
-        List<TonnageModel> _tonnageModel = tonnageModelFromJson(value.body);
-        if (_tonnageModel.isEmpty) {
+        List<TonnageModel> tonnageModelRes = tonnageModelFromJson(value.body);
+        if (tonnageModelRes.isEmpty) {
           hideLoading();
           CustomSnackbar.snackBar('error',
               'Không có dữ liệu phụ tải ${dropdownvalue.toString()} ngày này');
         } else {
-          _tonnageModel.forEach((e) {
+          for (var e in tonnageModelRes) {
             _dataChartCk.add(ChartDataTonnage(x: e.chuky, y2: e.giatri));
-          });
+          }
           http
               .get(Uri.parse(
                   'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_DAHByDay?NGAY=${formatDateAPITomorrow.toString()}&ID_NODE=${indexDropdownValue.toInt()}'))
               .then((value) {
-            List<TonnageModel> _tonnageModel1 =
+            List<TonnageModel> tonnageModelRes1 =
                 tonnageModelFromJson(value.body);
-            if (_tonnageModel1.isEmpty) {
-              print('empty');
+            if (tonnageModelRes1.isEmpty) {
+              debugPrintStack();
             } else {
-              _tonnageModel1.forEach((e) {
+              for (var e in tonnageModelRes1) {
                 _dataChartDay.add(ChartDataTonnage(x: e.chuky, y1: e.giatri));
-              });
+              }
               hideLoading();
               CustomSnackbar.showSuccessToast(
                   'Thành công', 'Dữ liệu phụ tải ${dropdownvalue.toString()}');
@@ -83,7 +74,7 @@ class TonnageController extends BaseController {
         }
       });
     } catch (e) {
-      print(e);
+      debugPrintStack();
     }
     hideLoading();
 

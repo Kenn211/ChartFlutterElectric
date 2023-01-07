@@ -30,7 +30,7 @@ class RegisterScreen extends GetView<RegisterController> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'title_app'.tr.toUpperCase(),
@@ -42,7 +42,7 @@ class RegisterScreen extends GetView<RegisterController> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'register'.tr.toUpperCase(),
@@ -67,7 +67,7 @@ class RegisterScreen extends GetView<RegisterController> {
 }
 
 class _FormRegister extends StatefulWidget {
-  const _FormRegister({super.key, this.register});
+  const _FormRegister({Key? key, this.register}) : super(key: key);
 
   final Function()? register;
 
@@ -166,7 +166,7 @@ class __FormRegisterState extends State<_FormRegister> {
               ],
             ),
             const SizedBox(height: 10),
-            Container(
+            SizedBox(
                 height: 50,
                 child: Button(
                     showIcon: false,

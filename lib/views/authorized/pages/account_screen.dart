@@ -6,6 +6,8 @@ import 'package:test_chart/shared/widgets/txt_button.dart';
 import 'package:test_chart/views/authorized/widgets/text_field.dart';
 
 class AccountScreen extends GetView<AccountController> {
+  const AccountScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,14 +49,14 @@ class AccountScreen extends GetView<AccountController> {
                 ),
               ),
               const SizedBox(height: 30),
-              TextFieldWidget(text: 'username'),
+              const TextFieldWidget(text: 'username'),
               const SizedBox(height: 10),
-              TextFieldWidget(
+              const TextFieldWidget(
                 text: 'username',
                 inputPass: true,
               ),
               const SizedBox(height: 10),
-              TextFieldWidget(
+              const TextFieldWidget(
                 text: 'username',
                 inputPass: true,
               ),

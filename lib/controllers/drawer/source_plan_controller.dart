@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/controllers/base_controller.dart';
 import 'package:http/http.dart' as http;
@@ -13,9 +14,9 @@ class SourcePlanController extends BaseController {
   String dropdownvalueFactory = 'Nhà máy';
 
   //Data response
-  var _dataToMayIAH = <ToMay>[].obs;
+  final _dataToMayIAH = <ToMay>[].obs;
   RxList<ToMay> get dataToMayIAH => _dataToMayIAH;
-  var _dataToMayDAH = <ToMay>[].obs;
+  final _dataToMayDAH = <ToMay>[].obs;
   RxList<ToMay> get dataToMayDAH => _dataToMayDAH;
 
   @override
@@ -45,7 +46,7 @@ class SourcePlanController extends BaseController {
         }
       });
     } catch (e) {
-      print(e);
+      debugPrintStack();
     }
     hideLoading();
     update();
@@ -104,13 +105,8 @@ class SourcePlanController extends BaseController {
         }
       });
     } catch (e) {
-      print(e);
+      debugPrintStack();
     }
     hideLoading();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 }

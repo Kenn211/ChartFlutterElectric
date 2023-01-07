@@ -42,7 +42,8 @@ class AppBarCustom extends StatelessWidget {
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onPressed: () {},
-                  icon: Icon(Icons.arrow_back_ios, color: Colors.transparent))
+                  icon: const Icon(Icons.arrow_back_ios,
+                      color: Colors.transparent))
         ],
         title: Container(
           width: double.infinity,

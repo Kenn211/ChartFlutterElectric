@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:test_chart/controllers/base_controller.dart';
 import 'package:test_chart/core.dart';
 import 'package:test_chart/models/auth/authen_model.dart';
@@ -26,7 +27,7 @@ class LoginController extends BaseController {
         CustomSnackbar.snackBar('error', 'Sai tài khoản hoặc mật khẩu');
       }
     } else {
-      print('Error');
+      debugPrintStack(label: 'error');
     }
   }
 

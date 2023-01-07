@@ -30,7 +30,7 @@ class RevenueScreen extends GetView<RevenueController> {
 }
 
 class _ChartRevenue extends StatelessWidget {
-  const _ChartRevenue({super.key});
+  const _ChartRevenue({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

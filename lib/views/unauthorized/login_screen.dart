@@ -31,7 +31,7 @@ class LoginScreen extends GetView<LoginController> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'title_app'.tr.toUpperCase(),
@@ -43,7 +43,7 @@ class LoginScreen extends GetView<LoginController> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'login'.tr.toUpperCase(),
@@ -64,7 +64,7 @@ class LoginScreen extends GetView<LoginController> {
 }
 
 class _FormLogin extends StatefulWidget {
-  const _FormLogin({super.key});
+  const _FormLogin({Key? key}) : super(key: key);
 
   @override
   State<_FormLogin> createState() => __FormLoginState();
@@ -87,7 +87,7 @@ class __FormLoginState extends State<_FormLogin> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             child: TextField(
               controller: controller.userNameController,
               decoration: InputDecoration(
@@ -99,10 +99,10 @@ class __FormLoginState extends State<_FormLogin> {
             ),
           ),
           const SizedBox(height: 10),
-          Container(
+          SizedBox(
             child: Stack(
               children: [
-                Container(
+                SizedBox(
                     child: TextField(
                   controller: controller.passwordController,
                   decoration: InputDecoration(
@@ -135,9 +135,9 @@ class __FormLoginState extends State<_FormLogin> {
             ),
           ),
           const SizedBox(height: 10),
-          Container(
+          const SizedBox(
             width: double.infinity,
-            child: const Text(
+            child: Text(
               'Quên mật khẩu?',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -147,7 +147,7 @@ class __FormLoginState extends State<_FormLogin> {
             ),
           ),
           const SizedBox(height: 10),
-          Container(
+          SizedBox(
             height: 50,
             child: Button(
                 text: 'login'.tr.toUpperCase(),
@@ -161,8 +161,8 @@ class __FormLoginState extends State<_FormLogin> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                child: const Text('Bạn không có tài khoản?'),
+              const SizedBox(
+                child: Text('Bạn không có tài khoản?'),
               ),
               Container(
                 margin: const EdgeInsets.only(left: 15),

@@ -91,8 +91,7 @@ class MainDrawer extends StatelessWidget {
 
 class _ItemDrawer extends StatelessWidget {
   const _ItemDrawer(
-      {super.key,
-      required this.iconItem,
+      {required this.iconItem,
       required this.text,
       this.logout = false,
       this.onTap});

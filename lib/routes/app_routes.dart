@@ -16,7 +16,7 @@ class AppPages {
   static final homePage = GetPage(
       name: Routes.homePage,
       transition: Transition.native,
-      page: () => HomePage(),
+      page: () => const HomePage(),
       binding: HomeBinding());
 
   static final loginPage = GetPage(
@@ -35,13 +35,13 @@ class AppPages {
   static final systemPage = GetPage(
       name: Routes.systemPage,
       transition: Transition.native,
-      page: () => SystemPage(),
+      page: () => const SystemPage(),
       binding: SystemBinding());
 
   static final accountPage = GetPage(
       name: Routes.accountPage,
       transition: Transition.native,
-      page: () => AccountScreen(),
+      page: () => const AccountScreen(),
       binding: AccountBinding());
 
   static final List<GetPage> getDrawerPages = [

@@ -4,7 +4,6 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:test_chart/controllers/drawer/marginal_price_controller.dart';
 import 'package:test_chart/core.dart';
 import 'package:test_chart/models/drawer/marginal_price/chart_data.dart';
-import 'package:test_chart/shared/widgets/item_region.dart';
 import 'package:test_chart/shared/widgets/select_date.dart';
 import 'package:test_chart/shared/widgets/txt_button.dart';
 import 'package:intl/intl.dart';
@@ -46,7 +45,7 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 250,
                     child: Stack(
                       children: [
@@ -249,7 +248,7 @@ class _ChartColumnDAH extends StatelessWidget {
 }
 
 class _TableMarginalIAH extends StatelessWidget {
-  const _TableMarginalIAH({super.key});
+  const _TableMarginalIAH({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -273,7 +272,7 @@ class _TableMarginalIAH extends StatelessWidget {
 }
 
 class _TableMarginalDAH extends StatelessWidget {
-  const _TableMarginalDAH({super.key});
+  const _TableMarginalDAH({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

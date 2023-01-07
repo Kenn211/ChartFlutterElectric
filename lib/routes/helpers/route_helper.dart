@@ -22,7 +22,7 @@ class RouterHelper {
   static getOffUntil() {
     Get.offUntil(
         GetPageRoute(
-            page: () => HomePage(),
+            page: () => const HomePage(),
             transition: Transition.native,
             transitionDuration: const Duration(milliseconds: 250),
             binding: HomeBinding()),

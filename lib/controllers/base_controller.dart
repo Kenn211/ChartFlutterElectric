@@ -242,14 +242,14 @@ abstract class BaseController extends GetxController {
     CustomSnackbar.snackBar('error', 'Tính năng đang phát triển');
   }
 
-  @override
-  void onInit() async {
-    // if (await hasLoggedIn()) {
-    //   _isLoggedIn.value = true;
-    //   update();
-    // }
-    super.onInit();
-  }
+  // @override
+  // void onInit() async {
+  //   if (await hasLoggedIn()) {
+  //     _isLoggedIn.value = true;
+  //     update();
+  //   }
+  //   super.onInit();
+  // }
 
   @override
   void dispose() {

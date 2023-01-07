@@ -17,7 +17,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   var showPassword = true;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Stack(
         children: [

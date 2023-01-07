@@ -98,7 +98,7 @@ class _LakeLevelEvolutionState extends State<LakeLevelEvolution> {
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [_SelectDate(), _SelectDate(fromDay: false)],
+                children: const [],
               ),
               const SizedBox(height: 15),
               Container(
@@ -123,112 +123,5 @@ class _LakeLevelEvolutionState extends State<LakeLevelEvolution> {
         ),
       ),
     );
-  }
-}
-
-class _SelectDate extends StatefulWidget {
-  const _SelectDate({super.key, this.restorationId, this.fromDay = true});
-
-  final String? restorationId;
-  final bool fromDay;
-
-  @override
-  State<_SelectDate> createState() => __SelectDateState();
-}
-
-/// RestorationProperty objects can be used because of RestorationMixin.
-class __SelectDateState extends State<_SelectDate> with RestorationMixin {
-  // In this example, the restoration ID for the mixin is passed in through
-  // the [StatefulWidget]'s constructor.
-  @override
-  String? get restorationId => widget.restorationId;
-
-  final RestorableDateTime _selectedDate =
-      RestorableDateTime(DateTime(2022, 1, 1));
-  late final RestorableRouteFuture<DateTime?> _restorableDatePickerRouteFuture =
-      RestorableRouteFuture<DateTime?>(
-    onComplete: __selectDate,
-    onPresent: (NavigatorState navigator, Object? arguments) {
-      return navigator.restorablePush(
-        _datePickerRoute,
-        arguments: _selectedDate.value.millisecondsSinceEpoch,
-      );
-    },
-  );
-
-  static Route<DateTime> _datePickerRoute(
-    BuildContext context,
-    Object? arguments,
-  ) {
-    return DialogRoute<DateTime>(
-      context: context,
-      builder: (BuildContext context) {
-        return DatePickerDialog(
-          restorationId: 'date_picker_dialog',
-          initialEntryMode: DatePickerEntryMode.calendarOnly,
-          initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
-          firstDate: DateTime(2021),
-          lastDate: DateTime(2023),
-        );
-      },
-    );
-  }
-
-  @override
-  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    registerForRestoration(_selectedDate, 'selected_date');
-    registerForRestoration(
-        _restorableDatePickerRouteFuture, 'date_picker_route_future');
-  }
-
-  void __selectDate(DateTime? newSelectedDate) {
-    if (newSelectedDate != null) {
-      setState(() {
-        _selectedDate.value = newSelectedDate;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          _restorableDatePickerRouteFuture.present();
-        },
-        child: Container(
-          width: 165,
-          height: 60,
-          padding: const EdgeInsets.all(5),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              border:
-                  Border.all(width: 1, color: Colors.black.withOpacity(0.5))),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                CupertinoIcons.calendar,
-                color: Colors.black.withOpacity(0.6),
-              ),
-              const SizedBox(width: 10),
-              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Container(
-                    child: Text(
-                  '${widget.fromDay == true ? 'Từ ngày' : 'Đến ngày'}: ',
-                  style: TextStyle(color: Colors.black.withOpacity(0.5)),
-                  overflow: TextOverflow.visible,
-                )),
-                const SizedBox(height: 5),
-                Container(
-                  child: Text(
-                      '${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}',
-                      style: TextStyle(color: Colors.black.withOpacity(0.6))),
-                )
-              ])
-            ],
-          ),
-        ));
   }
 }

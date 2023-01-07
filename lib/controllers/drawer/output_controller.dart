@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:test_chart/controllers/base_controller.dart';
 import 'package:test_chart/models/drawer/output/chart_out_put.dart';
 import 'package:get/get.dart';
@@ -58,7 +59,7 @@ class OutputController extends BaseController {
         }
       });
     } catch (e) {
-      print(e);
+      debugPrintStack();
     }
     hideLoading();
     update();
@@ -124,7 +125,7 @@ class OutputController extends BaseController {
             'Sản lượng nhà máy ${dropdownvalueFactory.toString()}');
       });
     } catch (e) {
-      print(e);
+      debugPrintStack();
     }
     update();
   }

@@ -28,7 +28,7 @@ class SelectDate extends StatelessWidget {
               ),
               const SizedBox(width: 5),
               Row(children: [
-                Container(
+                SizedBox(
                   child: Text(text!,
                       style: TextStyle(color: Colors.black.withOpacity(0.6))),
                 ),
