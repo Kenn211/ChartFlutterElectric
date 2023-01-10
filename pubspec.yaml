@@ -13,10 +13,10 @@ dependencies:
     sdk: flutter
   
   cupertino_icons: ^1.0.2
-  syncfusion_flutter_charts: ^20.3.59
+  syncfusion_flutter_charts: 
 
   # Local Storage
-  shared_preferences: ^2.0.15
+  shared_preferences: 
 
   #Call API
   http: ^0.13.5
@@ -24,7 +24,7 @@ dependencies:
   flutter_screenutil: ^5.6.0
 
   # State Management
-  get: ^4.6.5
+  get: 
 
   #
   intl: 

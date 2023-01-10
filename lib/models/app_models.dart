@@ -24,3 +24,6 @@ export 'drawer/source_plan/source_plan_model.dart';
 //Tonnage
 export 'drawer/tonnage/chart_dart_tonnage.dart';
 export 'drawer/tonnage/tonnage_model.dart';
+
+//Hydrological
+export 'drawer/hydrological/chart_hydrological.dart';

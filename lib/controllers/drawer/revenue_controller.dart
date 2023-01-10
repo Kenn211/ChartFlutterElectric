@@ -114,8 +114,10 @@ class RevenueController extends BaseController {
       _dataRsmp.value = [];
 
       await http
-          .get(Uri.parse(
-              "http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHANHTOAN_HANGNGAYByDay?NGAY=${formatDateAPIToday.toString()}&UNITID=${indexFactory.toInt()}"))
+          .get(
+        Uri.parse(
+            "http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHANHTOAN_HANGNGAYByDay?NGAY=${formatDateAPIToday.toString()}&UNITID=${indexFactory.toInt()}"),
+      )
           .then((value) {
         RevenueModel? revenueModelRes = revenueModelFromJson(value.body);
 

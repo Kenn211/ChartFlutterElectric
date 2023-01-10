@@ -12,11 +12,11 @@ class SelectDate extends StatelessWidget {
     return GestureDetector(
         onTap: onTap,
         child: Container(
-          height: 50,
+          height: 48,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              border: Border.all(width: 1, color: AppColors.secondColor)),
+              borderRadius: const BorderRadius.all(Radius.circular(4)),
+              border: Border.all(width: 2, color: AppColors.primaryColor)),
           child: Row(
             mainAxisAlignment: isStack == true
                 ? MainAxisAlignment.start
@@ -30,7 +30,7 @@ class SelectDate extends StatelessWidget {
               Row(children: [
                 SizedBox(
                   child: Text(text!,
-                      style: TextStyle(color: Colors.black.withOpacity(0.6))),
+                      style: TextStyle(color: AppColors.secondColor)),
                 ),
               ])
             ],

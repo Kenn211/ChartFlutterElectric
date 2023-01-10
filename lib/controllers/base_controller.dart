@@ -9,7 +9,8 @@ import '/shared/app_shared.dart';
 
 abstract class BaseController extends GetxController {
   //Table
-  TableRow buildRow(List<String> cells, {bool isHeader = false}) {
+  TableRow buildRow(List<String> cells,
+      {bool isHeader = false, bool isCate = false, double height = 40}) {
     final style = TextStyle(
       fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
       fontSize: 15,
@@ -18,10 +19,18 @@ abstract class BaseController extends GetxController {
     return TableRow(
         children: cells
             .map((cell) => Container(
-                  color: isHeader ? Colors.blue.shade200 : Colors.white,
+                  color: isHeader
+                      ? Colors.blue.shade200
+                      : isCate
+                          ? const Color.fromARGB(255, 216, 214, 214)
+                          : Colors.white,
                   alignment: Alignment.center,
-                  height: 40,
-                  child: Text(cell, style: style),
+                  height: height,
+                  child: Text(
+                    cell,
+                    textAlign: TextAlign.center,
+                    style: style,
+                  ),
                 ))
             .toList());
   }

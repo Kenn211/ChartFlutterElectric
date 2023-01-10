@@ -115,10 +115,12 @@ class _ItemDrawer extends StatelessWidget {
                     logout == true ? Colors.red : Colors.black.withOpacity(0.5),
               ),
               const SizedBox(width: 30),
-              Text(text,
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: logout == true ? Colors.red : Colors.black))
+              Text(
+                text,
+                style: TextStyle(
+                    fontSize: 15,
+                    color: logout == true ? Colors.red : Colors.black),
+              )
             ],
           ),
         ),

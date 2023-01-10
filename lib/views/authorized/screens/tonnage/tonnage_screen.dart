@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:test_chart/core.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/shared/widgets/select_date.dart';
 import 'package:intl/intl.dart';
 
 class TonnagePage extends GetView<TonnageController> {
@@ -85,25 +84,14 @@ class ChartTonnage extends StatelessWidget {
     return GetBuilder<TonnageController>(builder: (controller) {
       return SfCartesianChart(
         primaryXAxis: CategoryAxis(
-            labelStyle:
-                const TextStyle(fontSize: 12, color: Colors.transparent)),
-        trackballBehavior: TrackballBehavior(
-            enable: true,
-            lineWidth: 3,
-            tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-            lineColor: AppColors.secondColor,
-            activationMode: ActivationMode.singleTap,
-            markerSettings: const TrackballMarkerSettings(
-                markerVisibility: TrackballVisibilityMode.visible),
-            tooltipSettings: InteractiveTooltip(
-                canShowMarker: false,
-                format: 'series.name: point.y MW',
-                color: const Color.fromARGB(255, 181, 180, 180),
-                textStyle: TextStyle(color: AppColors.secondColor))),
-        legend: Legend(
-            isVisible: true,
-            alignment: ChartAlignment.center,
-            position: LegendPosition.bottom),
+          labelStyle: const TextStyle(fontSize: 12),
+        ),
+        primaryYAxis: NumericAxis(
+          numberFormat: NumberFormat.compact(),
+        ),
+        trackballBehavior:
+            const StyleChartCustom().trackball('series.name: point.y MW'),
+        legend: const StyleChartCustom().legend(),
         series: <ChartSeries<ChartDataTonnage, int>>[
           StackedAreaSeries<ChartDataTonnage, int>(
               dataLabelSettings: const DataLabelSettings(
@@ -137,37 +125,56 @@ class __DropDownSelectState extends State<_DropDownSelect> {
   final controller = Get.put(TonnageController());
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-          border: Border.all(width: 1, color: AppColors.secondColor)),
-      child: DropdownButton(
-          isExpanded: true,
-          underline: const SizedBox(width: 0),
-          value: controller.dropdownvalue,
-          focusColor: Colors.transparent,
-          // Down Arrow Icon
-          icon: Icon(Icons.keyboard_arrow_down, color: AppColors.primaryColor),
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-          dropdownColor: Colors.blue.shade200,
-          // Array list of items
-          items: controller.ragion.map((String items) {
-            return DropdownMenuItem(
-              value: items,
-              child: Text(items,
-                  style: TextStyle(color: Colors.black.withOpacity(0.5))),
-            );
-          }).toList(),
-          // After selecting the desired option,it will
-          // change button value to selected value
-          onChanged: (String? newValue) {
-            setState(() {
-              controller.dropdownvalue = newValue!;
-            });
-          }),
-    );
+    return DropdownButtonFormField(
+        decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.primaryColor,
+              width: 2,
+            ),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.primaryColor,
+              width: 2,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.primaryColor, width: 2.0),
+          ),
+          errorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+          ),
+        ),
+        style: TextStyle(
+            color: AppColors.secondColor, //<-- SEE HERE
+            fontSize: 16,
+            fontWeight: FontWeight.bold),
+        isExpanded: true,
+        value: controller.dropdownvalue,
+        focusColor: Colors.transparent,
+        // Down Arrow Icon
+        icon: Icon(Icons.keyboard_arrow_down, color: AppColors.primaryColor),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        dropdownColor: const Color.fromARGB(255, 253, 254, 253),
+        // Array list of items
+        items: controller.ragion.map((String items) {
+          return DropdownMenuItem(
+            value: items,
+            child: Text(
+              items,
+            ),
+          );
+        }).toList(),
+        // After selecting the desired option,it will
+        // change button value to selected value
+        onChanged: (String? newValue) {
+          setState(() {
+            controller.dropdownvalue = newValue!;
+          });
+        });
   }
 }
 
@@ -178,19 +185,22 @@ class _TableTonnage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<TonnageController>(builder: (controller) {
       return Table(
-          border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
-          children: [
-            controller.buildRow(['CK', 'Chu kì tới (IAH)', 'Ngày tới (DAH)'],
-                isHeader: true),
-            for (var e = 0; e < controller.dataChartCk.length; e++)
-              controller.buildRow([
+        border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
+        children: [
+          controller.buildRow(['CK', 'Chu kì tới (IAH)', 'Ngày tới (DAH)'],
+              isHeader: true),
+          for (var e = 0; e < controller.dataChartCk.length; e++)
+            controller.buildRow(
+              [
                 '${controller.dataChartCk[e].x}',
                 '${controller.dataChartCk[e].y2}',
                 controller.dataChartDay.length <= e
                     ? ''
                     : controller.dataChartDay[e].y1.toString()
-              ])
-          ]);
+              ],
+            )
+        ],
+      );
     });
   }
 }

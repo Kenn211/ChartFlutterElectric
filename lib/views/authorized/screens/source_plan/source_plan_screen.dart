@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:test_chart/core.dart';
-import 'package:test_chart/shared/widgets/select_date.dart';
 import 'package:intl/intl.dart';
 
 class SourcePlanScreen extends GetView<SourcePlanController> {
@@ -79,7 +78,7 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
                       ])),
               const SizedBox(height: 20),
               const _ChartSourcePlanIAH(),
-              Row(children: const [_TableSourcePlanIAH()]),
+              const _TableSourcePlanIAH(),
               const SizedBox(height: 20),
               const _ChartSourcePlanDAH(),
               const _TableSourcePlanDAH()
@@ -101,24 +100,11 @@ class _ChartSourcePlanIAH extends StatelessWidget {
             textStyle:
                 const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
         primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),
+        primaryYAxis: NumericAxis(numberFormat: NumberFormat.compact()),
         zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
-        legend: Legend(
-            isVisible: true,
-            alignment: ChartAlignment.center,
-            position: LegendPosition.bottom),
-        trackballBehavior: TrackballBehavior(
-            enable: true,
-            lineWidth: 3,
-            tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-            lineColor: AppColors.secondColor,
-            activationMode: ActivationMode.singleTap,
-            markerSettings: const TrackballMarkerSettings(
-                markerVisibility: TrackballVisibilityMode.visible),
-            tooltipSettings: InteractiveTooltip(
-                canShowMarker: false,
-                format: 'series.name: point.y MW',
-                color: const Color.fromARGB(255, 181, 180, 180),
-                textStyle: TextStyle(color: AppColors.secondColor))),
+        legend: const StyleChartCustom().legend(),
+        trackballBehavior:
+            const StyleChartCustom().trackball('series.name: point.y MW'),
         series: [
           for (var i = 0; i < controller.dataToMayIAH.length; i++)
             SplineSeries(
@@ -146,30 +132,19 @@ class _ChartSourcePlanDAH extends StatelessWidget {
             text: 'Biểu đồ huy động công suất ngày tới nhà máy điện',
             textStyle:
                 const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-        legend: Legend(
-            isVisible: true,
-            alignment: ChartAlignment.center,
-            position: LegendPosition.bottom),
-        zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
         primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),
-        trackballBehavior: TrackballBehavior(
-            enable: true,
-            lineWidth: 3,
-            tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-            lineColor: AppColors.secondColor,
-            activationMode: ActivationMode.singleTap,
-            markerSettings: const TrackballMarkerSettings(
-                markerVisibility: TrackballVisibilityMode.visible),
-            tooltipSettings: InteractiveTooltip(
-                canShowMarker: false,
-                format: 'series.name: point.y MW',
-                color: const Color.fromARGB(255, 181, 180, 180),
-                textStyle: TextStyle(color: AppColors.secondColor))),
+        primaryYAxis: NumericAxis(numberFormat: NumberFormat.compact()),
+        zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
+        legend: const StyleChartCustom().legend(),
+        trackballBehavior:
+            const StyleChartCustom().trackball('series.name: point.y MW'),
         series: [
           for (var i = 0; i < controller.dataToMayDAH.length; i++)
             SplineSeries(
               dataLabelSettings: const DataLabelSettings(
-                  isVisible: false, useSeriesColor: true),
+                isVisible: false,
+                useSeriesColor: true,
+              ),
               dataSource: controller.dataToMayDAH[i].chuky,
               name: controller.dataToMayDAH[i].tenTm,
               xValueMapper: (data, _) => 'CK ${data.chuKyDesc.toString()}',
@@ -191,43 +166,61 @@ class _DropDownSelect extends StatefulWidget {
 class __DropDownSelectState extends State<_DropDownSelect> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: double.infinity,
-        height: 50,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
-            border: Border.all(width: 1, color: AppColors.secondColor)),
-        child: GetBuilder<SourcePlanController>(builder: (controller) {
-          return DropdownButton(
-              underline: const SizedBox(width: 0),
-              value: controller.dropdownvalueFactory,
-              focusColor: Colors.transparent,
-              // Down Arrow Icon
-              icon: Container(
-                alignment: Alignment.centerRight,
-                child: Icon(Icons.keyboard_arrow_down,
-                    color: AppColors.primaryColor),
+    return GetBuilder<SourcePlanController>(builder: (controller) {
+      return DropdownButtonFormField(
+          decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.primaryColor,
+                width: 2,
               ),
-              isExpanded: true,
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              dropdownColor: Colors.blue.shade200,
-              // Array list of items
-              items: controller.listFactory.map((String items) {
-                return DropdownMenuItem(
-                  value: items,
-                  child: Text(items,
-                      style: TextStyle(color: Colors.black.withOpacity(0.5))),
-                );
-              }).toList(),
-              // After selecting the desired option,it will
-              // change button value to selected value
-              onChanged: (String? newValue) {
-                setState(() {
-                  controller.dropdownvalueFactory = newValue!;
-                });
-              });
-        }));
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.primaryColor,
+                width: 2,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.primaryColor, width: 2.0),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+            ),
+          ),
+          style: TextStyle(
+              color: AppColors.secondColor, //<-- SEE HERE
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
+          value: controller.dropdownvalueFactory,
+          focusColor: Colors.transparent,
+          // Down Arrow Icon
+          icon: Container(
+            alignment: Alignment.centerRight,
+            child:
+                Icon(Icons.keyboard_arrow_down, color: AppColors.primaryColor),
+          ),
+          isExpanded: true,
+          dropdownColor: const Color.fromARGB(255, 253, 254, 253),
+          // Array list of items
+          items: controller.listFactory.map((String items) {
+            return DropdownMenuItem(
+              value: items,
+              child: Text(
+                items,
+              ),
+            );
+          }).toList(),
+          // After selecting the desired option,it will
+          // change button value to selected value
+          onChanged: (String? newValue) {
+            setState(() {
+              controller.dropdownvalueFactory = newValue!;
+            });
+          });
+    });
   }
 }
 
@@ -278,18 +271,7 @@ class _TableSourcePlanIAH extends StatelessWidget {
         child: Table(
             border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
             children: [
-              controller.buildRow([
-                'CK',
-                '00:30',
-              ], isHeader: true),
-              // for (var e = 0; e < controller.dataChartCentralDAH.length; e++)
-              //   controller.buildRow([
-              //     '${controller.dataTableIAH[e].ck}',
-              //     '${controller.dataChartNorthDAH[e].y1}',
-              //     '${controller.dataChartCentralDAH[e].y2}',
-              //     '${controller.dataChartSouthDAH[e].y3}',
-              //     '${controller.dataChartNationDAH[e].y4}'
-              //   ])
+              // for(var i = 0; i < controller.dataToMayIAH.length; i++)
             ]),
       );
     });

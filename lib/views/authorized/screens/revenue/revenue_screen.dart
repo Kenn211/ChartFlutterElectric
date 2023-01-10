@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:test_chart/core.dart';
-import 'package:test_chart/shared/widgets/select_date.dart';
 import 'package:intl/intl.dart';
 
 class RevenueScreen extends GetView<RevenueController> {
@@ -23,9 +22,8 @@ class RevenueScreen extends GetView<RevenueController> {
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
-            const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -52,7 +50,8 @@ class RevenueScreen extends GetView<RevenueController> {
             const SizedBox(height: 20),
             const _ChartRevenue(),
             const SizedBox(height: 20),
-            const _TableRevenue()
+            const _TableRevenue(),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -71,28 +70,12 @@ class _ChartRevenue extends StatelessWidget {
               text: 'Biểu đồ Doanh thu ngày',
               textStyle:
                   const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-          primaryYAxis: CategoryAxis(isVisible: false),
           primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),
+          primaryYAxis: NumericAxis(numberFormat: NumberFormat.compact()),
           zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
-          legend: Legend(
-              isVisible: true,
-              isResponsive: true,
-              shouldAlwaysShowScrollbar: true,
-              alignment: ChartAlignment.center,
-              position: LegendPosition.bottom),
-          trackballBehavior: TrackballBehavior(
-              enable: true,
-              lineWidth: 3,
-              tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-              lineColor: AppColors.secondColor,
-              activationMode: ActivationMode.singleTap,
-              markerSettings: const TrackballMarkerSettings(
-                  markerVisibility: TrackballVisibilityMode.visible),
-              tooltipSettings: InteractiveTooltip(
-                  canShowMarker: false,
-                  format: 'series.name: point.y đồng/kWh',
-                  color: const Color.fromARGB(255, 181, 180, 180),
-                  textStyle: TextStyle(color: AppColors.secondColor))),
+          legend: const StyleChartCustom().legend(),
+          trackballBehavior: const StyleChartCustom()
+              .trackball('series.name: point.y đồng/kWh'),
           series: <ChartSeries<ChartRevenue, String>>[
             StackedColumnSeries<ChartRevenue, String>(
                 groupName: 'Group A',
@@ -146,44 +129,63 @@ class _DropDownSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: double.infinity,
-        height: 50,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
-            border: Border.all(width: 1, color: AppColors.secondColor)),
-        child: GetBuilder<RevenueController>(builder: (controller) {
-          return DropdownButton(
-              menuMaxHeight: 400,
-              underline: const SizedBox(width: 0),
-              value: controller.dropdownvalueFactory,
-              focusColor: Colors.transparent,
-              // Down Arrow Icon
-              icon: Container(
-                alignment: Alignment.centerRight,
-                child: Icon(Icons.keyboard_arrow_down,
-                    color: AppColors.primaryColor),
+    return GetBuilder<RevenueController>(builder: (controller) {
+      return DropdownButtonFormField(
+          decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.primaryColor,
+                width: 2,
               ),
-              isExpanded: true,
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              dropdownColor: Colors.blue.shade200,
-              // Array list of items
-              items: controller.listFactory.map((String items) {
-                return DropdownMenuItem(
-                  value: items,
-                  child: Text(items,
-                      style: TextStyle(color: Colors.black.withOpacity(0.5))),
-                );
-              }).toList(),
-              // After selecting the desired option,it will
-              // change button value to selected value
-              onChanged: (String? newValue) {
-                controller.dropdownvalueFactory = newValue!;
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.primaryColor,
+                width: 2,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.primaryColor, width: 2.0),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+            ),
+          ),
+          style: TextStyle(
+              color: AppColors.secondColor, //<-- SEE HERE
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
+          menuMaxHeight: 400,
+          value: controller.dropdownvalueFactory,
+          focusColor: Colors.transparent,
+          // Down Arrow Icon
+          icon: Container(
+            alignment: Alignment.centerRight,
+            child:
+                Icon(Icons.keyboard_arrow_down, color: AppColors.primaryColor),
+          ),
+          isExpanded: true,
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          dropdownColor: const Color.fromARGB(255, 253, 254, 253),
+          // Array list of items
+          items: controller.listFactory.map((String items) {
+            return DropdownMenuItem(
+              value: items,
+              child: Text(
+                items,
+              ),
+            );
+          }).toList(),
+          // After selecting the desired option,it will
+          // change button value to selected value
+          onChanged: (String? newValue) {
+            controller.dropdownvalueFactory = newValue!;
 
-                (context as Element).markNeedsBuild(); //Trick setState in Stl
-              });
-        }));
+            (context as Element).markNeedsBuild(); //Trick setState in Stl
+          });
+    });
   }
 }
 
@@ -204,23 +206,49 @@ class _TableRevenue extends StatelessWidget {
             controller.buildRow(
                 ['Mục', 'Khoản thanh toán', 'Thành tiền (đồng)'],
                 isHeader: true),
-            controller.buildRow(['I', 'TTT', controller.thanhToanI.toString()]),
-            controller
-                .buildRow(['1', 'TTT', controller.thanhToanI1.toString()]),
-            controller
-                .buildRow(['2', 'TTT', controller.thanhToanI2.toString()]),
-            controller
-                .buildRow(['3', 'TTT', controller.thanhToanI3.toString()]),
-            controller
-                .buildRow(['4', 'TTT', controller.thanhToanI4.toString()]),
-            controller
-                .buildRow(['II', 'TTT', controller.thanhToanII.toString()]),
-            controller
-                .buildRow(['III', 'TTT', controller.thanhToanIII.toString()]),
-            controller
-                .buildRow(['IV', 'TTT', controller.thanhToanIV.toString()]),
-            controller
-                .buildRow(['', 'Tổng cộng', controller.sumPay.toString()]),
+            controller.buildRow([
+              'I',
+              'Thanh toán điện năng thị trường (= 1 + 2 + 3 + 4)',
+              controller.thanhToanI.toString()
+            ], height: 100),
+            controller.buildRow([
+              '1',
+              'Khoản thanh toán tính theo giá điện năng thị trường',
+              controller.thanhToanI1.toString()
+            ], height: 100, isCate: true),
+            controller.buildRow([
+              '2',
+              'Khoản thanh toán tính theo giá chào',
+              controller.thanhToanI2.toString()
+            ], height: 100),
+            controller.buildRow([
+              '3',
+              'Khoản thanh toán cho phần sản lượng tăng thêm',
+              controller.thanhToanI3.toString()
+            ], height: 100, isCate: true),
+            controller.buildRow([
+              '4',
+              'Khoản thanh toán cho phần sản lượng phát sai khác so với sản lượng điện năng huy động theo lệnh điều độ',
+              controller.thanhToanI4.toString()
+            ], height: 100),
+            controller.buildRow([
+              'II',
+              'Thanh toán công suất thị trường',
+              controller.thanhToanII.toString()
+            ], height: 100, isCate: true),
+            controller.buildRow([
+              'III',
+              'Thanh toán cho dịch vụ dự phòng điều chỉnh tần số',
+              controller.thanhToanIII.toString()
+            ], height: 100),
+            controller.buildRow(
+                ['IV', 'Thanh toán khác', controller.thanhToanIV.toString()],
+                height: 100, isCate: true),
+            controller.buildRow([
+              '',
+              'Tổng cộng ( = I + II + III + IV)',
+              controller.sumPay.toString()
+            ], height: 100),
           ]);
     });
   }

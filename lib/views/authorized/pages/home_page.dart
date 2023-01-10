@@ -9,32 +9,22 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    bool changeFlag = true;
-
     return Scaffold(
       key: controller.scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
         flexibleSpace: AppBarCustom(
-            title: 'home'.tr,
-            leading: IconButton(
-              onPressed: () {
-                controller.openDrawer();
-              },
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-              color: AppColors.secondColor,
-              icon: const Icon(Icons.menu_rounded),
-            ),
-            actions: GestureDetector(
-              onTap: () {
-                controller.handleChangeLang();
-                changeFlag = !changeFlag;
-              },
-              child: changeFlag == true
-                  ? Image.asset(Assets.icFlagVn)
-                  : Image.asset(Assets.icFlagUSA),
-            )),
+          title: 'home'.tr,
+          leading: IconButton(
+            onPressed: () {
+              controller.openDrawer();
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            color: AppColors.secondColor,
+            icon: const Icon(Icons.menu_rounded),
+          ),
+        ),
       ),
       drawer: const MainDrawer(),
       body: SingleChildScrollView(
@@ -68,9 +58,6 @@ class HomePage extends GetView<HomeController> {
                     colorBackground: AppColors.secondColor,
                     text: 'currentCapacity'.tr,
                     numData: '150 MW',
-                    onTap: () {
-                      Get.to(const LakeLevelEvolution());
-                    },
                     icon: CupertinoIcons.chart_bar,
                   ),
                   _ItemDisplayBody(
@@ -78,9 +65,6 @@ class HomePage extends GetView<HomeController> {
                     text: 'waterlevel'.tr,
                     numData: '150 m',
                     icon: CupertinoIcons.bars,
-                    onTap: () {
-                      controller.featureDeveloping();
-                    },
                   ),
                 ],
               ),
@@ -144,62 +128,58 @@ class HomePage extends GetView<HomeController> {
 }
 
 class _ItemDisplayBody extends StatelessWidget {
-  const _ItemDisplayBody(
-      {required this.colorBackground,
-      required this.text,
-      required this.numData,
-      this.icon,
-      this.onTap});
+  const _ItemDisplayBody({
+    required this.colorBackground,
+    required this.text,
+    required this.numData,
+    this.icon,
+  });
 
   final Color colorBackground;
   final String text, numData;
   final IconData? icon;
-  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap ?? () {},
-      child: Container(
-        width: 150,
-        padding: const EdgeInsets.all(12),
-        height: 150,
-        decoration: BoxDecoration(
-            color: colorBackground,
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 1,
-                blurRadius: 3,
-                offset: const Offset(0, 3), // changes position of shadow
-              ),
-            ]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                text,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
-              ),
+    return Container(
+      width: 150,
+      padding: const EdgeInsets.all(12),
+      height: 150,
+      decoration: BoxDecoration(
+          color: colorBackground,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: const Offset(0, 3), // changes position of shadow
             ),
-            const SizedBox(height: 30),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(numData,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600)),
+          ]),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              text,
+              style: const TextStyle(color: Colors.white, fontSize: 12),
             ),
-            Container(
-              alignment: Alignment.bottomRight,
-              child: Icon(icon, size: 45, color: Colors.white.withOpacity(0.5)),
-            )
-          ],
-        ),
+          ),
+          const SizedBox(height: 30),
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Text(numData,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600)),
+          ),
+          Container(
+            alignment: Alignment.bottomRight,
+            child: Icon(icon, size: 45, color: Colors.white.withOpacity(0.5)),
+          )
+        ],
       ),
     );
   }

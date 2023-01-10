@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:test_chart/core.dart';
-import 'package:test_chart/shared/widgets/select_date.dart';
 import 'package:intl/intl.dart';
 
 class MarginalPriceScreen extends GetView<MarginalPriceController> {
@@ -117,30 +116,14 @@ class _ChartColumnIAH extends StatelessWidget {
       builder: (controller) {
         return SfCartesianChart(
             primaryXAxis: CategoryAxis(
-                labelStyle:
-                    const TextStyle(fontSize: 12, color: Colors.transparent)),
-            legend: Legend(
-                isVisible: true,
-                alignment: ChartAlignment.center,
-                shouldAlwaysShowScrollbar: true,
-                position: LegendPosition.bottom),
-            trackballBehavior: TrackballBehavior(
-                enable: true,
-                lineWidth: 3,
-                tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-                tooltipAlignment: ChartAlignment.center,
-                lineColor: AppColors.secondColor,
-                hideDelay: 1,
-                activationMode: ActivationMode.singleTap,
-                markerSettings: const TrackballMarkerSettings(
-                    height: 10,
-                    width: 10,
-                    markerVisibility: TrackballVisibilityMode.visible),
-                tooltipSettings: InteractiveTooltip(
-                    canShowMarker: false,
-                    format: 'series.name: point.y đồng/kWh',
-                    color: const Color.fromARGB(255, 181, 180, 180),
-                    textStyle: TextStyle(color: AppColors.secondColor))),
+              labelStyle: const TextStyle(fontSize: 12),
+            ),
+            primaryYAxis: NumericAxis(
+              numberFormat: NumberFormat.compact(),
+            ),
+            trackballBehavior:
+                const StyleChartCustom().trackball('series.name: point.y MW'),
+            legend: const StyleChartCustom().legend(),
             series: <ChartSeries<ChartData, String>>[
               SplineSeries<ChartData, String>(
                   markerSettings: const MarkerSettings(isVisible: false),
@@ -184,30 +167,15 @@ class _ChartColumnDAH extends StatelessWidget {
     return GetBuilder<MarginalPriceController>(
       builder: (controller) {
         return SfCartesianChart(
-          legend: Legend(
-              isVisible: true,
-              shouldAlwaysShowScrollbar: true,
-              alignment: ChartAlignment.center,
-              position: LegendPosition.bottom),
-          trackballBehavior: TrackballBehavior(
-              enable: true,
-              lineWidth: 3,
-              tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-              tooltipAlignment: ChartAlignment.center,
-              lineColor: AppColors.secondColor,
-              activationMode: ActivationMode.singleTap,
-              markerSettings: const TrackballMarkerSettings(
-                  height: 10,
-                  width: 10,
-                  markerVisibility: TrackballVisibilityMode.visible),
-              tooltipSettings: InteractiveTooltip(
-                  canShowMarker: false,
-                  format: 'series.name: point.y đồng/kWh',
-                  color: const Color.fromARGB(255, 181, 180, 180),
-                  textStyle: TextStyle(color: AppColors.secondColor))),
           primaryXAxis: CategoryAxis(
-              labelStyle:
-                  const TextStyle(fontSize: 12, color: Colors.transparent)),
+            labelStyle: const TextStyle(fontSize: 12),
+          ),
+          primaryYAxis: NumericAxis(
+            numberFormat: NumberFormat.compact(),
+          ),
+          trackballBehavior:
+              const StyleChartCustom().trackball('series.name: point.y MW'),
+          legend: const StyleChartCustom().legend(),
           series: <ChartSeries<ChartData, String>>[
             SplineSeries<ChartData, String>(
                 markerSettings: const MarkerSettings(isVisible: false),

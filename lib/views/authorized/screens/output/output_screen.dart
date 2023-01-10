@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:test_chart/controllers/drawer/output_controller.dart';
-import 'package:test_chart/models/drawer/output/chart_out_put.dart';
-import 'package:test_chart/shared/constants/colors.dart';
-import 'package:test_chart/shared/widgets/app_bar_custom.dart';
-import 'package:test_chart/shared/widgets/select_date.dart';
-import 'package:test_chart/shared/widgets/txt_button.dart';
+import 'package:test_chart/core.dart';
 import 'package:intl/intl.dart';
 
 class OutputScreen extends GetView<OutputController> {
@@ -93,43 +88,61 @@ class _DropDownSelect extends StatefulWidget {
 class __DropDownSelectState extends State<_DropDownSelect> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: double.infinity,
-        height: 50,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
-            border: Border.all(width: 1, color: AppColors.secondColor)),
-        child: GetBuilder<OutputController>(builder: (controller) {
-          return DropdownButton(
-              underline: const SizedBox(width: 0),
-              value: controller.dropdownvalueFactory,
-              focusColor: Colors.transparent,
-              // Down Arrow Icon
-              icon: Container(
-                alignment: Alignment.centerRight,
-                child: Icon(Icons.keyboard_arrow_down,
-                    color: AppColors.primaryColor),
+    return GetBuilder<OutputController>(builder: (controller) {
+      return DropdownButtonFormField(
+          decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.primaryColor,
+                width: 2,
               ),
-              isExpanded: true,
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              dropdownColor: Colors.blue.shade200,
-              // Array list of items
-              items: controller.listFactory.map((String items) {
-                return DropdownMenuItem(
-                  value: items,
-                  child: Text(items,
-                      style: TextStyle(color: Colors.black.withOpacity(0.5))),
-                );
-              }).toList(),
-              // After selecting the desired option,it will
-              // change button value to selected value
-              onChanged: (String? newValue) {
-                setState(() {
-                  controller.dropdownvalueFactory = newValue!;
-                });
-              });
-        }));
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.primaryColor,
+                width: 2,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.primaryColor, width: 2.0),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+            ),
+          ),
+          style: TextStyle(
+              color: AppColors.secondColor, //<-- SEE HERE
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
+          value: controller.dropdownvalueFactory,
+          focusColor: Colors.transparent,
+          // Down Arrow Icon
+          icon: Container(
+            alignment: Alignment.centerRight,
+            child:
+                Icon(Icons.keyboard_arrow_down, color: AppColors.primaryColor),
+          ),
+          isExpanded: true,
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          dropdownColor: const Color.fromARGB(255, 253, 254, 253),
+          // Array list of items
+          items: controller.listFactory.map((String items) {
+            return DropdownMenuItem(
+                value: items,
+                child: Text(
+                  items,
+                ));
+          }).toList(),
+          // After selecting the desired option,it will
+          // change button value to selected value
+          onChanged: (String? newValue) {
+            setState(() {
+              controller.dropdownvalueFactory = newValue!;
+            });
+          });
+    });
   }
 }
 
@@ -142,29 +155,20 @@ class _ChartOutPut extends StatelessWidget {
       return SfCartesianChart(
           title: ChartTitle(
               text: 'Biểu đồ CAN & SMP',
-              textStyle:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-          primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),
+              textStyle: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              )),
+          primaryXAxis: CategoryAxis(
+            labelStyle: const TextStyle(fontSize: 12),
+          ),
+          primaryYAxis: NumericAxis(
+            numberFormat: NumberFormat.compact(),
+          ),
           zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
-          legend: Legend(
-              isVisible: true,
-              isResponsive: true,
-              shouldAlwaysShowScrollbar: true,
-              alignment: ChartAlignment.center,
-              position: LegendPosition.bottom),
-          trackballBehavior: TrackballBehavior(
-              enable: true,
-              lineWidth: 3,
-              tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-              lineColor: AppColors.secondColor,
-              activationMode: ActivationMode.singleTap,
-              markerSettings: const TrackballMarkerSettings(
-                  markerVisibility: TrackballVisibilityMode.visible),
-              tooltipSettings: InteractiveTooltip(
-                  canShowMarker: false,
-                  format: 'series.name: point.y đồng/kWh',
-                  color: const Color.fromARGB(255, 181, 180, 180),
-                  textStyle: TextStyle(color: AppColors.secondColor))),
+          legend: const StyleChartCustom().legend(),
+          trackballBehavior: const StyleChartCustom()
+              .trackball('series.name: point.y đồng/kWh'),
           series: <ChartSeries<ChartOutput, String>>[
             StackedColumnSeries<ChartOutput, String>(
                 groupName: 'Group A',
@@ -201,31 +205,23 @@ class _ChartOutPutQMQ extends StatelessWidget {
   const _ChartOutPutQMQ({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<OutputController>(builder: (controller) {
-      return SfCartesianChart(
+    return GetBuilder<OutputController>(
+      builder: (controller) {
+        return SfCartesianChart(
           title: ChartTitle(
               text: 'Biểu đồ QMQ & Qlltt',
               textStyle:
                   const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-          primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),
+          primaryXAxis: CategoryAxis(
+            labelStyle: const TextStyle(fontSize: 12),
+          ),
+          primaryYAxis: NumericAxis(
+            numberFormat: NumberFormat.compact(),
+          ),
           zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
-          legend: Legend(
-              isVisible: true,
-              alignment: ChartAlignment.center,
-              position: LegendPosition.bottom),
-          trackballBehavior: TrackballBehavior(
-              enable: true,
-              lineWidth: 3,
-              tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-              lineColor: AppColors.secondColor,
-              activationMode: ActivationMode.singleTap,
-              markerSettings: const TrackballMarkerSettings(
-                  markerVisibility: TrackballVisibilityMode.visible),
-              tooltipSettings: InteractiveTooltip(
-                  canShowMarker: false,
-                  format: 'series.name: point.y MWh',
-                  color: const Color.fromARGB(255, 181, 180, 180),
-                  textStyle: TextStyle(color: AppColors.secondColor))),
+          legend: const StyleChartCustom().legend(),
+          trackballBehavior: const StyleChartCustom()
+              .trackball('series.name: point.y đồng/kWh'),
           series: <ChartSeries<ChartOutput, String>>[
             SplineSeries<ChartOutput, String>(
               markerSettings: const MarkerSettings(isVisible: false),
@@ -241,7 +237,9 @@ class _ChartOutPutQMQ extends StatelessWidget {
               yValueMapper: (ChartOutput data, _) => data.qlltt,
               name: 'Qlltt',
             ),
-          ]);
-    });
+          ],
+        );
+      },
+    );
   }
 }
