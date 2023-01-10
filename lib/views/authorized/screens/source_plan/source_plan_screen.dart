@@ -48,15 +48,14 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
                                   fontWeight: FontWeight.w500, fontSize: 18)),
                         ),
                         const SizedBox(height: 10),
+
+                        ///Select Date
                         Obx(() {
                           return SelectDate(
-                            text: DateFormat("dd-MM-yyyy")
-                                .format(controller.selectedDateTime.value)
-                                .toString(),
-                            onTap: () {
-                              controller.chooseDate();
-                            },
-                          );
+                              text: DateFormat("dd-MM-yyyy")
+                                  .format(controller.selectedDateTime.value)
+                                  .toString(),
+                              onTap: controller.chooseDate);
                         }),
                         const SizedBox(height: 10),
                         Row(
@@ -75,9 +74,7 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
                           height: 50,
                           child: Button(
                               text: 'Lấy dữ liệu',
-                              onTap: () {
-                                controller.getDisplayData();
-                              }),
+                              onTap: controller.getDisplayData),
                         ),
                       ])),
               const SizedBox(height: 20),
@@ -192,7 +189,6 @@ class _DropDownSelect extends StatefulWidget {
 }
 
 class __DropDownSelectState extends State<_DropDownSelect> {
-  final controller = Get.put(SourcePlanController());
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:test_chart/core.dart';
-import 'package:test_chart/models/drawer/marginal_price/chart_data.dart';
 import 'package:test_chart/shared/widgets/select_date.dart';
 import 'package:intl/intl.dart';
 

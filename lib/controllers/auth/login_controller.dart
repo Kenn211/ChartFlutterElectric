@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:test_chart/controllers/base_controller.dart';
 import 'package:test_chart/core.dart';
-import 'package:test_chart/models/auth/authen_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:test_chart/models/base_url.dart';
 import 'package:test_chart/routes/helpers/route_helper.dart';

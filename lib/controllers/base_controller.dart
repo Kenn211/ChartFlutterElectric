@@ -27,9 +27,9 @@ abstract class BaseController extends GetxController {
   }
 
   //DateTime picker
-  var selectedDateTime = DateTime.now().obs;
-  var formatDateAPIToday = '';
-  var formatDateAPITomorrow = '';
+  Rx<DateTime> selectedDateTime = DateTime.now().obs;
+  String formatDateAPIToday = '';
+  String formatDateAPITomorrow = '';
 
   chooseDate() async {
     DateTime? pickedDate = await showDatePicker(
