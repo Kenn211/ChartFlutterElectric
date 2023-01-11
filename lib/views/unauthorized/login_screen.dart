@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:test_chart/controllers/auth/login_controller.dart';
-import 'package:test_chart/routes/app_routes.dart';
 import 'package:test_chart/shared/constants/local_images_path.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/shared/widgets/txt_button.dart';
@@ -134,18 +133,18 @@ class __FormLoginState extends State<_FormLogin> {
               ],
             ),
           ),
-          const SizedBox(height: 10),
-          const SizedBox(
-            width: double.infinity,
-            child: Text(
-              'Quên mật khẩu?',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 15,
-                  color: Color.fromARGB(255, 63, 160, 239),
-                  fontWeight: FontWeight.w400),
-            ),
-          ),
+          // const SizedBox(height: 10),
+          // const SizedBox(
+          //   width: double.infinity,
+          //   child: Text(
+          //     'Quên mật khẩu?',
+          //     textAlign: TextAlign.center,
+          //     style: TextStyle(
+          //         fontSize: 15,
+          //         color: Color.fromARGB(255, 63, 160, 239),
+          //         fontWeight: FontWeight.w400),
+          //   ),
+          // ),
           const SizedBox(height: 10),
           SizedBox(
             height: 50,
@@ -154,29 +153,29 @@ class __FormLoginState extends State<_FormLogin> {
                 showIcon: false,
                 onTap: controller.submitLogin),
           ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                child: Text('Bạn không có tài khoản?'),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 15),
-                child: TextButton(
-                  child: Text('register'.tr,
-                      style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w500)),
-                  onPressed: () {
-                    Get.toNamed(Routes.register);
-                  },
-                ),
-              )
-            ],
-          )
+          // const SizedBox(height: 10),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     const SizedBox(
+          //       child: Text('Bạn không có tài khoản?'),
+          //     ),
+          //     Container(
+          //       margin: const EdgeInsets.only(left: 15),
+          //       child: TextButton(
+          //         child: Text('register'.tr,
+          //             style: const TextStyle(
+          //                 fontSize: 18,
+          //                 color: Colors.blue,
+          //                 fontWeight: FontWeight.w500)),
+          //         onPressed: () {
+          //           Get.toNamed(Routes.register);
+          //         },
+          //       ),
+          //     )
+          //   ],
+          // )
         ],
       ),
     );

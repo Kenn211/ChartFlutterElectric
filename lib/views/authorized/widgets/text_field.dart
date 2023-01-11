@@ -2,8 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatefulWidget {
-  const TextFieldWidget(
-      {super.key, this.TextController, this.text, this.inputPass});
+  const TextFieldWidget({
+    super.key,
+    this.TextController,
+    this.text,
+    this.inputPass,
+  });
 
   final TextEditingController? TextController;
   final String? text;
@@ -25,7 +29,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             controller: widget.TextController,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              hintText: widget.text,
+              labelText: widget.text,
             ),
             obscureText: showPassword,
           ),
