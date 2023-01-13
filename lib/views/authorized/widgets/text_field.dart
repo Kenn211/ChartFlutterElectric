@@ -2,23 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatefulWidget {
-  const TextFieldWidget({
-    super.key,
-    this.TextController,
-    this.text,
-    this.inputPass,
-  });
+  const TextFieldWidget(
+      {super.key,
+      this.TextController,
+      this.text,
+      this.inputPass,
+      this.actionInput,
+      this.focusNode});
 
   final TextEditingController? TextController;
   final String? text;
   final bool? inputPass;
+  final TextInputAction? actionInput;
+  final FocusNode? focusNode;
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
 }
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
-  var showPassword = true;
+  bool showPassword = true;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -26,6 +29,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       child: Stack(
         children: [
           TextField(
+            focusNode: widget.focusNode,
+            textInputAction: widget.actionInput,
             controller: widget.TextController,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),

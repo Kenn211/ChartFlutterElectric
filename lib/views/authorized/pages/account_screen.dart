@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/core.dart';
-import 'package:test_chart/views/authorized/widgets/text_field.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 class AccountScreen extends GetView<AccountController> {
   const AccountScreen({super.key});
@@ -137,45 +137,60 @@ class BottomSheetExample extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
-                      child: Column(
-                        children: <Widget>[
-                          const Text(
-                            'Đổi mật khẩu',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                      child: KeyboardActions(
+                        config: controller.buildKeyboardActionsConfig(context),
+                        child: ListView(
+                          children: <Widget>[
+                            const Text(
+                              'Đổi mật khẩu',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 30),
-                          SizedBox(
-                              height: 50,
-                              child: TextFieldWidget(
-                                inputPass: true,
-                                text: 'Mật khẩu',
-                                TextController:
-                                    controller.oldPasswordController,
-                              )),
-                          const SizedBox(height: 20),
-                          SizedBox(
-                              height: 50,
-                              child: TextFieldWidget(
-                                inputPass: true,
-                                text: 'Mật khẩu mới',
-                                TextController: controller.passwordController,
-                              )),
-                          const SizedBox(height: 20),
-                          SizedBox(
-                              height: 50,
-                              child: TextFieldWidget(
-                                inputPass: true,
-                                text: 'Nhập lại mật khẩu',
-                                TextController: controller.rePasswordController,
-                              )),
-                          ElevatedButton(
-                            child: Text('Lưu'),
-                            onPressed: controller.submitChangePass,
-                          ),
-                        ],
+                            const SizedBox(height: 30),
+                            SizedBox(
+                                height: 50,
+                                child: TextFieldWidget(
+                                  focusNode: controller.oldPassFocus,
+                                  actionInput: TextInputAction.next,
+                                  inputPass: true,
+                                  text: 'Mật khẩu',
+                                  TextController:
+                                      controller.oldPasswordController,
+                                )),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                                height: 50,
+                                child: TextFieldWidget(
+                                  focusNode: controller.newPassFocus,
+                                  actionInput: TextInputAction.next,
+                                  inputPass: true,
+                                  text: 'Mật khẩu mới',
+                                  TextController: controller.passwordController,
+                                )),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                                height: 50,
+                                child: TextFieldWidget(
+                                  focusNode: controller.reNewFocus,
+                                  actionInput: TextInputAction.done,
+                                  inputPass: true,
+                                  text: 'Nhập lại mật khẩu',
+                                  TextController:
+                                      controller.rePasswordController,
+                                )),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 40,
+                              child: Button(
+                                  showIcon: false,
+                                  text: 'Lưu',
+                                  onTap: controller.submitChangePass),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

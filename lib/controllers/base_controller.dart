@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_chart/shared/helpers/function_helper.dart';
 import 'package:intl/intl.dart';
 
-import '/services/storage/storage_service.dart';
-import '/shared/app_shared.dart';
+import 'package:test_chart/core.dart';
 
 abstract class BaseController extends GetxController {
-  //Table
+  ///Table
   TableRow buildRow(List<String> cells,
       {bool isHeader = false, bool isCate = false, double height = 40}) {
     final style = TextStyle(
@@ -17,22 +17,25 @@ abstract class BaseController extends GetxController {
     );
 
     return TableRow(
-        children: cells
-            .map((cell) => Container(
-                  color: isHeader
-                      ? Colors.blue.shade200
-                      : isCate
-                          ? const Color.fromARGB(255, 216, 214, 214)
-                          : Colors.white,
-                  alignment: Alignment.center,
-                  height: height,
-                  child: Text(
-                    cell,
-                    textAlign: TextAlign.center,
-                    style: style,
-                  ),
-                ))
-            .toList());
+      children: cells
+          .map(
+            (cell) => Container(
+              color: isHeader
+                  ? Colors.blue.shade200
+                  : isCate
+                      ? const Color.fromARGB(255, 216, 214, 214)
+                      : Colors.white,
+              alignment: Alignment.center,
+              height: height,
+              child: Text(
+                cell,
+                textAlign: TextAlign.center,
+                style: style,
+              ),
+            ),
+          )
+          .toList(),
+    );
   }
 
   //DateTime picker
@@ -47,7 +50,7 @@ abstract class BaseController extends GetxController {
         firstDate: DateTime(2000),
         lastDate: DateTime(2024),
         initialEntryMode: DatePickerEntryMode.input,
-        initialDatePickerMode: DatePickerMode.year,
+        initialDatePickerMode: DatePickerMode.day,
         errorFormatText: 'Định dạng phải là tháng/ngày/năm',
         cancelText: 'ĐÓNG',
         helpText: 'Chọn ngày');
@@ -58,6 +61,32 @@ abstract class BaseController extends GetxController {
       formatDateAPITomorrow = DateFormat("yyyy-MM-dd")
           .format(selectedDateTime.value.add(const Duration(days: 1)));
     }
+  }
+
+  ///Keyboard
+  final oldPassFocus = FocusNode();
+  final newPassFocus = FocusNode();
+  final reNewFocus = FocusNode();
+
+  /// Creates the [KeyboardActionsConfig] to hook up the fields
+  /// and their focus nodes to our [FormKeyboardActions].
+  // ignore: no_leading_underscores_for_local_identifiers
+  KeyboardActionsConfig buildKeyboardActionsConfig(BuildContext context) {
+    return KeyboardActionsConfig(
+      keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
+      keyboardBarColor: Colors.grey,
+      actions: [
+        KeyboardActionsItem(
+          focusNode: oldPassFocus,
+        ),
+        KeyboardActionsItem(
+          focusNode: newPassFocus,
+        ),
+        KeyboardActionsItem(
+          focusNode: reNewFocus,
+        ),
+      ],
+    );
   }
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -89,32 +118,6 @@ abstract class BaseController extends GetxController {
 
   final _emailController = TextEditingController();
   TextEditingController get emailController => _emailController;
-
-  final _pincodeController = TextEditingController();
-  TextEditingController get pincodeController => _pincodeController;
-
-  final _responseController = TextEditingController();
-  TextEditingController get responseController => _responseController;
-
-  final _searchController = TextEditingController();
-  TextEditingController get searchController => _searchController;
-
-  final _companyNameController = TextEditingController();
-  TextEditingController get companyNameController => _companyNameController;
-
-  final _companyAddressController = TextEditingController();
-  TextEditingController get companyAddressController =>
-      _companyAddressController;
-
-  final _taxCodeController = TextEditingController();
-  TextEditingController get taxCodeController => _taxCodeController;
-
-  final _citizenIdController = TextEditingController(text: '001 195 031 100');
-  TextEditingController get citizenIdController => _citizenIdController;
-
-  final _addressController = TextEditingController(
-      text: 'Quan Hoa - Nhan Chinh - Thanh Xuan - Ha Noi');
-  TextEditingController get addressController => _addressController;
 
   final _userName = ''.obs;
   RxString get userName => _userName;
@@ -269,12 +272,7 @@ abstract class BaseController extends GetxController {
     _dobController.dispose();
     _phoneController.dispose();
     _emailController.dispose();
-    _pincodeController.dispose();
-    _responseController.dispose();
-    _searchController.dispose();
     tabController.dispose();
-    _citizenIdController.dispose();
-    _addressController.dispose();
   }
 
   @override

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/core.dart';
-import 'package:test_chart/views/authorized/screens/main_drawer.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -42,7 +41,7 @@ class HomePage extends GetView<HomeController> {
                   child: Obx(
                     () {
                       return Text(
-                        controller.userName.toString(),
+                        'Xin chào! ${controller.userName.toString()}',
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
