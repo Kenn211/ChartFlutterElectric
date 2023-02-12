@@ -5,6 +5,7 @@ export 'auth/register_controller.dart';
 ///home
 export 'home/home_controller.dart';
 export 'home/system_controller.dart';
+export 'home/wattage_controller.dart';
 
 ///Account
 export 'account/account_controller.dart';

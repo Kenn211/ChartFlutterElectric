@@ -6,6 +6,7 @@ export 'account/account_binding.dart';
 // home
 export 'home/home_binding.dart';
 export 'home/system_binding.dart';
+export 'home/wattage_binding.dart';
 
 //drawer
 export 'drawer/marginal_price_binding.dart';

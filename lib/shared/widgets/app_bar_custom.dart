@@ -45,6 +45,7 @@ class AppBarCustom extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back_ios,
                       color: Colors.transparent))
         ],
+        centerTitle: true,
         title: Container(
           width: double.infinity,
           alignment: Alignment.center,

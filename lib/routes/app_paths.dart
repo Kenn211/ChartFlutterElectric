@@ -12,6 +12,7 @@ abstract class Routes {
 
   //home
   static const homePage = _Paths.home;
+  static const wattagePage = _Paths.wattage;
 
   //system
   static const systemPage = _Paths.system;
@@ -33,6 +34,8 @@ abstract class _Paths {
   static const register = '/register';
 
   static const home = '/home';
+
+  static const wattage = '/wattage';
 
   static const system = '/system';
 

@@ -20,9 +20,8 @@ class AccountController extends BaseController {
   Future<void> fetchDataUser() async {
     final tokenSaved = await StorageService.getToken();
     try {
-      await http
-          .get(Uri.parse(
-              "https://mocki.io/v1/b92d89ca-2f3d-44cd-932c-957ccae17870"))
+      await BaseClient()
+          .get('https://mocki.io/v1/b92d89ca-2f3d-44cd-932c-957ccae17870')
           .then((value) {
         AuthenModel? authen = authenModelFromJson(value.body);
         if (authen!.data!.token == tokenSaved) {
@@ -32,7 +31,7 @@ class AccountController extends BaseController {
       });
       hideLoading();
     } catch (e) {
-      debugPrintStack();
+      debugPrint('e');
     }
   }
 
@@ -61,7 +60,7 @@ class AccountController extends BaseController {
       rePasswordController.clear();
       Get.back();
     } catch (e) {
-      debugPrintStack();
+      debugPrint('e');
     }
   }
 }

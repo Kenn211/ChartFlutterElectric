@@ -21,18 +21,6 @@ class Constants {
   static String FULL_YEAR_FORMAT = 'dd/MM/yyyy';
   static String FULL_YEAR_FORMAT_WITH_UNIT = 'dd/MM/yyyy hh:mm:ss';
 
-  // timeout
-  static const int TIME_OUT_DURATION = 30;
-
-  // tabbar
-  static const int SHOP_TABBAR_LENGTH = 4;
-  static const int CART_TABBAR_LENGTH = 2;
-  static const int HOME_TABBAR_LENGTH = 3;
-  static const int MESSAGES_TABBAR_LENGTH = 2;
-  static const int PRODUCT_TABBAR_LENGTH = 4;
-  static const int VOUCHER_TABBAR_LENGTH = 4;
-  static const int SHOP_ACTIVE_HISTORY = 3;
-  static const int NEWS_TABBAR_LENGTH = 4;
-  static const int ORDER_TABBAR_LENGTH = 7;
-  static const int RATING_ORDER_TABBAR_LENGTH = 2;
+  //Id Widget update
+  static const idDropDown = 'DropDown';
 }

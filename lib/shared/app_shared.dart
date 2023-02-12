@@ -11,3 +11,4 @@ export 'widgets/txt_button.dart';
 export 'widgets/custom_snackbar.dart';
 export 'widgets/custom_style_chart.dart';
 export 'widgets/select_date.dart';
+export 'widgets/drop_down_custom.dart';

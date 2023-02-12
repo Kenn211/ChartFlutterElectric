@@ -1,3 +1,6 @@
+///Base client
+export 'base_client.dart';
+
 ///Authen
 export 'auth/authen_model.dart';
 

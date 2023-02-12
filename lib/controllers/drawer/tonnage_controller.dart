@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/models/drawer/tonnage/chart_dart_tonnage.dart';
-import 'package:test_chart/models/drawer/tonnage/tonnage_model.dart';
-import 'package:test_chart/shared/widgets/custom_snackbar.dart';
+import 'package:test_chart/core.dart';
 
 class TonnageController extends BaseController {
   final _dataChartCk = <ChartDataTonnage>[].obs;
@@ -40,9 +37,9 @@ class TonnageController extends BaseController {
       _dataChartCk.value = [];
       _dataChartDay.value = [];
 
-      await http
-          .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_IAHByDay?NGAY=${formatDateAPIToday.toString()}&ID_NODE=${indexDropdownValue.toInt()}'))
+      await BaseClient()
+          .get(
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_IAHByDay?NGAY=${formatDateAPIToday.toString()}&ID_NODE=${indexDropdownValue.toInt()}')
           .then((value) {
         List<TonnageModel> tonnageModelRes = tonnageModelFromJson(value.body);
         if (tonnageModelRes.isEmpty) {
@@ -53,9 +50,9 @@ class TonnageController extends BaseController {
           for (var e in tonnageModelRes) {
             _dataChartCk.add(ChartDataTonnage(x: e.chuky, y2: e.giatri));
           }
-          http
-              .get(Uri.parse(
-                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_DAHByDay?NGAY=${formatDateAPITomorrow.toString()}&ID_NODE=${indexDropdownValue.toInt()}'))
+          BaseClient()
+              .get(
+                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_DAHByDay?NGAY=${formatDateAPITomorrow.toString()}&ID_NODE=${indexDropdownValue.toInt()}')
               .then((value) {
             List<TonnageModel> tonnageModelRes1 =
                 tonnageModelFromJson(value.body);

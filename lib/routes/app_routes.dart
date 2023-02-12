@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:test_chart/views/authorized/pages/wattage_page.dart';
 
 import 'bindings/index.dart';
 import '/views/app_views.dart';
@@ -18,6 +19,12 @@ class AppPages {
       transition: Transition.native,
       page: () => const HomePage(),
       binding: HomeBinding());
+
+  static final wattagePage = GetPage(
+      name: Routes.wattagePage,
+      transition: Transition.native,
+      page: () => const WattagePage(),
+      binding: WattageBinding());
 
   static final loginPage = GetPage(
       name: Routes.login,
@@ -90,6 +97,7 @@ class AppPages {
     registerPage,
     systemPage,
     accountPage,
+    wattagePage,
 
     //Page Drawer
     ...getDrawerPages,

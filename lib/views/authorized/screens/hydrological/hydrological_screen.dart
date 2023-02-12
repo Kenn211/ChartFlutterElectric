@@ -29,18 +29,17 @@ class HydrologicalScreen extends GetView<HydrologicalController> {
                 children: [
                   const _DropDownSelect(),
                   const SizedBox(height: 20),
-                  Obx(() {
-                    return SelectDate(
-                        text: DateFormat("dd-MM-yyyy")
-                            .format(controller.selectedDateTime.value)
-                            .toString(),
-                        onTap: controller.chooseDate);
-                  }),
+                  Obx(() => SelectDate(
+                      text: DateFormat("dd-MM-yyyy")
+                          .format(controller.selectedDateTime.value)
+                          .toString(),
+                      onTap: controller.chooseDate)),
                   const SizedBox(height: 20),
                   SizedBox(
                     width: 160,
                     height: 50,
-                    child: Button(text: 'Lấy dữ liệu', onTap: () {}),
+                    child: Button(
+                        text: 'Lấy dữ liệu', onTap: controller.getDisplayData),
                   ),
                 ],
               ),
@@ -50,6 +49,65 @@ class HydrologicalScreen extends GetView<HydrologicalController> {
         ),
       ),
     );
+  }
+}
+
+class _ChartHydrological extends StatelessWidget {
+  const _ChartHydrological({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<HydrologicalController>(builder: (controller) {
+      return SfCartesianChart(
+          enableAxisAnimation: true,
+          title: ChartTitle(
+              text: 'Biểu đồ Doanh thu ngày',
+              textStyle:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+          primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),
+          primaryYAxis: NumericAxis(numberFormat: NumberFormat.compact()),
+          zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
+          legend: const StyleChartCustom().legend(),
+          trackballBehavior:
+              const StyleChartCustom().trackball('series.name: point.y m'),
+          series: <ChartSeries<ChartHydrological, String>>[
+            LineSeries<ChartHydrological, String>(
+                dataSource: controller.dataGHTren,
+                name: 'GH trên',
+                xValueMapper: (ChartHydrological data, _) => data.x,
+                yValueMapper: (ChartHydrological data, _) => data.ghTren),
+            LineSeries<ChartHydrological, String>(
+                dataSource: controller.dataGHDuoi,
+                name: 'GH dưới',
+                xValueMapper: (ChartHydrological data, _) => data.x,
+                yValueMapper: (ChartHydrological data, _) => data.ghDuoi),
+            LineSeries<ChartHydrological, String>(
+                dataSource: controller.dataTTNam,
+                name: 'TT năm',
+                xValueMapper: (ChartHydrological data, _) => data.x,
+                yValueMapper: (ChartHydrological data, _) => data.ttNam),
+            LineSeries<ChartHydrological, String>(
+                dataSource: controller.dataKHNam,
+                name: 'KH năm',
+                xValueMapper: (ChartHydrological data, _) => data.x,
+                yValueMapper: (ChartHydrological data, _) => data.khNam),
+            LineSeries<ChartHydrological, String>(
+                dataSource: controller.dataTTNamAgo,
+                name: 'TT năm 2022',
+                xValueMapper: (ChartHydrological data, _) => data.x,
+                yValueMapper: (ChartHydrological data, _) => data.ttNamAgo),
+            LineSeries<ChartHydrological, String>(
+                dataSource: controller.dataMndbt,
+                name: 'MNDBT',
+                xValueMapper: (ChartHydrological data, _) => data.x,
+                yValueMapper: (ChartHydrological data, _) => data.mndbt),
+            LineSeries<ChartHydrological, String>(
+                dataSource: controller.dataMnc,
+                name: 'MNC',
+                xValueMapper: (ChartHydrological data, _) => data.x,
+                yValueMapper: (ChartHydrological data, _) => data.mnc),
+          ]);
+    });
   }
 }
 
@@ -87,7 +145,7 @@ class _DropDownSelect extends StatelessWidget {
               fontSize: 16,
               fontWeight: FontWeight.bold),
           menuMaxHeight: 400,
-          value: controller.dropdownvalueFactory,
+          value: controller.dropdownvalueLake,
           focusColor: Colors.transparent,
           // Down Arrow Icon
           icon: Container(
@@ -99,7 +157,7 @@ class _DropDownSelect extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           dropdownColor: const Color.fromARGB(255, 253, 254, 253),
           // Array list of items
-          items: controller.listFactory.map((String items) {
+          items: controller.listLake.map((String items) {
             return DropdownMenuItem(
               value: items,
               child: Text(
@@ -110,68 +168,10 @@ class _DropDownSelect extends StatelessWidget {
           // After selecting the desired option,it will
           // change button value to selected value
           onChanged: (String? newValue) {
-            controller.dropdownvalueFactory = newValue!;
+            controller.dropdownvalueLake = newValue!;
 
             (context as Element).markNeedsBuild(); //Trick setState in Stl
           });
-    });
-  }
-}
-
-class _ChartHydrological extends StatelessWidget {
-  const _ChartHydrological({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<HydrologicalController>(builder: (controller) {
-      return SfCartesianChart(
-          title: ChartTitle(
-              text: 'Biểu đồ Doanh thu ngày',
-              textStyle:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-          primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),
-          primaryYAxis: NumericAxis(numberFormat: NumberFormat.compact()),
-          zoomPanBehavior: ZoomPanBehavior(enableMouseWheelZooming: true),
-          legend: const StyleChartCustom().legend(),
-          trackballBehavior: const StyleChartCustom()
-              .trackball('series.name: point.y đồng/kWh'),
-          series: <ChartSeries<ChartHydrological, String>>[
-            LineSeries<ChartHydrological, String>(
-                dataSource: controller.dataGHTren,
-                name: 'GH trên',
-                xValueMapper: (ChartHydrological data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartHydrological data, _) => data.ghTren),
-            LineSeries<ChartHydrological, String>(
-                dataSource: controller.dataGHDuoi,
-                name: 'GH dưới',
-                xValueMapper: (ChartHydrological data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartHydrological data, _) => data.ghDuoi),
-            LineSeries<ChartHydrological, String>(
-                dataSource: controller.dataTTNam,
-                name: 'TT năm',
-                xValueMapper: (ChartHydrological data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartHydrological data, _) => data.ttNam),
-            LineSeries<ChartHydrological, String>(
-                dataSource: controller.dataKHNam,
-                name: 'KH năm',
-                xValueMapper: (ChartHydrological data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartHydrological data, _) => data.khNam),
-            LineSeries<ChartHydrological, String>(
-                dataSource: controller.dataTTNamAgo,
-                name: 'TT năm 2022',
-                xValueMapper: (ChartHydrological data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartHydrological data, _) => data.ttNamAgo),
-            LineSeries<ChartHydrological, String>(
-                dataSource: controller.dataMndbt,
-                name: 'MNDBT',
-                xValueMapper: (ChartHydrological data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartHydrological data, _) => data.mndbt),
-            LineSeries<ChartHydrological, String>(
-                dataSource: controller.dataGHTren,
-                name: 'MNC',
-                xValueMapper: (ChartHydrological data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartHydrological data, _) => data.mnc),
-          ]);
     });
   }
 }

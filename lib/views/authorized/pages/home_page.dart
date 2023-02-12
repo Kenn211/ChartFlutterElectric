@@ -16,9 +16,7 @@ class HomePage extends GetView<HomeController> {
         flexibleSpace: AppBarCustom(
           title: 'home'.tr,
           leading: IconButton(
-            onPressed: () {
-              controller.openDrawer();
-            },
+            onPressed: controller.openDrawer,
             tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             color: AppColors.secondColor,
             icon: const Icon(Icons.menu_rounded),
@@ -58,6 +56,9 @@ class HomePage extends GetView<HomeController> {
                     text: 'currentCapacity'.tr,
                     numData: '150 MW',
                     icon: CupertinoIcons.chart_bar,
+                    onTap: () {
+                      Get.toNamed(Routes.wattagePage);
+                    },
                   ),
                   _ItemDisplayBody(
                     colorBackground: AppColors.secondColor,
@@ -127,58 +128,62 @@ class HomePage extends GetView<HomeController> {
 }
 
 class _ItemDisplayBody extends StatelessWidget {
-  const _ItemDisplayBody({
-    required this.colorBackground,
-    required this.text,
-    required this.numData,
-    this.icon,
-  });
+  const _ItemDisplayBody(
+      {required this.colorBackground,
+      required this.text,
+      required this.numData,
+      this.icon,
+      this.onTap});
 
   final Color colorBackground;
   final String text, numData;
   final IconData? icon;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      padding: const EdgeInsets.all(12),
-      height: 150,
-      decoration: BoxDecoration(
-          color: colorBackground,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
-              blurRadius: 3,
-              offset: const Offset(0, 3), // changes position of shadow
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 150,
+        padding: const EdgeInsets.all(12),
+        height: 150,
+        decoration: BoxDecoration(
+            color: colorBackground,
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 3,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ]),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                text,
+                style: const TextStyle(color: Colors.white, fontSize: 12),
+              ),
             ),
-          ]),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              text,
-              style: const TextStyle(color: Colors.white, fontSize: 12),
+            const SizedBox(height: 30),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Text(numData,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600)),
             ),
-          ),
-          const SizedBox(height: 30),
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Text(numData,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600)),
-          ),
-          Container(
-            alignment: Alignment.bottomRight,
-            child: Icon(icon, size: 45, color: Colors.white.withOpacity(0.5)),
-          )
-        ],
+            Container(
+              alignment: Alignment.bottomRight,
+              child: Icon(icon, size: 45, color: Colors.white.withOpacity(0.5)),
+            )
+          ],
+        ),
       ),
     );
   }
