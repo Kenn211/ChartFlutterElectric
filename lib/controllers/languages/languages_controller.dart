@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '/services/storage/storage_service.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import '/shared/constants/keys.dart';
 
 class LanguagesController extends GetxController {
@@ -33,7 +34,7 @@ class LanguagesController extends GetxController {
     },
   };
 
-  void updateLocale(String key) {
+  Future<void> updateLocale(String key) async {
     final String languageCode = optionsLocales[key]['languageCode'];
     final String countryCode = optionsLocales[key]['countryCode'];
     // Update App
@@ -43,5 +44,13 @@ class LanguagesController extends GetxController {
     // Update storage
     storage.write(Constants.languageCode, languageCode);
     storage.write(Constants.countryCode, countryCode);
+  }
+
+  void setCurrentLocale(String? locale) async {
+    Phoenix.rebirth(Get.context!);
+    updateLocale(locale!).whenComplete(() {
+      Get.reset();
+      Get.put(StorageService());
+    });
   }
 }

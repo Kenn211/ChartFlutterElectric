@@ -43,7 +43,12 @@ class HydrologicalController extends BaseController {
   List<ListLakeModel> dataLake = [];
   int indexLake = 0;
   List<String> listLake = ['Nhà máy'];
-  String dropdownvalueLake = 'Nhà máy';
+  final _dropdownvalueLake = 'Nhà máy'.obs;
+  String get dropdownvalueLake => _dropdownvalueLake.value;
+
+  void setValueLake(String? value) {
+    _dropdownvalueLake.value = value!;
+  }
 
   Future<void> fetchListLake() async {
     try {
@@ -77,6 +82,13 @@ class HydrologicalController extends BaseController {
       update();
       CustomSnackbar.snackBar('error', 'Vui lòng chọn nhà máy');
     } else if (dropdownvalueLake != 'Nhà máy') {
+      _dataGHDuoi.value = [];
+      _dataGHTren.value = [];
+      _dataKHNam.value = [];
+      _dataMnc.value = [];
+      _dataMndbt.value = [];
+      _dataTTNam.value = [];
+      _dataTTNamAgo.value = [];
       showLoading();
       for (var e in dataLake) {
         if (dropdownvalueLake == e.tenHo) {
@@ -89,17 +101,9 @@ class HydrologicalController extends BaseController {
 
   Future<void> fetchLake() async {
     try {
-      _dataGHDuoi.value = [];
-      _dataGHTren.value = [];
-      _dataKHNam.value = [];
-      _dataMnc.value = [];
-      _dataMndbt.value = [];
-      _dataTTNam.value = [];
-      _dataTTNamAgo.value = [];
-
       await http
           .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/HOCHUA_THUYVAN_GET?ID_HO=$indexLake&NGAY=2023-01-27&NAM=2022'))
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/HOCHUA_THUYVAN_GET?ID_HO=$indexLake&NGAY=$formatDateAPIToday&NAM=2022'))
           .then((value) {
         DataLakeModel dataLakeRes = dataLakeModelFromJson(value.body);
         for (var e in dataLakeRes.mucnuocChet) {

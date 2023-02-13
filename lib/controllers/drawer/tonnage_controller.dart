@@ -10,7 +10,8 @@ class TonnageController extends BaseController {
   final _dataChartDay = <ChartDataTonnage>[].obs;
   RxList<ChartDataTonnage> get dataChartDay => _dataChartDay;
 
-  String dropdownvalue = 'Quốc Gia';
+  final _dropdownvalue = 'Quốc Gia'.obs;
+  String get dropdownvalue => _dropdownvalue.value;
   int indexDropdownValue = 150;
 
   final ragion = [
@@ -19,6 +20,10 @@ class TonnageController extends BaseController {
     "Miền Nam",
     "Quốc Gia",
   ];
+
+  void setValueDropDown(String? valueFactory) {
+    _dropdownvalue.value = valueFactory!;
+  }
 
   Future<void> fetchTonnage() async {
     showLoading();

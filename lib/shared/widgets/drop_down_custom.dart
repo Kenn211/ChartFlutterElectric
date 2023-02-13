@@ -4,10 +4,14 @@ import 'package:test_chart/core.dart';
 // ignore: must_be_immutable
 class DropDownSelect extends StatelessWidget {
   DropDownSelect(
-      {Key? key, required this.listItem, required this.dropDownValue})
+      {Key? key,
+      required this.listItem,
+      required this.dropDownValue,
+      required this.onChanged})
       : super(key: key);
 
   late String dropDownValue;
+  final ValueChanged<String?> onChanged;
   final List<String> listItem;
 
   @override
@@ -62,6 +66,7 @@ class DropDownSelect extends StatelessWidget {
         // After selecting the desired option,it will
         // change button value to selected value
         onChanged: (String? newValue) {
+          onChanged(newValue);
           dropDownValue = newValue!;
 
           (context as Element).markNeedsBuild(); //Trick setState in Stl

@@ -22,55 +22,60 @@ class TonnagePage extends GetView<TonnageController> {
         scrollDirection: Axis.vertical,
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const SizedBox(height: 20),
-                const _DropDownSelect(),
-                const SizedBox(height: 20),
-                Obx(() {
-                  return SelectDate(
-                    text: DateFormat("dd-MM-yyyy")
-                        .format(controller.selectedDateTime.value)
-                        .toString(),
-                    onTap: () {
-                      controller.chooseDate();
-                    },
-                  );
-                }),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      width: 150,
-                      height: 50,
-                      alignment: Alignment.centerRight,
-                      child: Button(
-                          text: 'Lấy dữ liệu',
-                          onTap: () {
-                            controller.fetchTonnage();
-                          }),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: const Text(
-                    'Phụ tải chi tiết',
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500),
+            child: GetBuilder<TonnageController>(builder: (controller) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  const SizedBox(height: 20),
+                  DropDownSelect(
+                      dropDownValue: controller.dropdownvalue,
+                      listItem: controller.ragion,
+                      onChanged: controller.setValueDropDown),
+                  const SizedBox(height: 20),
+                  Obx(() {
+                    return SelectDate(
+                      text: DateFormat("dd-MM-yyyy")
+                          .format(controller.selectedDateTime.value)
+                          .toString(),
+                      onTap: () {
+                        controller.chooseDate();
+                      },
+                    );
+                  }),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        width: 150,
+                        height: 50,
+                        alignment: Alignment.centerRight,
+                        child: Button(
+                            text: 'Lấy dữ liệu',
+                            onTap: () {
+                              controller.fetchTonnage();
+                            }),
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 15),
-                const ChartTonnage(),
-                const SizedBox(height: 20),
-                const _TableTonnage()
-              ],
-            )),
+                  const SizedBox(height: 20),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      'Phụ tải chi tiết',
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  const ChartTonnage(),
+                  const SizedBox(height: 20),
+                  const _TableTonnage()
+                ],
+              );
+            })),
       ),
     );
   }
@@ -111,70 +116,6 @@ class ChartTonnage extends StatelessWidget {
         ],
       );
     });
-  }
-}
-
-class _DropDownSelect extends StatefulWidget {
-  const _DropDownSelect({Key? key}) : super(key: key);
-
-  @override
-  State<_DropDownSelect> createState() => __DropDownSelectState();
-}
-
-class __DropDownSelectState extends State<_DropDownSelect> {
-  final controller = Get.put(TonnageController());
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButtonFormField(
-        decoration: InputDecoration(
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.primaryColor,
-              width: 2,
-            ),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.primaryColor,
-              width: 2,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primaryColor, width: 2.0),
-          ),
-          errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red),
-          ),
-        ),
-        style: TextStyle(
-            color: AppColors.secondColor, //<-- SEE HERE
-            fontSize: 16,
-            fontWeight: FontWeight.bold),
-        isExpanded: true,
-        value: controller.dropdownvalue,
-        focusColor: Colors.transparent,
-        // Down Arrow Icon
-        icon: Icon(Icons.keyboard_arrow_down, color: AppColors.primaryColor),
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        dropdownColor: const Color.fromARGB(255, 253, 254, 253),
-        // Array list of items
-        items: controller.ragion.map((String items) {
-          return DropdownMenuItem(
-            value: items,
-            child: Text(
-              items,
-            ),
-          );
-        }).toList(),
-        // After selecting the desired option,it will
-        // change button value to selected value
-        onChanged: (String? newValue) {
-          setState(() {
-            controller.dropdownvalue = newValue!;
-          });
-        });
   }
 }
 

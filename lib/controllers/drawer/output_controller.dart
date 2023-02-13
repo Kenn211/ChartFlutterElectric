@@ -30,7 +30,8 @@ class OutputController extends BaseController {
   List<ListFactoryOutputModel> dataFactoryOutPut = [];
   int indexFactory = 0;
   List<String> listFactory = ['Nhà máy'];
-  String dropdownvalueFactory = 'Nhà máy';
+  final _dropdownvalueFactory = 'Nhà máy'.obs;
+  String get dropdownvalueFactory => _dropdownvalueFactory.value;
 
   @override
   void onReady() {
@@ -41,6 +42,10 @@ class OutputController extends BaseController {
   void onInit() {
     fetchListFatoryOutput();
     super.onInit();
+  }
+
+  void setValueFactory(String? valueFactory) {
+    _dropdownvalueFactory.value = valueFactory!;
   }
 
   Future<void> fetchListFatoryOutput() async {

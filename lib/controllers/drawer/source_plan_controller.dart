@@ -11,7 +11,8 @@ class SourcePlanController extends BaseController {
   List<ListFactoryModel> dataFactory = [];
   int indexFactory = 0;
   List<String> listFactory = ['Nhà máy'];
-  String dropdownvalueFactory = 'Nhà máy';
+  final _dropdownvalueFactory = 'Nhà máy'.obs;
+  String get dropdownvalueFactory => _dropdownvalueFactory.value;
 
   //Data response
   final _dataToMayIAH = <ToMay>[].obs;
@@ -28,6 +29,10 @@ class SourcePlanController extends BaseController {
   void onInit() {
     fetchListFatory();
     super.onInit();
+  }
+
+  void setValueFactory(String? valueFactory) {
+    _dropdownvalueFactory.value = valueFactory!;
   }
 
   Future<void> fetchListFatory() async {

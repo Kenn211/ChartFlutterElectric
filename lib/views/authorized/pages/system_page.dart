@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/core.dart';
 
@@ -16,71 +17,56 @@ class SystemPage extends GetView<SystemController> {
           canBack: true,
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: const [
-            // _ItemLang(
-            //   text: 'Tiếng Việt',
-            //   image: Assets.icFlagVn,
-            // ),
-            // _ItemLang(
-            //   text: 'English',
-            //   image: Assets.icFlagUSA,
-            // )
-          ],
-        ),
-      ),
+      body: GetBuilder<LanguagesController>(
+          init: LanguagesController(),
+          builder: (controller) {
+            return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ...controller.optionsLocales.entries.map((item) {
+                      return Column(
+                        key: ValueKey(item.key),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListTile(
+                            dense: true,
+                            horizontalTitleGap: 0,
+                            leading: Text(
+                              LanguagesController.getFlag(
+                                  item.value['languageCode']),
+                              style: TextStyle(fontSize: 24.sp),
+                            ),
+                            title: Text(
+                              controller.locale.value == 'en_US'
+                                  ? item.value['en_description']
+                                  : item.value['vi_description'],
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                                color: controller.locale.value == item.key
+                                    ? AppColors.primaryColor
+                                    : const Color(0xFF141416),
+                              ),
+                            ),
+                            trailing: (controller.locale.value == item.key)
+                                ? Icon(
+                                    Icons.check_rounded,
+                                    color: AppColors.primaryColor,
+                                  )
+                                : null,
+                            onTap: () {
+                              controller.setCurrentLocale(item.key);
+                            },
+                          ),
+                          const Divider(height: 1)
+                        ],
+                      );
+                    }).toList()
+                  ],
+                ));
+          }),
     );
   }
 }
-
-// class _ItemLang extends StatefulWidget {
-//   const _ItemLang(
-//       {
-//       required this.text,
-//       required this.image,
-//       this.onTap,
-//       this.index});
-
-//   final String text, image;
-//   final Function()? onTap;
-//   final num? index;
-
-//   @override
-//   State<_ItemLang> createState() => __ItemLangState();
-// }
-
-// class __ItemLangState extends State<_ItemLang> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: () {
-//         setState(() {
-//           widget.onTap;
-//           widget.index;
-//         });
-//       },
-//       child: Container(
-//         padding: const EdgeInsets.all(20),
-//         width: double.infinity,
-//         height: 60,
-//         decoration: BoxDecoration(
-//             borderRadius: const BorderRadius.all(Radius.circular(10)),
-//             color: AppColors.primaryColor),
-//         child: Row(
-//           children: [
-//             Image.asset(widget.image),
-//             const SizedBox(width: 10),
-//             Container(
-//                 child: Text(
-//               widget.text,
-//               style: const TextStyle(fontSize: 16, color: Colors.white),
-//             )),
-//             widget.index == 1 ? Text('a') : Text('b')
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

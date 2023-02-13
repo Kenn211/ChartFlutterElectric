@@ -116,7 +116,7 @@ class HomePage extends GetView<HomeController> {
                 textDesc: 'updateinfo'.tr,
                 icon: Icons.settings,
                 onTap: () {
-                  Get.toNamed(Routes.accountPage);
+                  Get.toNamed(Routes.systemPage);
                 },
               ),
             ],

@@ -26,54 +26,60 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
               Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          alignment: Alignment.centerLeft,
-                          child: const Text('Nhà máy',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 18)),
-                        ),
-                        const SizedBox(height: 10),
-                        const _DropDownSelect(),
-                        const SizedBox(height: 20),
-                        Container(
-                          width: double.infinity,
-                          alignment: Alignment.centerLeft,
-                          child: const Text('Ngày',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 18)),
-                        ),
-                        const SizedBox(height: 10),
+                  child:
+                      GetBuilder<SourcePlanController>(builder: (controller) {
+                    return Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            alignment: Alignment.centerLeft,
+                            child: const Text('Nhà máy',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 18)),
+                          ),
+                          const SizedBox(height: 10),
+                          DropDownSelect(
+                              dropDownValue: controller.dropdownvalueFactory,
+                              listItem: controller.listFactory,
+                              onChanged: controller.setValueFactory),
+                          const SizedBox(height: 20),
+                          Container(
+                            width: double.infinity,
+                            alignment: Alignment.centerLeft,
+                            child: const Text('Ngày',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 18)),
+                          ),
+                          const SizedBox(height: 10),
 
-                        ///Select Date
-                        Obx(() => SelectDate(
-                            text: DateFormat("dd-MM-yyyy")
-                                .format(controller.selectedDateTime.value)
-                                .toString(),
-                            onTap: controller.chooseDate)),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            const _CheckBoxWidget(),
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              child: const Text(
-                                  'Xem chu kì hiện tại và ba chu kì tới',
-                                  style: TextStyle(fontSize: 16)),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 160,
-                          height: 50,
-                          child: Button(
-                              text: 'Lấy dữ liệu',
-                              onTap: controller.getDisplayData),
-                        ),
-                      ])),
+                          ///Select Date
+                          Obx(() => SelectDate(
+                              text: DateFormat("dd-MM-yyyy")
+                                  .format(controller.selectedDateTime.value)
+                                  .toString(),
+                              onTap: controller.chooseDate)),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              const _CheckBoxWidget(),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: const Text(
+                                    'Xem chu kì hiện tại và ba chu kì tới',
+                                    style: TextStyle(fontSize: 16)),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 160,
+                            height: 50,
+                            child: Button(
+                                text: 'Lấy dữ liệu',
+                                onTap: controller.getDisplayData),
+                          ),
+                        ]);
+                  })),
               const SizedBox(height: 20),
               const _ChartSourcePlanIAH(),
               const _TableSourcePlanIAH(),
@@ -231,71 +237,6 @@ class _TableSourcePlanDAH extends StatelessWidget {
               //   ])
             ]),
       );
-    });
-  }
-}
-
-class _DropDownSelect extends StatelessWidget {
-  const _DropDownSelect({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<SourcePlanController>(builder: (controller) {
-      return DropdownButtonFormField(
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.primaryColor,
-                width: 2,
-              ),
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.primaryColor,
-                width: 2,
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.primaryColor, width: 2.0),
-            ),
-            errorBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red),
-            ),
-          ),
-          style: TextStyle(
-              color: AppColors.secondColor, //<-- SEE HERE
-              fontSize: 16,
-              fontWeight: FontWeight.bold),
-          menuMaxHeight: 400,
-          value: controller.dropdownvalueFactory,
-          focusColor: Colors.transparent,
-          // Down Arrow Icon
-          icon: Container(
-            alignment: Alignment.centerRight,
-            child:
-                Icon(Icons.keyboard_arrow_down, color: AppColors.primaryColor),
-          ),
-          isExpanded: true,
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-          dropdownColor: const Color.fromARGB(255, 253, 254, 253),
-          // Array list of items
-          items: controller.listFactory.map((String items) {
-            return DropdownMenuItem(
-              value: items,
-              child: Text(
-                items,
-              ),
-            );
-          }).toList(),
-          // After selecting the desired option,it will
-          // change button value to selected value
-          onChanged: (String? newValue) {
-            controller.dropdownvalueFactory = newValue!;
-
-            (context as Element).markNeedsBuild(); //Trick setState in Stl
-          });
     });
   }
 }
