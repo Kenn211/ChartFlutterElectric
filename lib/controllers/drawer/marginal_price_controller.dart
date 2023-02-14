@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/models/drawer/marginal_price/chart_data.dart';
-import 'package:test_chart/models/drawer/marginal_price/marginal_price_model.dart';
-import 'package:test_chart/models/drawer/marginal_price/table_marginal_model.dart';
-import 'package:test_chart/shared/widgets/custom_snackbar.dart';
+import 'package:test_chart/core.dart';
 
 class MarginalPriceController extends BaseController {
   //IAH
@@ -52,9 +48,9 @@ class MarginalPriceController extends BaseController {
       _dataChartNorthDAH.value = [];
       _dataChartSouthDAH.value = [];
       _dataChartNationDAH.value = [];
-      await http
-          .get(Uri.parse(
-              'http://103.78.88.74:207/api/API_GIABIEN_IAH/GetAllGIABIEN_IAHByDay?NGAY=${formatDateAPIToday.toString()}'))
+      await BaseClient()
+          .get(
+              'http://103.78.88.74:207/api/API_GIABIEN_IAH/GetAllGIABIEN_IAHByDay?NGAY=${formatDateAPIToday.toString()}')
           .then((value) {
         List<PriceModel> priceModelRes = priceModelFromJson(value.body);
         if (priceModelRes.isEmpty) {
@@ -79,9 +75,9 @@ class MarginalPriceController extends BaseController {
             }
           }
 
-          http
-              .get(Uri.parse(
-                  'http://103.78.88.74:207/api/API_GIABIEN_IAH/GetAllGIABIEN_IAHByDay?NGAY=${formatDateAPITomorrow.toString()}'))
+          BaseClient()
+              .get(
+                  'http://103.78.88.74:207/api/API_GIABIEN_IAH/GetAllGIABIEN_IAHByDay?NGAY=${formatDateAPITomorrow.toString()}')
               .then((value) {
             List<PriceModel> priceModelRes1 = priceModelFromJson(value.body);
             if (priceModelRes1.isEmpty) {

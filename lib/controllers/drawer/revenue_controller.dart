@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/controllers/base_controller.dart';
 import 'package:test_chart/core.dart';
-import 'package:http/http.dart' as http;
 
 class RevenueController extends BaseController {
   final _dataRcan = <ChartRevenue>[].obs;
@@ -52,8 +51,9 @@ class RevenueController extends BaseController {
 
   //Categories Factory
   List<ListFactoryOutputModel> dataFactory = [];
-  int indexFactory = 0;
-  List<String> listFactory = ['Nhà máy'];
+  final Map<String, dynamic> listFactory = {
+    'Nhà máy': 0,
+  };
   final _dropdownvalueFactory = 'Nhà máy'.obs;
   String get dropdownvalueFactory => _dropdownvalueFactory.value;
 
@@ -74,17 +74,14 @@ class RevenueController extends BaseController {
 
   Future<void> fetchListFatory() async {
     try {
-      indexFactory = 0;
-      listFactory = ['Nhà máy'];
-      await http
-          .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_DONVIByID?UNITID=-1&UNIT_NAME='))
+      await BaseClient()
+          .get(
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_DONVIByID?UNITID=-1&UNIT_NAME=')
           .then((value) {
         List<ListFactoryOutputModel> dataFactoryRespon =
             listFactoryOutputModelFromJson(value.body);
         for (var e in dataFactoryRespon) {
-          listFactory.add(e.unitName);
-          dataFactory.add(e);
+          listFactory.addAll({e.unitName: e.unitid});
         }
       });
     } catch (e) {
@@ -95,17 +92,11 @@ class RevenueController extends BaseController {
   }
 
   void getDisplayRevenue() {
-    indexFactory = 0;
     if (dropdownvalueFactory == 'Nhà máy') {
       CustomSnackbar.snackBar('error', 'Vui lòng chọn nhà máy');
     } else if (dropdownvalueFactory != 'Nhà máy') {
       showLoading();
-      for (var e in dataFactory) {
-        if (dropdownvalueFactory == e.unitName) {
-          indexFactory = e.unitid;
-          fetchRevenue();
-        }
-      }
+      fetchRevenue();
     }
   }
 
@@ -118,11 +109,9 @@ class RevenueController extends BaseController {
       _dataRdu.value = [];
       _dataRsmp.value = [];
 
-      await http
+      await BaseClient()
           .get(
-        Uri.parse(
-            "http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHANHTOAN_HANGNGAYByDay?NGAY=${formatDateAPIToday.toString()}&UNITID=${indexFactory.toInt()}"),
-      )
+              "http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHANHTOAN_HANGNGAYByDay?NGAY=${formatDateAPIToday.toString()}&UNITID=${listFactory[_dropdownvalueFactory.value]}")
           .then((value) {
         RevenueModel? revenueModelRes = revenueModelFromJson(value.body);
 

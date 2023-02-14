@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/models/drawer/output/chart_out_put.dart';
+import 'package:test_chart/core.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'package:test_chart/models/drawer/output/list_factory_output_model.dart';
-import 'package:test_chart/models/drawer/output/out_put_model.dart';
-import 'package:test_chart/shared/widgets/custom_snackbar.dart';
 
 class OutputController extends BaseController {
   final _dataCAN = <ChartOutput>[].obs;
@@ -28,8 +24,7 @@ class OutputController extends BaseController {
 
   //Categories Factory
   List<ListFactoryOutputModel> dataFactoryOutPut = [];
-  int indexFactory = 0;
-  List<String> listFactory = ['Nhà máy'];
+  final Map<String, dynamic> listFactory = {'Nhà máy': 0};
   final _dropdownvalueFactory = 'Nhà máy'.obs;
   String get dropdownvalueFactory => _dropdownvalueFactory.value;
 
@@ -50,17 +45,14 @@ class OutputController extends BaseController {
 
   Future<void> fetchListFatoryOutput() async {
     try {
-      indexFactory = 0;
-      listFactory = ['Nhà máy'];
-      await http
-          .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_DONVIByID?UNITID=-1&UNIT_NAME='))
+      await BaseClient()
+          .get(
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_DONVIByID?UNITID=-1&UNIT_NAME=')
           .then((value) {
         List<ListFactoryOutputModel> dataFactoryRes =
             listFactoryOutputModelFromJson(value.body);
         for (var e in dataFactoryRes) {
-          listFactory.add(e.unitName);
-          dataFactoryOutPut.add(e);
+          listFactory.addAll({e.unitName: e.unitid});
         }
       });
     } catch (e) {
@@ -71,17 +63,11 @@ class OutputController extends BaseController {
   }
 
   void getDisplayData() {
-    indexFactory = 0;
     if (dropdownvalueFactory == 'Nhà máy') {
       CustomSnackbar.snackBar('error', 'Vui lòng chọn nhà máy');
     } else if (dropdownvalueFactory != 'Nhà máy') {
       showLoading();
-      for (var e in dataFactoryOutPut) {
-        if (dropdownvalueFactory == e.unitName) {
-          indexFactory = e.unitid;
-          fetchOutput();
-        }
-      }
+      fetchOutput();
     }
   }
 
@@ -94,9 +80,9 @@ class OutputController extends BaseController {
       _dataQCAN.value = [];
       _dataQLLTT.value = [];
 
-      await http
-          .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHITRUONG_SAUVANHANHByDay2?NGAY=${formatDateAPIToday.toString()}&UNITID=${indexFactory.toInt()}'))
+      await BaseClient()
+          .get(
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHITRUONG_SAUVANHANHByDay2?NGAY=${formatDateAPIToday.toString()}&UNITID=${listFactory[_dropdownvalueFactory.value]}')
           .then((value) {
         OutPutModel outputModel = outPutModelFromJson(value.body);
 
@@ -125,13 +111,12 @@ class OutputController extends BaseController {
           _dataQLLTT.add(ChartOutput(x: e.chuKy.toString(), qlltt: e.giaTri));
         }
         hideLoading();
-
-        CustomSnackbar.showSuccessToast('Thành công',
-            'Sản lượng nhà máy ${dropdownvalueFactory.toString()}');
       });
     } catch (e) {
+      hideLoading();
       debugPrintStack();
     }
     update();
+    hideLoading();
   }
 }

@@ -14,12 +14,12 @@ class TonnageController extends BaseController {
   String get dropdownvalue => _dropdownvalue.value;
   int indexDropdownValue = 150;
 
-  final ragion = [
-    "Miền Bắc",
-    "Miền Trung",
-    "Miền Nam",
-    "Quốc Gia",
-  ];
+  final Map<String, dynamic> ragion = {
+    "Miền Bắc": 1,
+    "Miền Trung": 2,
+    "Miền Nam": 3,
+    "Quốc Gia": 150,
+  };
 
   void setValueDropDown(String? valueFactory) {
     _dropdownvalue.value = valueFactory!;
@@ -27,24 +27,19 @@ class TonnageController extends BaseController {
 
   Future<void> fetchTonnage() async {
     showLoading();
-    try {
-      indexDropdownValue = 0;
-      if (dropdownvalue == 'Quốc Gia') {
-        indexDropdownValue = 150;
-      } else if (dropdownvalue == 'Miền Bắc') {
-        indexDropdownValue = 1;
-      } else if (dropdownvalue == 'Miền Trung') {
-        indexDropdownValue = 2;
-      } else if (dropdownvalue == 'Miền Nam') {
-        indexDropdownValue = 3;
+    indexDropdownValue = 150;
+    for (var entry in ragion.entries) {
+      if (_dropdownvalue.value == entry.key) {
+        indexDropdownValue = entry.value;
       }
-
+    }
+    try {
       _dataChartCk.value = [];
       _dataChartDay.value = [];
 
       await BaseClient()
           .get(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_IAHByDay?NGAY=${formatDateAPIToday.toString()}&ID_NODE=${indexDropdownValue.toInt()}')
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_IAHByDay?NGAY=${formatDateAPIToday.toString()}&ID_NODE=${indexDropdownValue.toString()}')
           .then((value) {
         List<TonnageModel> tonnageModelRes = tonnageModelFromJson(value.body);
         if (tonnageModelRes.isEmpty) {
@@ -57,7 +52,7 @@ class TonnageController extends BaseController {
           }
           BaseClient()
               .get(
-                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_DAHByDay?NGAY=${formatDateAPITomorrow.toString()}&ID_NODE=${indexDropdownValue.toInt()}')
+                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_DAHByDay?NGAY=${formatDateAPITomorrow.toString()}&ID_NODE=${indexDropdownValue.toString()}')
               .then((value) {
             List<TonnageModel> tonnageModelRes1 =
                 tonnageModelFromJson(value.body);
@@ -76,7 +71,7 @@ class TonnageController extends BaseController {
         }
       });
     } catch (e) {
-      debugPrintStack();
+      debugPrintStack(label: e.toString());
     }
     hideLoading();
 

@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:test_chart/controllers/base_controller.dart';
 import 'package:test_chart/core.dart';
-import 'package:test_chart/models/drawer/hydrological/data_lake_model.dart';
-import 'package:test_chart/models/drawer/hydrological/lake_list_model.dart';
 
 class HydrologicalController extends BaseController {
   final _dataGHTren = <ChartHydrological>[].obs;
@@ -42,7 +39,9 @@ class HydrologicalController extends BaseController {
   //Categories Lake
   List<ListLakeModel> dataLake = [];
   int indexLake = 0;
-  List<String> listLake = ['Nhà máy'];
+  final Map<String, dynamic> listLake = {
+    'Nhà máy': 0,
+  };
   final _dropdownvalueLake = 'Nhà máy'.obs;
   String get dropdownvalueLake => _dropdownvalueLake.value;
 
@@ -52,13 +51,13 @@ class HydrologicalController extends BaseController {
 
   Future<void> fetchListLake() async {
     try {
-      http
-          .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_HOCHUAByID?ID_HO=-1&TEN_HO=%27%27'))
+      await BaseClient()
+          .get(
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_HOCHUAByID?ID_HO=-1&TEN_HO=%27%27')
           .then((value) {
         dataLake = listLakeModelFromJson(value.body);
         for (var e in dataLake) {
-          listLake.add(e.tenHo);
+          listLake.addAll({e.tenHo: e.idHo});
         }
         update();
       });
@@ -70,7 +69,6 @@ class HydrologicalController extends BaseController {
   }
 
   void getDisplayData() {
-    indexLake = 0;
     if (dropdownvalueLake == 'Nhà máy') {
       _dataGHDuoi.value = [];
       _dataGHTren.value = [];
@@ -82,6 +80,7 @@ class HydrologicalController extends BaseController {
       update();
       CustomSnackbar.snackBar('error', 'Vui lòng chọn nhà máy');
     } else if (dropdownvalueLake != 'Nhà máy') {
+      indexLake = listLake[_dropdownvalueLake.value];
       _dataGHDuoi.value = [];
       _dataGHTren.value = [];
       _dataKHNam.value = [];
@@ -90,25 +89,19 @@ class HydrologicalController extends BaseController {
       _dataTTNam.value = [];
       _dataTTNamAgo.value = [];
       showLoading();
-      for (var e in dataLake) {
-        if (dropdownvalueLake == e.tenHo) {
-          indexLake = e.idHo;
-          fetchLake();
-        }
-      }
+      fetchLake();
     }
   }
 
   Future<void> fetchLake() async {
     try {
-      await http
-          .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/HOCHUA_THUYVAN_GET?ID_HO=$indexLake&NGAY=$formatDateAPIToday&NAM=2022'))
+      await BaseClient()
+          .get(
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/HOCHUA_THUYVAN_GET?ID_HO=$indexLake&NGAY=$formatDateAPIToday&NAM=2022')
           .then((value) {
         DataLakeModel dataLakeRes = dataLakeModelFromJson(value.body);
         for (var e in dataLakeRes.mucnuocChet) {
-          _dataMnc
-              .add(ChartHydrological(x: e.waterDay.toString(), mnc: e.value));
+          _dataMnc.add(ChartHydrological(x: e.waterDay, mnc: e.value));
         }
         for (var e in dataLakeRes.mucnuocDangbinhthuong) {
           _dataMndbt.add(ChartHydrological(x: e.waterDay, mndbt: e.value));

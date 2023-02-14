@@ -30,3 +30,5 @@ export 'drawer/tonnage/tonnage_model.dart';
 
 //Hydrological
 export 'drawer/hydrological/chart_hydrological.dart';
+export 'drawer/hydrological/data_lake_model.dart';
+export 'drawer/hydrological/lake_list_model.dart';

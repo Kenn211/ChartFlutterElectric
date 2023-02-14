@@ -22,7 +22,7 @@ class TonnagePage extends GetView<TonnageController> {
         scrollDirection: Axis.vertical,
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: GetBuilder<TonnageController>(builder: (controller) {
+            child: Obx(() {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -32,16 +32,14 @@ class TonnagePage extends GetView<TonnageController> {
                       listItem: controller.ragion,
                       onChanged: controller.setValueDropDown),
                   const SizedBox(height: 20),
-                  Obx(() {
-                    return SelectDate(
-                      text: DateFormat("dd-MM-yyyy")
-                          .format(controller.selectedDateTime.value)
-                          .toString(),
-                      onTap: () {
-                        controller.chooseDate();
-                      },
-                    );
-                  }),
+                  SelectDate(
+                    text: DateFormat("dd-MM-yyyy")
+                        .format(controller.selectedDateTime.value)
+                        .toString(),
+                    onTap: () {
+                      controller.chooseDate();
+                    },
+                  ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -51,10 +49,11 @@ class TonnagePage extends GetView<TonnageController> {
                         height: 50,
                         alignment: Alignment.centerRight,
                         child: Button(
-                            text: 'Lấy dữ liệu',
-                            onTap: () {
-                              controller.fetchTonnage();
-                            }),
+                          text: 'Lấy dữ liệu',
+                          onTap: () {
+                            controller.fetchTonnage();
+                          },
+                        ),
                       ),
                     ],
                   ),

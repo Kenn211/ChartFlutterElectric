@@ -46,9 +46,9 @@ class LanguagesController extends GetxController {
     storage.write(Constants.countryCode, countryCode);
   }
 
-  void setCurrentLocale(String? locale) async {
+  void setCurrentLocale(String locale) async {
     Phoenix.rebirth(Get.context!);
-    updateLocale(locale!).whenComplete(() {
+    updateLocale(locale).whenComplete(() {
       Get.reset();
       Get.put(StorageService());
     });

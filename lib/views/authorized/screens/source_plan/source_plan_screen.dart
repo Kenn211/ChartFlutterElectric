@@ -60,17 +60,6 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
                                   .toString(),
                               onTap: controller.chooseDate)),
                           const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              const _CheckBoxWidget(),
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                child: const Text(
-                                    'Xem chu kì hiện tại và ba chu kì tới',
-                                    style: TextStyle(fontSize: 16)),
-                              ),
-                            ],
-                          ),
                           SizedBox(
                             width: 160,
                             height: 50,
@@ -82,10 +71,8 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
                   })),
               const SizedBox(height: 20),
               const _ChartSourcePlanIAH(),
-              const _TableSourcePlanIAH(),
               const SizedBox(height: 20),
               const _ChartSourcePlanDAH(),
-              const _TableSourcePlanDAH()
             ],
           ),
         ));
@@ -155,87 +142,6 @@ class _ChartSourcePlanDAH extends StatelessWidget {
               yValueMapper: (data, _) => data.giaTri,
             )
         ],
-      );
-    });
-  }
-}
-
-class _CheckBoxWidget extends StatefulWidget {
-  const _CheckBoxWidget({Key? key}) : super(key: key);
-
-  @override
-  State<_CheckBoxWidget> createState() => __CheckBoxWidgetState();
-}
-
-class __CheckBoxWidgetState extends State<_CheckBoxWidget> {
-  bool isChecked = false;
-
-  @override
-  Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
-      }
-      return Colors.blue;
-    }
-
-    return Checkbox(
-      checkColor: Colors.white,
-      fillColor: MaterialStateProperty.resolveWith(getColor),
-      value: isChecked,
-      onChanged: (bool? value) {
-        setState(() {
-          isChecked = value!;
-        });
-      },
-    );
-  }
-}
-
-class _TableSourcePlanIAH extends StatelessWidget {
-  const _TableSourcePlanIAH({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<SourcePlanController>(builder: (controller) {
-      return SizedBox(
-        child: Table(
-            border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
-            children: const [
-              // for(var i = 0; i < controller.dataToMayIAH.length; i++)
-            ]),
-      );
-    });
-  }
-}
-
-class _TableSourcePlanDAH extends StatelessWidget {
-  const _TableSourcePlanDAH({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<SourcePlanController>(builder: (controller) {
-      return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Table(
-            border: TableBorder.all(width: 1.2, color: Colors.blue.shade500),
-            children: [
-              controller
-                  .buildRow(['CK', 'MB', 'MT', 'MN', 'GBM'], isHeader: true),
-              // for (var e = 0; e < controller.dataChartCentralDAH.length; e++)
-              //   controller.buildRow([
-              //     '${controller.dataTableIAH[e].ck}',
-              //     '${controller.dataChartNorthDAH[e].y1}',
-              //     '${controller.dataChartCentralDAH[e].y2}',
-              //     '${controller.dataChartSouthDAH[e].y3}',
-              //     '${controller.dataChartNationDAH[e].y4}'
-              //   ])
-            ]),
       );
     });
   }

@@ -68,7 +68,7 @@ class _ChartHydrological extends StatelessWidget {
       return SfCartesianChart(
           enableAxisAnimation: true,
           title: ChartTitle(
-              text: 'Biểu đồ Doanh thu ngày',
+              text: 'Biểu đồ',
               textStyle:
                   const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
           primaryXAxis: CategoryAxis(labelStyle: const TextStyle(fontSize: 12)),

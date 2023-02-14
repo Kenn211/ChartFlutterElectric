@@ -1,16 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/controllers/base_controller.dart';
-import 'package:http/http.dart' as http;
-import 'package:test_chart/models/drawer/source_plan/list_factory_model.dart';
-import 'package:test_chart/models/drawer/source_plan/source_plan_model.dart';
-import 'package:test_chart/shared/app_shared.dart';
+import 'package:test_chart/core.dart';
 
 class SourcePlanController extends BaseController {
   //Categories Factory
-  List<ListFactoryModel> dataFactory = [];
-  int indexFactory = 0;
-  List<String> listFactory = ['Nhà máy'];
+  final Map<String, dynamic> listFactory = {
+    'Nhà máy': 0,
+  };
   final _dropdownvalueFactory = 'Nhà máy'.obs;
   String get dropdownvalueFactory => _dropdownvalueFactory.value;
 
@@ -37,28 +34,25 @@ class SourcePlanController extends BaseController {
 
   Future<void> fetchListFatory() async {
     try {
-      indexFactory = 0;
-      listFactory = ['Nhà máy'];
-      await http
-          .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_NHAMAYByID?ID_NM=-1&TEN_NM='))
+      BaseClient()
+          .get(
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_NHAMAYByID?ID_NM=-1&TEN_NM=')
           .then((value) {
         List<ListFactoryModel> dataFactoryRespon =
             listFactoryModelFromJson(value.body);
         for (var e in dataFactoryRespon) {
-          listFactory.add(e.tenNm);
-          dataFactory.add(e);
+          listFactory.addAll({e.tenNm: e.idNm});
         }
+        update();
       });
     } catch (e) {
-      debugPrintStack();
+      debugPrint(e.toString());
     }
-    hideLoading();
     update();
+    hideLoading();
   }
 
   void getDisplayData() {
-    indexFactory = 0;
     if (dropdownvalueFactory == 'Nhà máy') {
       _dataToMayIAH.value = [];
       _dataToMayDAH.value = [];
@@ -66,12 +60,7 @@ class SourcePlanController extends BaseController {
       CustomSnackbar.snackBar('error', 'Vui lòng chọn nhà máy');
     } else if (dropdownvalueFactory != 'Nhà máy') {
       showLoading();
-      for (var e in dataFactory) {
-        if (dropdownvalueFactory == e.tenNm) {
-          indexFactory = e.idNm;
-          fetchPlan();
-        }
-      }
+      fetchPlan();
     }
   }
 
@@ -80,9 +69,9 @@ class SourcePlanController extends BaseController {
       _dataToMayIAH.value = [];
       _dataToMayDAH.value = [];
 
-      await http
-          .get(Uri.parse(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_IAHByDay2?NGAY=${formatDateAPIToday.toString()}&ID_NM=${indexFactory.toInt()}'))
+      await BaseClient()
+          .get(
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_IAHByDay2?NGAY=${formatDateAPIToday.toString()}&ID_NM=${listFactory[_dropdownvalueFactory.value]}')
           .then((value) {
         SourcePlanModel planModel = sourcePlanModelFromJson(value.body);
 
@@ -95,9 +84,9 @@ class SourcePlanController extends BaseController {
           }
 
           //Get Data DAH
-          http
-              .get(Uri.parse(
-                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_DAHByDay2?NGAY=${formatDateAPITomorrow.toString()}&ID_NM=${indexFactory.toInt()}'))
+          BaseClient()
+              .get(
+                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_DAHByDay2?NGAY=${listFactory[_dropdownvalueFactory.value]}')
               .then((value) {
             SourcePlanModel planModel1 = sourcePlanModelFromJson(value.body);
             for (var e in planModel1.toMay) {

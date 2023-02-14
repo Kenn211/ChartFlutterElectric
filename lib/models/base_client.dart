@@ -7,12 +7,12 @@ class BaseClient {
 
   ///GET
   Future<dynamic> get(String api) async {
-    var headersAPI = {"": ""};
+    // var headersAPI = {"": ""};
 
     var url = Uri.parse(api);
-    var response = await client.get(url, headers: headersAPI);
+    var response = await client.get(url);
     if (response.statusCode == 200) {
-      return response.body;
+      return response;
     } else {
       //throw exception and catch it in UI
     }

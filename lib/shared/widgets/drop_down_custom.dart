@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:test_chart/core.dart';
 
@@ -12,11 +14,11 @@ class DropDownSelect extends StatelessWidget {
 
   late String dropDownValue;
   final ValueChanged<String?> onChanged;
-  final List<String> listItem;
+  final Map<String, dynamic> listItem;
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField(
+    return DropdownButtonFormField<String>(
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
@@ -55,21 +57,27 @@ class DropDownSelect extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         dropdownColor: const Color.fromARGB(255, 253, 254, 253),
         // Array list of items
-        items: listItem.map((String items) {
-          return DropdownMenuItem(
-            value: items,
-            child: Text(
-              items,
-            ),
-          );
-        }).toList(),
+        items: _buildDropdownMenuItems(dropdownList: listItem),
         // After selecting the desired option,it will
         // change button value to selected value
         onChanged: (String? newValue) {
           onChanged(newValue);
           dropDownValue = newValue!;
 
-          (context as Element).markNeedsBuild(); //Trick setState in Stl
+          // (context as Element).markNeedsBuild(); //Trick setState in Stl
         });
+  }
+
+  List<DropdownMenuItem<String>> _buildDropdownMenuItems(
+      {required Map<String, dynamic> dropdownList}) {
+    List<DropdownMenuItem<String>> list = [];
+    LinkedHashMap.from(dropdownList).forEach((key, value) {
+      list.add(DropdownMenuItem<String>(
+        alignment: AlignmentDirectional.centerStart,
+        value: key,
+        child: Text(key),
+      ));
+    });
+    return list;
   }
 }
