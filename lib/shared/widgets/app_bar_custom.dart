@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_chart/shared/constants/colors.dart';
+import 'package:test_chart/core.dart';
 
 class AppBarCustom extends StatelessWidget {
   const AppBarCustom(
@@ -49,9 +49,12 @@ class AppBarCustom extends StatelessWidget {
         title: Container(
           width: double.infinity,
           alignment: Alignment.center,
-          child: Text(
-            title ?? '',
-            style: TextStyle(color: AppColors.secondColor),
+          child: DelayedReveal(
+            delay: const Duration(microseconds: 3),
+            child: Text(
+              title ?? '',
+              style: TextStyle(color: AppColors.secondColor),
+            ),
           ),
         ));
     return SizedBox(

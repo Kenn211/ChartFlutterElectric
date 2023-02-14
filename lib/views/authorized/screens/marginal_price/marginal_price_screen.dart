@@ -48,7 +48,7 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
                         Obx(() {
                           return SelectDate(
                             text: DateFormat("dd-MM-yyyy")
-                                .format(controller.selectedDateTime.value)
+                                .format(controller.selectedDateTime)
                                 .toString(),
                             onTap: () {
                               controller.chooseDate();

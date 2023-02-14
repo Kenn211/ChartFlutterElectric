@@ -42,9 +42,17 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
   build_runner: ^2.1.8
+  flutter_launcher_icons: ^0.11.0
 
   flutter_localizations:
     sdk: flutter 
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/logo_evn.png"
+  remove_alpha_ios: true
+
 # assets
 flutter:
   uses-material-design: true

@@ -39,14 +39,15 @@ abstract class BaseController extends GetxController {
   }
 
   //DateTime picker
-  Rx<DateTime> selectedDateTime = DateTime.now().obs;
+  final _selectedDateTime = DateTime.now().obs;
+  DateTime get selectedDateTime => _selectedDateTime.value;
   String formatDateAPIToday = '';
   String formatDateAPITomorrow = '';
 
   chooseDate() async {
     DateTime? pickedDate = await showDatePicker(
         context: Get.context!,
-        initialDate: selectedDateTime.value,
+        initialDate: _selectedDateTime.value,
         firstDate: DateTime(2000),
         lastDate: DateTime(2024),
         initialEntryMode: DatePickerEntryMode.input,
@@ -54,13 +55,22 @@ abstract class BaseController extends GetxController {
         errorFormatText: 'Định dạng phải là tháng/ngày/năm',
         cancelText: 'ĐÓNG',
         helpText: 'Chọn ngày');
-    if (pickedDate != null && pickedDate != selectedDateTime.value) {
-      selectedDateTime.value = pickedDate;
+    if (pickedDate != null && pickedDate != _selectedDateTime.value) {
+      _selectedDateTime.value = pickedDate;
       formatDateAPIToday =
-          DateFormat("yyyy-MM-dd").format(selectedDateTime.value);
+          DateFormat("yyyy-MM-dd").format(_selectedDateTime.value);
       formatDateAPITomorrow = DateFormat("yyyy-MM-dd")
-          .format(selectedDateTime.value.add(const Duration(days: 1)));
+          .format(_selectedDateTime.value.add(const Duration(days: 1)));
     }
+
+    TextFormField(
+        controller: TextEditingController(
+          // ignore: unnecessary_null_comparison
+          text: _selectedDateTime != null
+              ? "${_selectedDateTime.value.day.toString().padLeft(2, '0')}/${_selectedDateTime.value.month.toString().padLeft(2, '0')}/${_selectedDateTime.value.year}"
+              : "",
+        ),
+        decoration: const InputDecoration(labelText: "mm/dd/yyyy"));
   }
 
   ///Keyboard

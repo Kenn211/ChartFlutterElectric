@@ -86,7 +86,7 @@ class SourcePlanController extends BaseController {
           //Get Data DAH
           BaseClient()
               .get(
-                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_DAHByDay2?NGAY=${listFactory[_dropdownvalueFactory.value]}')
+                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_DAHByDay2?NGAY=${formatDateAPITomorrow.toString()}&ID_NM=${listFactory[_dropdownvalueFactory.value]}')
               .then((value) {
             SourcePlanModel planModel1 = sourcePlanModelFromJson(value.body);
             for (var e in planModel1.toMay) {
@@ -94,8 +94,8 @@ class SourcePlanController extends BaseController {
             }
             CustomSnackbar.showSuccessToast('Thành công',
                 'Dữ liệu kế hoạch nhà máy ${dropdownvalueFactory.toString()}');
-            update();
           });
+          update();
         }
       });
     } catch (e) {

@@ -56,7 +56,7 @@ class SourcePlanScreen extends GetView<SourcePlanController> {
                           ///Select Date
                           Obx(() => SelectDate(
                               text: DateFormat("dd-MM-yyyy")
-                                  .format(controller.selectedDateTime.value)
+                                  .format(controller.selectedDateTime)
                                   .toString(),
                               onTap: controller.chooseDate)),
                           const SizedBox(height: 10),

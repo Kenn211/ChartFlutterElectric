@@ -36,7 +36,7 @@ class HydrologicalScreen extends GetView<HydrologicalController> {
                     const SizedBox(height: 20),
                     Obx(() => SelectDate(
                         text: DateFormat("dd-MM-yyyy")
-                            .format(controller.selectedDateTime.value)
+                            .format(controller.selectedDateTime)
                             .toString(),
                         onTap: controller.chooseDate)),
                     const SizedBox(height: 20),

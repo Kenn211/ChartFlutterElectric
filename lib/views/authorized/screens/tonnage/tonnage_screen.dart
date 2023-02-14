@@ -34,7 +34,7 @@ class TonnagePage extends GetView<TonnageController> {
                   const SizedBox(height: 20),
                   SelectDate(
                     text: DateFormat("dd-MM-yyyy")
-                        .format(controller.selectedDateTime.value)
+                        .format(controller.selectedDateTime)
                         .toString(),
                     onTap: () {
                       controller.chooseDate();

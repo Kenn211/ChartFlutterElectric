@@ -1,7 +1,12 @@
-// keys
+// constants
 export 'constants/colors.dart';
 export 'constants/keys.dart';
 export 'constants/local_images_path.dart';
+
+// animations
+export 'animations/delayed_reveal.dart';
+export 'animations/domino_reveal.dart';
+export 'animations/fade_animation.dart';
 
 // widgets
 export 'widgets/app_bar_custom.dart';
