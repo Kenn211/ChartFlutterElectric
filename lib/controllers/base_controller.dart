@@ -41,10 +41,11 @@ abstract class BaseController extends GetxController {
   //DateTime picker
   final _selectedDateTime = DateTime.now().obs;
   DateTime get selectedDateTime => _selectedDateTime.value;
+
   String formatDateAPIToday = '';
   String formatDateAPITomorrow = '';
 
-  chooseDate() async {
+  Future<void> chooseDate() async {
     DateTime? pickedDate = await showDatePicker(
         context: Get.context!,
         initialDate: _selectedDateTime.value,
@@ -64,13 +65,16 @@ abstract class BaseController extends GetxController {
     }
 
     TextFormField(
-        controller: TextEditingController(
-          // ignore: unnecessary_null_comparison
-          text: _selectedDateTime != null
-              ? "${_selectedDateTime.value.day.toString().padLeft(2, '0')}/${_selectedDateTime.value.month.toString().padLeft(2, '0')}/${_selectedDateTime.value.year}"
-              : "",
-        ),
-        decoration: const InputDecoration(labelText: "mm/dd/yyyy"));
+      controller: TextEditingController(
+        // ignore: unnecessary_null_comparison
+        text: _selectedDateTime != null
+            ? "${_selectedDateTime.value.day.toString().padLeft(2, '0')}/${_selectedDateTime.value.month.toString().padLeft(2, '0')}/${_selectedDateTime.value.year}"
+            : "",
+      ),
+      decoration: const InputDecoration(
+        labelText: "dd/mm/yyyy",
+      ),
+    );
   }
 
   ///Keyboard

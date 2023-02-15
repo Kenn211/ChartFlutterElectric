@@ -8,13 +8,15 @@ class TextFieldWidget extends StatefulWidget {
       this.text,
       this.inputPass,
       this.actionInput,
-      this.focusNode});
+      this.focusNode,
+      this.obscurText});
 
   final TextEditingController? TextController;
   final String? text;
   final bool? inputPass;
   final TextInputAction? actionInput;
   final FocusNode? focusNode;
+  final bool? obscurText;
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -36,7 +38,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               border: const OutlineInputBorder(),
               labelText: widget.text,
             ),
-            obscureText: showPassword,
+            obscureText: widget.obscurText == true ? showPassword : false,
           ),
           widget.inputPass == true
               ? Positioned(

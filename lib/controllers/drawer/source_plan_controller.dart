@@ -92,8 +92,6 @@ class SourcePlanController extends BaseController {
             for (var e in planModel1.toMay) {
               _dataToMayDAH.add(e);
             }
-            CustomSnackbar.showSuccessToast('Thành công',
-                'Dữ liệu kế hoạch nhà máy ${dropdownvalueFactory.toString()}');
           });
           update();
         }

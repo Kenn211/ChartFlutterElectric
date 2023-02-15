@@ -84,6 +84,7 @@ class _FormLogin extends StatelessWidget {
                 child: TextFieldWidget(
                   actionInput: TextInputAction.done,
                   inputPass: true,
+                  obscurText: true,
                   text: 'password'.tr,
                   TextController: controller.passwordController,
                 )),
