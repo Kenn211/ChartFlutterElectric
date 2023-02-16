@@ -14,6 +14,9 @@ const Map<String, String> enEN = {
   //I
   'info': 'Information',
 
+  //M
+  'marginalCost': 'Marginal Cost',
+
   //E
   'edit': 'chỉnh sửa',
   'error': 'Error',

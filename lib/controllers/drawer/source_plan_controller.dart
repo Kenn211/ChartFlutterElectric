@@ -44,12 +44,12 @@ class SourcePlanController extends BaseController {
           listFactory.addAll({e.tenNm: e.idNm});
         }
         update();
+      }).whenComplete(() {
+        hideLoading();
       });
     } catch (e) {
       debugPrint(e.toString());
     }
-    update();
-    hideLoading();
   }
 
   void getDisplayData() {
@@ -92,13 +92,14 @@ class SourcePlanController extends BaseController {
             for (var e in planModel1.toMay) {
               _dataToMayDAH.add(e);
             }
+            update();
+          }).whenComplete(() {
+            hideLoading();
           });
-          update();
         }
       });
     } catch (e) {
       debugPrintStack();
     }
-    hideLoading();
   }
 }

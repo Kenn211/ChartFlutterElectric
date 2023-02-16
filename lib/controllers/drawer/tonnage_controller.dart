@@ -62,19 +62,15 @@ class TonnageController extends BaseController {
               for (var e in tonnageModelRes1) {
                 _dataChartDay.add(ChartDataTonnage(x: e.chuky, y1: e.giatri));
               }
-              hideLoading();
-              CustomSnackbar.showSuccessToast(
-                  'Thành công', 'Dữ liệu phụ tải ${dropdownvalue.toString()}');
             }
             update();
           });
         }
+      }).whenComplete(() {
+        hideLoading();
       });
     } catch (e) {
       debugPrintStack(label: e.toString());
     }
-    hideLoading();
-
-    update();
   }
 }

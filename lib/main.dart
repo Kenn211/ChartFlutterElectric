@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_chart/core.dart';
@@ -7,7 +8,7 @@ import 'package:get/get.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Get.putAsync(() => StorageService().init());
-  runApp(const App());
+  runApp(Phoenix(child: const App()));
 }
 
 class App extends StatefulWidget {

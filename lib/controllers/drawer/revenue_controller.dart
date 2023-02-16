@@ -83,12 +83,13 @@ class RevenueController extends BaseController {
         for (var e in dataFactoryRespon) {
           listFactory.addAll({e.unitName: e.unitid});
         }
+        update();
+      }).whenComplete(() {
+        hideLoading();
       });
     } catch (e) {
       debugPrintStack(label: e.toString());
     }
-    hideLoading();
-    update();
   }
 
   void getDisplayRevenue() {
@@ -166,13 +167,12 @@ class RevenueController extends BaseController {
 
           _sumPay.value = revenueModelRes.tong.toString();
         }
+        update();
+      }).whenComplete(() {
+        hideLoading();
       });
     } catch (e) {
       debugPrintStack();
     }
-    Future.delayed(const Duration(milliseconds: 500), () {
-      hideLoading();
-    });
-    update();
   }
 }

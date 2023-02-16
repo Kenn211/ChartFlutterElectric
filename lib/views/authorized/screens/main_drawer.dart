@@ -16,7 +16,7 @@ class MainDrawer extends StatelessWidget {
     ),
     ItemDrawer(
       index: 2,
-      text: 'Giá biên',
+      text: 'marginalCost'.tr,
       iconItem: CupertinoIcons.arrowtriangle_up,
       onTap: controller.setNavigationBarIndex,
     ),
@@ -84,13 +84,14 @@ class MainDrawer extends StatelessWidget {
 }
 
 class ItemDrawer extends StatelessWidget {
-  const ItemDrawer(
-      {super.key,
-      required this.index,
-      required this.iconItem,
-      required this.text,
-      this.logout = false,
-      required this.onTap});
+  const ItemDrawer({
+    super.key,
+    required this.index,
+    required this.iconItem,
+    required this.text,
+    this.logout = false,
+    required this.onTap,
+  });
 
   final int index;
   final IconData? iconItem;

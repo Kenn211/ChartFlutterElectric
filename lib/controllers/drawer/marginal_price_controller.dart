@@ -99,17 +99,15 @@ class MarginalPriceController extends BaseController {
                 }
               }
             }
-            hideLoading();
-            CustomSnackbar.showSuccessToast('Thành công',
-                'Dữ liệu giá biên ngày ${formatDateAPIToday.toString()}');
+
             update();
+          }).whenComplete(() {
+            hideLoading();
           });
         }
       });
     } catch (e) {
       debugPrintStack();
     }
-    hideLoading();
-    update();
   }
 }

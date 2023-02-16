@@ -54,12 +54,13 @@ class OutputController extends BaseController {
         for (var e in dataFactoryRes) {
           listFactory.addAll({e.unitName: e.unitid});
         }
+        update();
+      }).whenComplete(() {
+        hideLoading();
       });
     } catch (e) {
       debugPrintStack();
     }
-    hideLoading();
-    update();
   }
 
   void getDisplayData() {
@@ -110,13 +111,13 @@ class OutputController extends BaseController {
         for (var e in outputModel.qlltt) {
           _dataQLLTT.add(ChartOutput(x: e.chuKy.toString(), qlltt: e.giaTri));
         }
+        update();
+      }).whenComplete(() {
         hideLoading();
       });
     } catch (e) {
       hideLoading();
       debugPrintStack();
     }
-    update();
-    hideLoading();
   }
 }

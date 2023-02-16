@@ -60,12 +60,12 @@ class HydrologicalController extends BaseController {
           listLake.addAll({e.tenHo: e.idHo});
         }
         update();
+      }).whenComplete(() {
+        hideLoading();
       });
     } catch (e) {
       debugPrint(e.toString());
     }
-    update();
-    hideLoading();
   }
 
   void getDisplayData() {
@@ -126,11 +126,11 @@ class HydrologicalController extends BaseController {
           _dataMndbt.add(ChartHydrological(x: e.waterDay, mndbt: e.value));
         }
         update();
+      }).whenComplete(() {
+        hideLoading();
       });
     } catch (e) {
       debugPrint(e.toString());
     }
-    update();
-    hideLoading();
   }
 }

@@ -22,6 +22,9 @@ const Map<String, String> viVN = {
   //F
   'function': 'Chức năng',
 
+  //M
+  'marginalCost': 'Giá biên',
+
   // L
   'login': 'Đăng nhập',
   'logout': 'Đăng xuất',

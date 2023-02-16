@@ -13,9 +13,9 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        flexibleSpace: const AppBarCustom(
+        flexibleSpace: AppBarCustom(
           canBack: true,
-          title: 'Giá biên',
+          title: 'marginalCost'.tr,
         ),
       ),
       body: SingleChildScrollView(

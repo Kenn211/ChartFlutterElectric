@@ -39,7 +39,7 @@ class HomePage extends GetView<HomeController> {
                   child: Obx(
                     () {
                       return Text(
-                        'Xin chào! ${controller.userName.toString()}',
+                        '${'hello'.tr}! ${controller.userName.toString()}',
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
