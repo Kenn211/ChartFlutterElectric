@@ -130,6 +130,10 @@ class HydrologicalController extends BaseController {
         hideLoading();
       });
     } catch (e) {
+      CustomSnackbar.snackBar(
+          'error', 'Không có dữ liệu nhà máy $_dropdownvalueLake');
+      hideLoading();
+
       debugPrint(e.toString());
     }
   }

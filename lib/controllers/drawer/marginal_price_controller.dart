@@ -81,7 +81,7 @@ class MarginalPriceController extends BaseController {
               .then((value) {
             List<PriceModel> priceModelRes1 = priceModelFromJson(value.body);
             if (priceModelRes1.isEmpty) {
-              debugPrintStack();
+              hideLoading();
             } else {
               for (var e in priceModelRes1) {
                 if (e.idNode == 1) {
@@ -107,6 +107,8 @@ class MarginalPriceController extends BaseController {
         }
       });
     } catch (e) {
+      hideLoading();
+      CustomSnackbar.snackBar('error', 'Không có dữ liệu ngày này');
       debugPrintStack();
     }
   }

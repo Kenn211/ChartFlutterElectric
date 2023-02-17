@@ -70,6 +70,8 @@ class TonnageController extends BaseController {
         hideLoading();
       });
     } catch (e) {
+      hideLoading();
+      CustomSnackbar.snackBar('error', 'Không có dữ liệu ngày này');
       debugPrintStack(label: e.toString());
     }
   }

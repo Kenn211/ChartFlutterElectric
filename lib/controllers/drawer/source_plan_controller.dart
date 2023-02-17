@@ -99,6 +99,9 @@ class SourcePlanController extends BaseController {
         }
       });
     } catch (e) {
+      hideLoading();
+      CustomSnackbar.snackBar(
+          'error', 'Không có dữ liệu nhà máy $_dropdownvalueFactory');
       debugPrintStack();
     }
   }

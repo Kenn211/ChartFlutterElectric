@@ -172,6 +172,9 @@ class RevenueController extends BaseController {
         hideLoading();
       });
     } catch (e) {
+      hideLoading();
+      CustomSnackbar.snackBar(
+          'error', 'Không có dữ liệu nhà máy $_dropdownvalueFactory');
       debugPrintStack();
     }
   }
