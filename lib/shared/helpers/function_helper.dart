@@ -43,6 +43,26 @@ class FunctionHelper {
   //   return storage.getString(Constants.accessToken).toString();
   // }
 
+  static showError({required String error, String? stack}) {
+    return Get.dialog(
+      AlertDialog(
+        title: Center(child: Text('default_error_title'.tr)),
+        content: SingleChildScrollView(
+          child: ListBody(children: [
+            Text(error),
+            if (stack != null) ...[const SizedBox(height: 20), Text(stack)]
+          ]),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text('agree'.tr),
+          ),
+        ],
+      ),
+    );
+  }
+
   static void showLoading([String? message]) {
     Get.dialog(
       Scaffold(

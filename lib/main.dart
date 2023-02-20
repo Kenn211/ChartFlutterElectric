@@ -1,12 +1,17 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_chart/core.dart';
 import 'package:get/get.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 // ignore: depend_on_referenced_packages
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:test_chart/shared/helpers/function_helper.dart';
 import 'firebase_options.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -41,7 +46,34 @@ Future<void> main() async {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     if (message.notification != null) {}
   });
-  runApp(Phoenix(child: const App()));
+
+  if (kDebugMode) {
+    FlutterError.onError = (details) async {
+      await FunctionHelper.showError(
+        error: details.exception.toString(),
+        stack: details.stack.toString(),
+      );
+    };
+    runZonedGuarded(
+      () => runApp(Phoenix(child: const App())),
+      ((error, stack) async {
+        await FunctionHelper.showError(
+          error: error.toString(),
+          stack: stack.toString(),
+        );
+      }),
+    );
+  } else {
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    runZonedGuarded(
+      () => runApp(Phoenix(child: const App())),
+      (error, stack) => FirebaseCrashlytics.instance.recordError(
+        error,
+        stack,
+        fatal: true,
+      ),
+    );
+  }
 }
 
 class App extends StatefulWidget {
@@ -73,7 +105,9 @@ class _AppState extends State<App> {
         enableLog: true,
         title: 'Thị trường điện'.toUpperCase(),
         theme: ThemeData(
-            primarySwatch: Colors.blue, scaffoldBackgroundColor: Colors.white),
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: Colors.white,
+        ),
         fallbackLocale: const Locale('vi', 'VN'),
         translations: AppTranslations(),
         defaultTransition: Transition.native,

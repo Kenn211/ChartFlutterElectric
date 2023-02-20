@@ -190,14 +190,6 @@ abstract class BaseController extends GetxController {
   late TabController tabController;
   late ImageProvider<Object> oBackground;
 
-  void closeDrawer() {
-    scaffoldKey.currentState!.closeDrawer();
-  }
-
-  void openDrawer() {
-    scaffoldKey.currentState!.openDrawer();
-  }
-
   void onChecked(bool? value) {
     if (value != null) _checked.value = value;
     update();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:test_chart/core.dart';
@@ -42,7 +43,7 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(
-                    width: 250,
+                    width: 260.w,
                     child: Stack(
                       children: [
                         Obx(() {
@@ -50,9 +51,7 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
                             text: DateFormat("dd-MM-yyyy")
                                 .format(controller.selectedDateTime)
                                 .toString(),
-                            onTap: () {
-                              controller.chooseDate();
-                            },
+                            onTap: controller.chooseDate,
                             isStack: true,
                           );
                         }),
@@ -61,14 +60,13 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
                           bottom: 4,
                           top: 4,
                           child: Container(
-                            width: 130,
-                            height: 40,
+                            width: 140.w,
+                            height: 40.h,
                             alignment: Alignment.centerLeft,
                             child: Button(
-                                text: 'Lấy dữ liệu',
-                                onTap: () {
-                                  controller.fetchPriceData();
-                                }),
+                              text: 'Lấy dữ liệu',
+                              onTap: controller.fetchPriceData,
+                            ),
                           ),
                         )
                       ],

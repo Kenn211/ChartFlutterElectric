@@ -3,127 +3,128 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/core.dart';
 
-class HomePage extends GetView<HomeController> {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: controller.scaffoldKey,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        flexibleSpace: AppBarCustom(
-          title: 'home'.tr,
-          leading: IconButton(
-            onPressed: controller.openDrawer,
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            color: AppColors.secondColor,
-            icon: const Icon(Icons.menu_rounded),
+    return GetBuilder<HomeController>(builder: (controller) {
+      return Scaffold(
+        key: controller.scaffoldKey,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          flexibleSpace: AppBarCustom(
+            title: 'home'.tr,
+            leading: IconButton(
+              onPressed: controller.openDrawer,
+              color: AppColors.secondColor,
+              icon: const Icon(Icons.menu_rounded),
+            ),
           ),
         ),
-      ),
-      drawer: const MainDrawer(),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          alignment: Alignment.topLeft,
-          color: Colors.white,
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
+        drawer: const MainDrawer(),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            alignment: Alignment.topLeft,
+            color: Colors.white,
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                    alignment: Alignment.centerLeft,
+                    child: Obx(
+                      () {
+                        return Text(
+                          '${'hello'.tr}! ${controller.userName.toString()}',
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
+                        );
+                      },
+                    )),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _ItemDisplayBody(
+                      colorBackground: AppColors.secondColor,
+                      text: 'currentCapacity'.tr,
+                      numData: '150 MW',
+                      icon: CupertinoIcons.chart_bar,
+                      onTap: () {
+                        Get.toNamed(Routes.wattagePage);
+                      },
+                    ),
+                    _ItemDisplayBody(
+                      colorBackground: AppColors.secondColor,
+                      text: 'waterlevel'.tr,
+                      numData: '150 m',
+                      icon: CupertinoIcons.bars,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40),
+                Container(
                   alignment: Alignment.centerLeft,
-                  child: Obx(
-                    () {
-                      return Text(
-                        '${'hello'.tr}! ${controller.userName.toString()}',
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500),
-                      );
-                    },
-                  )),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _ItemDisplayBody(
-                    colorBackground: AppColors.secondColor,
-                    text: 'currentCapacity'.tr,
-                    numData: '150 MW',
-                    icon: CupertinoIcons.chart_bar,
-                    onTap: () {
-                      Get.toNamed(Routes.wattagePage);
-                    },
+                  child: Text(
+                    '${'output'.tr} ${'and'.tr} ${'revenue'.tr}',
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w500),
                   ),
-                  _ItemDisplayBody(
-                    colorBackground: AppColors.secondColor,
-                    text: 'waterlevel'.tr,
-                    numData: '150 m',
-                    icon: CupertinoIcons.bars,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '${'output'.tr} ${'and'.tr} ${'revenue'.tr}',
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _ItemDisplayBody(
-                    colorBackground: const Color.fromARGB(255, 45, 175, 50),
-                    text: 'output'.tr,
-                    numData: '150 M',
-                    icon: CupertinoIcons.bolt_fill,
-                  ),
-                  _ItemDisplayBody(
-                    colorBackground: const Color.fromARGB(255, 45, 175, 50),
-                    text: 'revenue'.tr,
-                    numData: '150 m',
-                    icon: CupertinoIcons.money_dollar_circle,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'function'.tr,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _ItemDisplayBody(
+                      colorBackground: const Color.fromARGB(255, 45, 175, 50),
+                      text: 'output'.tr,
+                      numData: '150 M',
+                      icon: CupertinoIcons.bolt_fill,
+                    ),
+                    _ItemDisplayBody(
+                      colorBackground: const Color.fromARGB(255, 45, 175, 50),
+                      text: 'revenue'.tr,
+                      numData: '150 m',
+                      icon: CupertinoIcons.money_dollar_circle,
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 20),
-              _ItemFunctions(
-                text: 'repair'.tr,
-                textDesc: 'trackEditHistory'.tr,
-                icon: CupertinoIcons.hammer_fill,
-              ),
-              const SizedBox(height: 10),
-              _ItemFunctions(
-                text: 'system'.tr,
-                textDesc: 'updateinfo'.tr,
-                icon: Icons.settings,
-                onTap: () {
-                  Get.toNamed(Routes.systemPage);
-                },
-              ),
-            ],
+                const SizedBox(height: 40),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'function'.tr,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                _ItemFunctions(
+                  text: 'repair'.tr,
+                  textDesc: 'trackEditHistory'.tr,
+                  icon: CupertinoIcons.hammer_fill,
+                ),
+                const SizedBox(height: 10),
+                _ItemFunctions(
+                  text: 'system'.tr,
+                  textDesc: 'updateinfo'.tr,
+                  icon: Icons.settings,
+                  onTap: () {
+                    Get.toNamed(Routes.systemPage);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 

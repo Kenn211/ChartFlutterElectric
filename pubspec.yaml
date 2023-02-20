@@ -34,7 +34,10 @@ dependencies:
 
   #keyboard_action
   keyboard_actions: 
+
+  #firebase
   firebase_messaging: ^14.2.3
+  firebase_crashlytics: ^3.0.14
 
 
 dev_dependencies:

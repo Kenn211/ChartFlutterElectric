@@ -6,8 +6,8 @@ import 'package:test_chart/core.dart';
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
 
-  static HomeController controller = Get.find<HomeController>();
-  static List<ItemDrawer> listDrawer = [
+  static final HomeController controller = Get.find<HomeController>();
+  static final List<ItemDrawer> listDrawer = [
     ItemDrawer(
       index: 1,
       text: 'load'.tr,

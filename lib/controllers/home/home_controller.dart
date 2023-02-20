@@ -7,6 +7,10 @@ class HomeController extends BaseController {
   final _selectedIndex = RxInt(0);
   int get selectedIndex => _selectedIndex.value;
 
+  void openDrawer() {
+    scaffoldKey.currentState!.openDrawer();
+  }
+
   void handleLogout() {
     showLoading();
     Future.delayed(const Duration(seconds: 1), () async {
@@ -40,6 +44,5 @@ class HomeController extends BaseController {
         break;
       default:
     }
-    closeDrawer();
   }
 }
