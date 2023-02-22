@@ -4,6 +4,9 @@ export 'base_client.dart';
 ///Authen
 export 'auth/authen_model.dart';
 
+//Home
+export 'home/cong_suat_model.dart';
+
 ///Drawer
 //Marginal Price
 export 'drawer/marginal_price/chart_data.dart';

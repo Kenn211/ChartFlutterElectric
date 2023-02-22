@@ -35,7 +35,7 @@ abstract class _Paths {
 
   static const home = '/home';
 
-  static const wattage = '/wattage';
+  static const wattage = '/home/wattage';
 
   static const system = '/system';
 

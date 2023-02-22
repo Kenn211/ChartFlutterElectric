@@ -18,13 +18,14 @@ class AppPages {
       name: Routes.homePage,
       transition: Transition.native,
       page: () => const HomePage(),
-      binding: HomeBinding());
-
-  static final wattagePage = GetPage(
-      name: Routes.wattagePage,
-      transition: Transition.native,
-      page: () => const WattagePage(),
-      binding: WattageBinding());
+      binding: HomeBinding(),
+      children: [
+        GetPage(
+            name: Routes.wattagePage,
+            transition: Transition.native,
+            page: () => const WattagePage(),
+            binding: WattageBinding())
+      ]);
 
   static final loginPage = GetPage(
       name: Routes.login,
@@ -97,7 +98,6 @@ class AppPages {
     registerPage,
     systemPage,
     accountPage,
-    wattagePage,
 
     //Page Drawer
     ...getDrawerPages,

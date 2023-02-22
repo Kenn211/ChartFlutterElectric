@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/core.dart';
+import 'package:test_chart/routes/bindings/home/wattage_binding.dart';
+import 'package:test_chart/views/authorized/pages/wattage_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -34,19 +36,22 @@ class HomePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                    alignment: Alignment.centerLeft,
-                    child: Obx(
-                      () {
-                        return Text(
-                          '${'hello'.tr}! ${controller.userName.toString()}',
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500),
-                        );
-                      },
-                    )),
+                DelayedReveal(
+                  delay: const Duration(milliseconds: 500),
+                  child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Obx(
+                        () {
+                          return Text(
+                            '${'hello'.tr}! ${controller.userName.toString()}',
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500),
+                          );
+                        },
+                      )),
+                ),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,10 +59,12 @@ class HomePage extends StatelessWidget {
                     _ItemDisplayBody(
                       colorBackground: AppColors.secondColor,
                       text: 'currentCapacity'.tr,
-                      numData: '150 MW',
+                      numData: '${controller.displayDataCS.toInt()} MW',
                       icon: CupertinoIcons.chart_bar,
                       onTap: () {
-                        Get.toNamed(Routes.wattagePage);
+                        Get.to(() => const WattagePage(),
+                            arguments: {'data': controller.dataCongSuat},
+                            binding: WattageBinding());
                       },
                     ),
                     _ItemDisplayBody(
@@ -69,12 +76,15 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 40),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '${'output'.tr} ${'and'.tr} ${'revenue'.tr}',
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w500),
+                DelayedReveal(
+                  delay: const Duration(milliseconds: 300),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '${'output'.tr} ${'and'.tr} ${'revenue'.tr}',
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -96,12 +106,15 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 40),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'function'.tr,
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w500),
+                DelayedReveal(
+                  delay: const Duration(milliseconds: 300),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'function'.tr,
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -163,25 +176,35 @@ class _ItemDisplayBody extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                text,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+            DelayedReveal(
+              delay: const Duration(milliseconds: 300),
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  text,
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                ),
               ),
             ),
             const SizedBox(height: 30),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(numData,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600)),
+            DelayedReveal(
+              delay: const Duration(milliseconds: 300),
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: Text(numData,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600)),
+              ),
             ),
-            Container(
-              alignment: Alignment.bottomRight,
-              child: Icon(icon, size: 45, color: Colors.white.withOpacity(0.5)),
+            DelayedReveal(
+              delay: const Duration(milliseconds: 300),
+              child: Container(
+                alignment: Alignment.bottomRight,
+                child:
+                    Icon(icon, size: 45, color: Colors.white.withOpacity(0.5)),
+              ),
             )
           ],
         ),
@@ -238,19 +261,25 @@ class _ItemFunctions extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  text,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500),
+                DelayedReveal(
+                  delay: const Duration(milliseconds: 300),
+                  child: Text(
+                    text,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
-                Text(
-                  textDesc,
-                  style: TextStyle(
-                      color: Colors.black.withOpacity(0.7),
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500),
+                DelayedReveal(
+                  delay: const Duration(milliseconds: 300),
+                  child: Text(
+                    textDesc,
+                    style: TextStyle(
+                        color: Colors.black.withOpacity(0.7),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
               ],
             )

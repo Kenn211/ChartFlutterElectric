@@ -7,6 +7,18 @@ class HomeController extends BaseController {
   final _selectedIndex = RxInt(0);
   int get selectedIndex => _selectedIndex.value;
 
+  final _dataCongSuat = <DataCongSuat>[].obs;
+  RxList<DataCongSuat> get dataCongSuat => _dataCongSuat;
+
+  final _displayDataCS = 0.0.obs;
+  double get displayDataCS => _displayDataCS.value;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchDataCongSuat();
+  }
+
   void openDrawer() {
     scaffoldKey.currentState!.openDrawer();
   }
@@ -44,5 +56,19 @@ class HomeController extends BaseController {
         break;
       default:
     }
+  }
+
+  Future<void> fetchDataCongSuat() async {
+    try {
+      _dataCongSuat.value = [];
+      BaseClient()
+          .get(
+              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/CONGSUATPHAT_NHAMY_GET?MaDV=G25600')
+          .then((value) {
+        _dataCongSuat.value = dataCongSuatFromJson(value.body);
+        _displayDataCS.value = _dataCongSuat[0].congsuat;
+        update();
+      });
+    } catch (_) {}
   }
 }

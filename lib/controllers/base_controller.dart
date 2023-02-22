@@ -10,7 +10,10 @@ import 'package:test_chart/core.dart';
 abstract class BaseController extends GetxController {
   ///Table
   TableRow buildRow(List<String> cells,
-      {bool isHeader = false, bool isCate = false, double height = 40}) {
+      {bool isHeader = false,
+      bool isCate = false,
+      double height = 40,
+      Function()? onTap}) {
     final style = TextStyle(
       fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
       fontSize: 15,
@@ -19,18 +22,24 @@ abstract class BaseController extends GetxController {
     return TableRow(
       children: cells
           .map(
-            (cell) => Container(
-              color: isHeader
-                  ? Colors.blue.shade200
-                  : isCate
-                      ? const Color.fromARGB(255, 216, 214, 214)
-                      : Colors.white,
-              alignment: Alignment.center,
-              height: height,
-              child: Text(
-                cell,
-                textAlign: TextAlign.center,
-                style: style,
+            (cell) => DelayedReveal(
+              delay: const Duration(milliseconds: 500),
+              child: InkWell(
+                onTap: onTap,
+                child: Container(
+                  color: isHeader
+                      ? Colors.blue.shade200
+                      : isCate
+                          ? const Color.fromARGB(255, 216, 214, 214)
+                          : Colors.white,
+                  alignment: Alignment.center,
+                  height: height,
+                  child: Text(
+                    cell,
+                    textAlign: TextAlign.center,
+                    style: style,
+                  ),
+                ),
               ),
             ),
           )
