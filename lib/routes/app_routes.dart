@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:test_chart/views/authorized/pages/wattage_page.dart';
+import 'package:test_chart/views/authorized/pages/screen_home/wattage_page.dart';
 
 import 'bindings/index.dart';
 import '/views/app_views.dart';
@@ -21,10 +21,25 @@ class AppPages {
       binding: HomeBinding(),
       children: [
         GetPage(
-            name: Routes.wattagePage,
-            transition: Transition.native,
-            page: () => const WattagePage(),
-            binding: WattageBinding())
+          name: Routes.wattagePage,
+          page: () => const WattagePage(),
+          binding: WattageBinding(),
+        ),
+        GetPage(
+          name: Routes.lakeLevelPage,
+          page: () => const LakeLevelScreen(),
+          binding: LakeLevelBinding(),
+        ),
+        GetPage(
+          name: Routes.revenueHomePage,
+          page: () => const RevenueHome(),
+          binding: RevenueHomeBinding(),
+        ),
+        GetPage(
+          name: Routes.outputHomePage,
+          page: () => const OutputHome(),
+          binding: OutputHomeBinding(),
+        ),
       ]);
 
   static final loginPage = GetPage(

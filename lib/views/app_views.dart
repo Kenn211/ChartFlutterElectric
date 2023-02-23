@@ -7,9 +7,11 @@ export 'not_found/not_found.dart';
 
 //authorized
 export 'authorized/pages/home_page.dart';
-export 'authorized/pages/account_screen.dart';
-export 'authorized/pages/lake_level_evolution.dart';
-export 'authorized/pages/system_page.dart';
+export 'authorized/pages/screen_home/account_screen.dart';
+export 'authorized/pages/screen_home/lake_level_screen.dart';
+export 'authorized/pages/screen_home/system_page.dart';
+export 'authorized/pages/screen_home/revenue_home.dart';
+export 'authorized/pages/screen_home/output_home.dart';
 
 //drawer
 export 'authorized/screens/main_drawer.dart';

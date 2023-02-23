@@ -6,6 +6,9 @@ export 'auth/register_controller.dart';
 export 'home/home_controller.dart';
 export 'home/system_controller.dart';
 export 'home/wattage_controller.dart';
+export 'home/lake_level_controller.dart';
+export 'home/output_home_controller.dart';
+export 'home/revenue_home_controller.dart';
 
 ///Account
 export 'account/account_controller.dart';

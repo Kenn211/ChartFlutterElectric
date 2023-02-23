@@ -13,6 +13,9 @@ abstract class Routes {
   //home
   static const homePage = _Paths.home;
   static const wattagePage = _Paths.wattage;
+  static const lakeLevelPage = _Paths.lakeLevel;
+  static const revenueHomePage = _Paths.outputHome;
+  static const outputHomePage = _Paths.revenueHome;
 
   //system
   static const systemPage = _Paths.system;
@@ -33,13 +36,14 @@ abstract class _Paths {
   static const login = '/login';
   static const register = '/register';
 
+  //Home
   static const home = '/home';
-
   static const wattage = '/home/wattage';
-
+  static const lakeLevel = '/home/lakeLevel';
   static const system = '/system';
-
   static const account = '/account';
+  static const outputHome = '/home/outputHome';
+  static const revenueHome = '/home/revenueHome';
 
   //Page Drawer
   static const tonnage = '/tonnage';

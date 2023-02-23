@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/core.dart';
-import 'package:test_chart/routes/bindings/home/wattage_binding.dart';
-import 'package:test_chart/views/authorized/pages/wattage_page.dart';
+import 'package:test_chart/routes/bindings/index.dart';
+import 'package:test_chart/views/authorized/pages/screen_home/wattage_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -72,6 +72,10 @@ class HomePage extends StatelessWidget {
                       text: 'waterlevel'.tr,
                       numData: '150 m',
                       icon: CupertinoIcons.bars,
+                      onTap: () {
+                        Get.to(() => const LakeLevelScreen(),
+                            binding: LakeLevelBinding());
+                      },
                     ),
                   ],
                 ),
@@ -96,12 +100,20 @@ class HomePage extends StatelessWidget {
                       text: 'output'.tr,
                       numData: '150 M',
                       icon: CupertinoIcons.bolt_fill,
+                      onTap: () {
+                        Get.to(() => const OutputHome(),
+                            binding: OutputHomeBinding());
+                      },
                     ),
                     _ItemDisplayBody(
                       colorBackground: const Color.fromARGB(255, 45, 175, 50),
                       text: 'revenue'.tr,
                       numData: '150 m',
                       icon: CupertinoIcons.money_dollar_circle,
+                      onTap: () {
+                        Get.to(() => const RevenueHome(),
+                            binding: RevenueHomeBinding());
+                      },
                     ),
                   ],
                 ),
