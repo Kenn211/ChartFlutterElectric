@@ -10,6 +10,7 @@ export 'home/wattage_binding.dart';
 export 'home/lake_level_binding.dart';
 export 'home/output_home_binding.dart';
 export 'home/revenue_home_binding.dart';
+export 'home/factory_home_binding.dart';
 
 //drawer
 export 'drawer/marginal_price_binding.dart';

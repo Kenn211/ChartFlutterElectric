@@ -39,7 +39,7 @@ class _NotFoundScreenState extends State<NotFoundScreen> {
         height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/splash.jpg'),
+            image: AssetImage('assets/images/splash.png'),
             fit: BoxFit.fill,
           ),
         ),

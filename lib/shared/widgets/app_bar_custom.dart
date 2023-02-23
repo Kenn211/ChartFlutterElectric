@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_chart/core.dart';
 
 class AppBarCustom extends StatelessWidget {
@@ -29,7 +30,7 @@ class AppBarCustom extends StatelessWidget {
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Get.back();
                 },
                 icon: Icon(Icons.arrow_back_ios, color: AppColors.secondColor))
             : leading,

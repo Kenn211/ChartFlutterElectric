@@ -16,6 +16,7 @@ abstract class Routes {
   static const lakeLevelPage = _Paths.lakeLevel;
   static const revenueHomePage = _Paths.outputHome;
   static const outputHomePage = _Paths.revenueHome;
+  static const factoryHomePage = _Paths.factoryHome;
 
   //system
   static const systemPage = _Paths.system;
@@ -44,6 +45,7 @@ abstract class _Paths {
   static const account = '/account';
   static const outputHome = '/home/outputHome';
   static const revenueHome = '/home/revenueHome';
+  static const factoryHome = '/home/factoryHome';
 
   //Page Drawer
   static const tonnage = '/tonnage';

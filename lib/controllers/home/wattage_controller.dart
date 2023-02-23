@@ -15,8 +15,10 @@ class WattageController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    _dataCongSuat.value = Get.arguments['data'];
-    _displayCS.value = _dataCongSuat[0].congsuat;
+    if (checkArgumentsExist('data')) {
+      _dataCongSuat.value = Get.arguments['data'];
+      _displayCS.value = _dataCongSuat[0].congsuat;
+    }
   }
 
   void funcDisplayCS(String id) {

@@ -16,7 +16,7 @@ class HomeController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    fetchDataCongSuat();
+    getDataCongSuat();
   }
 
   void openDrawer() {
@@ -31,7 +31,7 @@ class HomeController extends BaseController {
     });
   }
 
-  void setNavigationBarIndex(int index) {
+  void setDrawerIndex(int index) {
     switch (index) {
       case 1:
         Get.toNamed(Routes.tonnageScreen);
@@ -58,7 +58,7 @@ class HomeController extends BaseController {
     }
   }
 
-  Future<void> fetchDataCongSuat() async {
+  Future<void> getDataCongSuat() async {
     try {
       _dataCongSuat.value = [];
       BaseClient()
@@ -70,5 +70,19 @@ class HomeController extends BaseController {
         update();
       });
     } catch (_) {}
+  }
+
+  Future<void> getDataLakeLevel(int id) async {
+    showLoading();
+    await Future.delayed(const Duration(seconds: 2), () {
+      hideLoading();
+    });
+    // try {
+    //   await BaseClient()
+    //       .get(
+    //           'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/HOCHUA_THUYVAN_GET?ID_HO=55&NGAY=2022-12-27&NAM=2022')
+    //       .then((value) {})
+    //       .whenComplete(() {});
+    // } catch (_) {}
   }
 }

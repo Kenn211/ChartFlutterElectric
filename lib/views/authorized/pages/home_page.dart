@@ -144,6 +144,17 @@ class HomePage extends StatelessWidget {
                     Get.toNamed(Routes.systemPage);
                   },
                 ),
+                const SizedBox(height: 10),
+                _ItemFunctions(
+                  text: 'factory'.tr,
+                  textDesc: 'select_factory'.tr,
+                  icon: Icons.settings,
+                  onTap: () {
+                    Get.to(() => const FactoryHome(),
+                        binding:
+                            BindingsBuilder.put(() => FactoryHomeController()));
+                  },
+                ),
               ],
             ),
           ),

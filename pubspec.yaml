@@ -53,9 +53,9 @@ dev_dependencies:
     sdk: flutter 
 
 flutter_icons:
-  android: true
+  android: 'launcher_icon'
   ios: true
-  image_path: "assets/icons/logo_evn.png"
+  image_path: "assets/icons/logo_app_electric.png"
   remove_alpha_ios: true
 
 # assets

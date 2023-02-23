@@ -21,6 +21,11 @@ class AppPages {
       binding: HomeBinding(),
       children: [
         GetPage(
+          name: Routes.factoryHomePage,
+          page: () => const FactoryHome(),
+          binding: FactoryHomeBinding(),
+        ),
+        GetPage(
           name: Routes.wattagePage,
           page: () => const WattagePage(),
           binding: WattageBinding(),
