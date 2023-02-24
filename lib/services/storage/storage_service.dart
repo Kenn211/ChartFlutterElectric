@@ -16,10 +16,6 @@ class StorageService extends GetxService {
     return this;
   }
 
-  void initConnect() {
-    Get.put<CheckNetWorkController>(CheckNetWorkController(), permanent: true);
-  }
-
   static void saveToken({String? tokenString}) async {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();

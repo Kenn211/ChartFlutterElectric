@@ -16,6 +16,7 @@ class Constants {
   static double height = MediaQuery.of(Get.context!).size.height;
   static double width = MediaQuery.of(Get.context!).size.width;
   static double statusBarHeight = MediaQuery.of(Get.context!).viewPadding.top;
+  static const idCompany = 'idCompany';
 
   // format date
   static String FULL_YEAR_FORMAT = 'dd/MM/yyyy';
