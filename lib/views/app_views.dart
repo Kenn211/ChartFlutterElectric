@@ -4,6 +4,7 @@ export 'unauthorized/register_screen.dart';
 
 //not found
 export 'not_found/not_found.dart';
+export 'not_found/select_company.dart';
 
 //authorized
 export 'authorized/pages/home_page.dart';

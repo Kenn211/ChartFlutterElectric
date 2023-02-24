@@ -12,7 +12,13 @@ dependencies:
   flutter:
     sdk: flutter
   
+  #check network
+  connectivity_plus: ^3.0.3
+  
+  #icon
   cupertino_icons: ^1.0.2
+
+  #sync
   syncfusion_flutter_charts:
   syncfusion_flutter_gauges: ^20.4.51 
 

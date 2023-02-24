@@ -8,6 +8,8 @@ const Map<String, String> viVN = {
   //C
   'confirm': 'Xác nhận',
   'currentCapacity': 'Công suất hiện tại',
+  'company': 'Công ty',
+  're_select_company': 'Chọn công ty khác',
 
   //E
   'edit': 'chỉnh sửa',
@@ -21,6 +23,7 @@ const Map<String, String> viVN = {
 
   //F
   'function': 'Chức năng',
+  'factory': 'Nhà máy',
 
   //M
   'marginalCost': 'Giá biên',
@@ -49,6 +52,7 @@ const Map<String, String> viVN = {
   //S
   'system': 'Hệ thống',
   'sourcePlan': 'Kế hoạch nguồn',
+  'select_factory': 'Chọn nhà máy',
 
   //U
   'user_login': 'Tên đăng nhập',
@@ -62,6 +66,7 @@ const Map<String, String> viVN = {
 
   //W
   'waterlevel': 'Mực nước',
+  'welcome_app': 'Chào mừng bạn đến với E-Market',
 
   //T
   'trackEditHistory': 'Theo dõi lịch sử chỉnh sửa',

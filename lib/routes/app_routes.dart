@@ -14,6 +14,11 @@ class AppPages {
   static final unknownRoute =
       GetPage(name: Routes.notFound, page: () => const NotFoundScreen());
 
+  static final selectCompany = GetPage(
+    name: Routes.selectCompany,
+    page: () => const SelectCompanyScreen(),
+  );
+
   static final homePage = GetPage(
       name: Routes.homePage,
       transition: Transition.native,
@@ -113,6 +118,7 @@ class AppPages {
 
   static final List<GetPage> getPages = [
     unknownRoute,
+    selectCompany,
     homePage,
     loginPage,
     registerPage,

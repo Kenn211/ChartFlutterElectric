@@ -23,7 +23,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Get.putAsync(() => StorageService().init());
+  Get.put(StorageService()
+    ..init()
+    ..initConnect());
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

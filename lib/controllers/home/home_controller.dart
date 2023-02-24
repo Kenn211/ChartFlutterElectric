@@ -72,6 +72,10 @@ class HomeController extends BaseController {
     } catch (_) {}
   }
 
+  void toSelectCompany() {
+    RouterHelper.getSelectCompany();
+  }
+
   Future<void> getDataLakeLevel(int id) async {
     showLoading();
     await Future.delayed(const Duration(seconds: 2), () {

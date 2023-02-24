@@ -148,12 +148,19 @@ class HomePage extends StatelessWidget {
                 _ItemFunctions(
                   text: 'factory'.tr,
                   textDesc: 'select_factory'.tr,
-                  icon: Icons.settings,
+                  icon: CupertinoIcons.building_2_fill,
                   onTap: () {
                     Get.to(() => const FactoryHome(),
                         binding:
                             BindingsBuilder.put(() => FactoryHomeController()));
                   },
+                ),
+                const SizedBox(height: 10),
+                _ItemFunctions(
+                  text: 'company'.tr,
+                  textDesc: 're_select_company'.tr,
+                  icon: CupertinoIcons.house_fill,
+                  onTap: controller.toSelectCompany,
                 ),
               ],
             ),

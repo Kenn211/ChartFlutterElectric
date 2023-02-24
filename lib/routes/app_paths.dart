@@ -9,6 +9,7 @@ abstract class Routes {
 
   // UnKnown
   static const notFound = '/not_found';
+  static const selectCompany = '/select_company';
 
   //home
   static const homePage = _Paths.home;

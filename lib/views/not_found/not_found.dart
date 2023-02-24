@@ -11,7 +11,7 @@ class NotFoundScreen extends StatefulWidget {
 }
 
 class _NotFoundScreenState extends State<NotFoundScreen> {
-  static final prefs = SharedPreferences.getInstance();
+  final prefs = SharedPreferences.getInstance();
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class _NotFoundScreenState extends State<NotFoundScreen> {
     final SharedPreferences storage = await prefs;
     final isLogged = storage.getString(Constants.accessToken);
     if (isLogged != null && isLogged.isNotEmpty) {
-      RouterHelper.getOffUntil();
+      RouterHelper.getSelectCompany();
     } else {
       RouterHelper.toLogin();
     }

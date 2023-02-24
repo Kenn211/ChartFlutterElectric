@@ -1,11 +1,8 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_chart/routes/app_routes.dart';
+import 'package:test_chart/core.dart';
 import 'package:test_chart/routes/bindings/auth/login_binding.dart';
 import 'package:test_chart/routes/bindings/home/home_binding.dart';
-import 'package:test_chart/shared/app_shared.dart';
-import 'package:test_chart/views/authorized/pages/home_page.dart';
-import 'package:test_chart/views/unauthorized/login_screen.dart';
 
 class RouterHelper {
   // ==================================== ROUTER ===========================================//
@@ -27,6 +24,24 @@ class RouterHelper {
             transitionDuration: const Duration(milliseconds: 250),
             binding: HomeBinding()),
         (route) => false);
+  }
+
+  static getSelectCompany() async {
+    Get.put(SelectCompanyController());
+
+    await Future.delayed(
+      const Duration(milliseconds: 200),
+      () async {
+        final select = Get.find<SelectCompanyController>();
+        await Future.wait([select.fetchListCompany()]).whenComplete(() {
+          Get.offUntil(
+              GetPageRoute(
+                page: () => const SelectCompanyScreen(),
+              ),
+              (route) => false);
+        });
+      },
+    );
   }
 
   static onLogout() async {

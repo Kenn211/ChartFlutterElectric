@@ -10,6 +10,8 @@ const Map<String, String> enEN = {
   'current': 'Current',
   'capacity': 'Capacity',
   'currentCapacity': 'Current capacity',
+  'company': 'Company',
+  're_select_company': 'Choose another company',
 
   //I
   'info': 'Information',
@@ -29,6 +31,7 @@ const Map<String, String> enEN = {
 
   //F
   'function': 'Function',
+  'factory': 'Factory',
 
   // L
   'login': 'Log in',
@@ -61,9 +64,11 @@ const Map<String, String> enEN = {
 
   //S
   'success': 'Success',
+  'select_factory': 'Select Factory',
 
   //W
   'waterlevel': 'Water level',
+  'welcome_app': 'Welcome to E-Market',
 
   //T
   'trackEditHistory': 'Track edit history',

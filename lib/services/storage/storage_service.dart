@@ -1,5 +1,6 @@
-import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test_chart/controllers/check_network/check_network_controller.dart';
 
 import '/shared/constants/keys.dart';
 
@@ -13,6 +14,10 @@ class StorageService extends GetxService {
     languageCode = storage.getString(Constants.languageCode) ?? 'vi';
     countryCode = storage.getString(Constants.countryCode) ?? 'VN';
     return this;
+  }
+
+  void initConnect() {
+    Get.put<CheckNetWorkController>(CheckNetWorkController(), permanent: true);
   }
 
   static void saveToken({String? tokenString}) async {
