@@ -59,17 +59,14 @@ class HomeController extends BaseController {
   }
 
   Future<void> getDataCongSuat() async {
-    try {
-      _dataCongSuat.value = [];
-      BaseClient()
-          .get(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/CONGSUATPHAT_NHAMY_GET?MaDV=G25600')
-          .then((value) {
-        _dataCongSuat.value = dataCongSuatFromJson(value.body);
-        _displayDataCS.value = _dataCongSuat[0].congsuat;
-        update();
-      });
-    } catch (_) {}
+    _dataCongSuat.value = [];
+    BaseClient.get(
+        'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/CONGSUATPHAT_NHAMY_GET?MaDV=G25600',
+        onSuccess: (response) {
+      _dataCongSuat.value = dataCongSuatFromJson(response.data);
+      _displayDataCS.value = _dataCongSuat[0].congsuat;
+      update();
+    });
   }
 
   void toSelectCompany() {

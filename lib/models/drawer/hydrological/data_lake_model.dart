@@ -4,8 +4,7 @@
 
 import 'dart:convert';
 
-DataLakeModel dataLakeModelFromJson(String str) =>
-    DataLakeModel.fromJson(json.decode(str));
+DataLakeModel dataLakeModelFromJson(dynamic str) => DataLakeModel.fromJson(str);
 
 String dataLakeModelToJson(DataLakeModel data) => json.encode(data.toJson());
 

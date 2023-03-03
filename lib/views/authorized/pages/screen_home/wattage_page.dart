@@ -29,11 +29,11 @@ class WattagePage extends GetView<WattageController> {
                   axes: <RadialAxis>[
                     RadialAxis(minimum: 0, maximum: 200, ranges: <GaugeRange>[
                       GaugeRange(
-                          startValue: 0, endValue: 50, color: Colors.green),
+                          startValue: 0, endValue: 70, color: Colors.green),
                       GaugeRange(
-                          startValue: 50, endValue: 100, color: Colors.orange),
+                          startValue: 70, endValue: 140, color: Colors.orange),
                       GaugeRange(
-                          startValue: 100, endValue: 200, color: Colors.red)
+                          startValue: 140, endValue: 200, color: Colors.red)
                     ], pointers: <GaugePointer>[
                       NeedlePointer(
                         value: controller.displayCS,
@@ -92,7 +92,8 @@ class _TableWattage extends StatelessWidget {
           },
           border: TableBorder.all(width: 1.0, color: Colors.black),
           children: [
-            controller.buildRow(['Tên tổ máy', 'Công suất'], isHeader: true),
+            controller
+                .buildRow(['Tên tổ máy/nhà máy', 'Công suất'], isHeader: true),
             for (var item in controller.dataCongSuat)
               controller.buildRow(
                 [item.tentb, item.congsuat.toString()],

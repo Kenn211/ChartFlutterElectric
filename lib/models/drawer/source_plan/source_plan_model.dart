@@ -4,8 +4,8 @@
 
 import 'dart:convert';
 
-SourcePlanModel sourcePlanModelFromJson(String str) =>
-    SourcePlanModel.fromJson(json.decode(str));
+SourcePlanModel sourcePlanModelFromJson(dynamic str) =>
+    SourcePlanModel.fromJson(str);
 
 String sourcePlanModelToJson(SourcePlanModel data) =>
     json.encode(data.toJson());

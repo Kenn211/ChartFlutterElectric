@@ -4,8 +4,7 @@
 
 import 'dart:convert';
 
-RevenueModel? revenueModelFromJson(String str) =>
-    RevenueModel.fromJson(json.decode(str));
+RevenueModel? revenueModelFromJson(dynamic str) => RevenueModel.fromJson(str);
 
 String revenueModelToJson(RevenueModel? data) => json.encode(data!.toJson());
 

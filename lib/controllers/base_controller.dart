@@ -72,18 +72,6 @@ abstract class BaseController extends GetxController {
       formatDateAPITomorrow = DateFormat("yyyy-MM-dd")
           .format(_selectedDateTime.value.add(const Duration(days: 1)));
     }
-
-    TextFormField(
-      controller: TextEditingController(
-        // ignore: unnecessary_null_comparison
-        text: _selectedDateTime != null
-            ? "${_selectedDateTime.value.day.toString().padLeft(2, '0')}/${_selectedDateTime.value.month.toString().padLeft(2, '0')}/${_selectedDateTime.value.year}"
-            : "",
-      ),
-      decoration: const InputDecoration(
-        labelText: "dd/mm/yyyy",
-      ),
-    );
   }
 
   ///Keyboard

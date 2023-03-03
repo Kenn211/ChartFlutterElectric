@@ -4,8 +4,8 @@
 
 import 'dart:convert';
 
-List<PriceModel> priceModelFromJson(String str) =>
-    List<PriceModel>.from(json.decode(str).map((x) => PriceModel.fromJson(x)));
+List<PriceModel> priceModelFromJson(List<dynamic> list) =>
+    List<PriceModel>.from(list.map((x) => PriceModel.fromJson(x)));
 
 String priceModelToJson(List<PriceModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));

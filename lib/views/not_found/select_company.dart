@@ -73,7 +73,7 @@ class SelectCompanyScreen extends GetView<SelectCompanyController> {
                     child: Button(
                         text: 'Trang chủ',
                         showIcon: false,
-                        onTap: controller.getListCompany),
+                        onTap: controller.submitSelectCompany),
                   ),
                 ],
               );

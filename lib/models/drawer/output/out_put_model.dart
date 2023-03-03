@@ -4,8 +4,7 @@
 
 import 'dart:convert';
 
-OutPutModel outPutModelFromJson(String str) =>
-    OutPutModel.fromJson(json.decode(str));
+OutPutModel outPutModelFromJson(dynamic str) => OutPutModel.fromJson(str);
 
 String outPutModelToJson(OutPutModel data) => json.encode(data.toJson());
 

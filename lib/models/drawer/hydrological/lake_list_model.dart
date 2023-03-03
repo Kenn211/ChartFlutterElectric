@@ -4,9 +4,8 @@
 
 import 'dart:convert';
 
-List<ListLakeModel> listLakeModelFromJson(String str) =>
-    List<ListLakeModel>.from(
-        json.decode(str).map((x) => ListLakeModel.fromJson(x)));
+List<ListLakeModel> listLakeModelFromJson(List<dynamic> list) =>
+    List<ListLakeModel>.from(list.map((x) => ListLakeModel.fromJson(x)));
 
 String listLakeModelToJson(List<ListLakeModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));

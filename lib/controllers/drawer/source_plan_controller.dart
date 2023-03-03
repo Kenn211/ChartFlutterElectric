@@ -18,13 +18,10 @@ class SourcePlanController extends BaseController {
   RxList<ToMay> get dataToMayDAH => _dataToMayDAH;
 
   @override
-  void onReady() {
-    showLoading();
-  }
-
-  @override
   void onInit() {
-    fetchListFatory();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchListFatory();
+    });
     super.onInit();
   }
 
@@ -33,23 +30,18 @@ class SourcePlanController extends BaseController {
   }
 
   Future<void> fetchListFatory() async {
-    try {
-      BaseClient()
-          .get(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_NHAMAYByID?ID_NM=-1&TEN_NM=')
-          .then((value) {
-        List<ListFactoryModel> dataFactoryRespon =
-            listFactoryModelFromJson(value.body);
-        for (var e in dataFactoryRespon) {
-          listFactory.addAll({e.tenNm: e.idNm});
-        }
-        update();
-      }).whenComplete(() {
-        hideLoading();
-      });
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    showLoading();
+    BaseClient.get(
+        'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_NHAMAYByID?ID_NM=-1&TEN_NM=',
+        onSuccess: (response) {
+      List<ListFactoryModel> dataFactoryRespon =
+          listFactoryModelFromJson(response.data);
+      for (var e in dataFactoryRespon) {
+        listFactory.addAll({e.tenNm: e.idNm});
+      }
+      hideLoading();
+      update();
+    });
   }
 
   void getDisplayData() {
@@ -65,44 +57,34 @@ class SourcePlanController extends BaseController {
   }
 
   Future<void> fetchPlan() async {
-    try {
-      _dataToMayIAH.value = [];
-      _dataToMayDAH.value = [];
+    _dataToMayIAH.value = [];
+    _dataToMayDAH.value = [];
 
-      await BaseClient()
-          .get(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_IAHByDay2?NGAY=${formatDateAPIToday.toString()}&ID_NM=${listFactory[_dropdownvalueFactory.value]}')
-          .then((value) {
-        SourcePlanModel planModel = sourcePlanModelFromJson(value.body);
+    await BaseClient.get(
+        'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_IAHByDay2?NGAY=${formatDateAPIToday.toString()}&ID_NM=${listFactory[_dropdownvalueFactory.value]}',
+        onSuccess: (response) {
+      SourcePlanModel planModel = sourcePlanModelFromJson(response.data);
 
-        if (planModel.toMay.isEmpty) {
-          hideLoading();
-          CustomSnackbar.snackBar('error', 'Không có dữ liệu ngày này');
-        } else {
-          for (var e in planModel.toMay) {
-            _dataToMayIAH.add(e);
-          }
-
-          //Get Data DAH
-          BaseClient()
-              .get(
-                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_DAHByDay2?NGAY=${formatDateAPITomorrow.toString()}&ID_NM=${listFactory[_dropdownvalueFactory.value]}')
-              .then((value) {
-            SourcePlanModel planModel1 = sourcePlanModelFromJson(value.body);
-            for (var e in planModel1.toMay) {
-              _dataToMayDAH.add(e);
-            }
-            update();
-          }).whenComplete(() {
-            hideLoading();
-          });
+      if (planModel.toMay.isEmpty) {
+        hideLoading();
+        CustomSnackbar.snackBar('error', 'Không có dữ liệu ngày này');
+      } else {
+        for (var e in planModel.toMay) {
+          _dataToMayIAH.add(e);
         }
-      });
-    } catch (e) {
-      hideLoading();
-      CustomSnackbar.snackBar(
-          'error', 'Không có dữ liệu nhà máy $_dropdownvalueFactory');
-      debugPrintStack();
-    }
+
+        //Get Data DAH
+        BaseClient.get(
+            'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_DAHByDay2?NGAY=${formatDateAPITomorrow.toString()}&ID_NM=${listFactory[_dropdownvalueFactory.value]}',
+            onSuccess: (response) {
+          SourcePlanModel planModel1 = sourcePlanModelFromJson(response.data);
+          for (var e in planModel1.toMay) {
+            _dataToMayDAH.add(e);
+          }
+          hideLoading();
+          update();
+        });
+      }
+    });
   }
 }

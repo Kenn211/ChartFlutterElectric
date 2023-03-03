@@ -27,46 +27,38 @@ class TonnageController extends BaseController {
   Future<void> fetchTonnage() async {
     showLoading();
 
-    try {
-      _dataChartCk.value = [];
-      _dataChartDay.value = [];
+    _dataChartCk.value = [];
+    _dataChartDay.value = [];
 
-      await BaseClient()
-          .get(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_IAHByDay?NGAY=${formatDateAPIToday.toString()}&ID_NODE=${ragion[_dropdownvalue.value]}')
-          .then((value) {
-        List<TonnageModel> tonnageModelRes = tonnageModelFromJson(value.body);
-        if (tonnageModelRes.isEmpty) {
-          hideLoading();
-          CustomSnackbar.snackBar('error',
-              'Không có dữ liệu phụ tải ${dropdownvalue.toString()} ngày này');
-        } else {
-          for (var e in tonnageModelRes) {
-            _dataChartCk.add(ChartDataTonnage(x: e.chuky, y2: e.giatri));
-          }
-          BaseClient()
-              .get(
-                  'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_DAHByDay?NGAY=${formatDateAPITomorrow.toString()}&ID_NODE=${ragion[_dropdownvalue.value]}')
-              .then((value) {
-            List<TonnageModel> tonnageModelRes1 =
-                tonnageModelFromJson(value.body);
-            if (tonnageModelRes1.isEmpty) {
-              debugPrintStack();
-            } else {
-              for (var e in tonnageModelRes1) {
-                _dataChartDay.add(ChartDataTonnage(x: e.chuky, y1: e.giatri));
-              }
-            }
-            update();
-          });
-        }
-      }).whenComplete(() {
+    await BaseClient.get(
+        'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_IAHByDay?NGAY=${formatDateAPIToday.toString()}&ID_NODE=${ragion[_dropdownvalue.value]}',
+        onSuccess: (response) {
+      List<TonnageModel> tonnageModelRes = tonnageModelFromJson(response.data);
+      if (tonnageModelRes.isEmpty) {
         hideLoading();
-      });
-    } catch (e) {
+        CustomSnackbar.snackBar('error',
+            'Không có dữ liệu phụ tải ${dropdownvalue.toString()} ngày này');
+      } else {
+        for (var e in tonnageModelRes) {
+          _dataChartCk.add(ChartDataTonnage(x: e.chuky, y2: e.giatri));
+        }
+        BaseClient.get(
+            'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_DAHByDay?NGAY=${formatDateAPITomorrow.toString()}&ID_NODE=${ragion[_dropdownvalue.value]}',
+            onSuccess: (response) {
+          List<TonnageModel> tonnageModelRes1 =
+              tonnageModelFromJson(response.data);
+          if (tonnageModelRes1.isEmpty) {
+            debugPrintStack();
+          } else {
+            for (var e in tonnageModelRes1) {
+              _dataChartDay.add(ChartDataTonnage(x: e.chuky, y1: e.giatri));
+            }
+          }
+          update();
+        });
+      }
+    }).whenComplete(() {
       hideLoading();
-      CustomSnackbar.snackBar('error', 'Không có dữ liệu ngày này');
-      debugPrintStack(label: e.toString());
-    }
+    });
   }
 }

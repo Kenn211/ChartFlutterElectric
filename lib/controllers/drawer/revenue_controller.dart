@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_chart/controllers/base_controller.dart';
 import 'package:test_chart/core.dart';
@@ -58,13 +58,10 @@ class RevenueController extends BaseController {
   String get dropdownvalueFactory => _dropdownvalueFactory.value;
 
   @override
-  void onReady() {
-    showLoading();
-  }
-
-  @override
   void onInit() {
-    fetchListFatory();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchListFatory();
+    });
     super.onInit();
   }
 
@@ -73,109 +70,94 @@ class RevenueController extends BaseController {
   }
 
   Future<void> fetchListFatory() async {
-    try {
-      await BaseClient()
-          .get(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_DONVIByID?UNITID=-1&UNIT_NAME=')
-          .then((value) {
+    showLoading();
+    await BaseClient.get(
+      'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_DONVIByID?UNITID=-1&UNIT_NAME=',
+      onSuccess: (response) {
         List<ListFactoryOutputModel> dataFactoryRespon =
-            listFactoryOutputModelFromJson(value.body);
+            listFactoryOutputModelFromJson(response.data);
         for (var e in dataFactoryRespon) {
           listFactory.addAll({e.unitName: e.unitid});
         }
-        update();
-      }).whenComplete(() {
         hideLoading();
-      });
-    } catch (e) {
-      debugPrintStack(label: e.toString());
-    }
+        update();
+      },
+    );
   }
 
-  void getDisplayRevenue() {
+  void getDisplayRevenue() async {
     if (dropdownvalueFactory == 'Nhà máy') {
       CustomSnackbar.snackBar('error', 'Vui lòng chọn nhà máy');
     } else if (dropdownvalueFactory != 'Nhà máy') {
       showLoading();
-      fetchRevenue();
+      await fetchRevenue().whenComplete(() => hideLoading());
     }
   }
 
   Future<void> fetchRevenue() async {
-    try {
-      _dataRcan.value = [];
-      _dataRbp.value = [];
-      _dataRcon.value = [];
-      _dataRdt.value = [];
-      _dataRdu.value = [];
-      _dataRsmp.value = [];
+    _dataRcan.value = [];
+    _dataRbp.value = [];
+    _dataRcon.value = [];
+    _dataRdt.value = [];
+    _dataRdu.value = [];
+    _dataRsmp.value = [];
 
-      await BaseClient()
-          .get(
-              "http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHANHTOAN_HANGNGAYByDay?NGAY=${formatDateAPIToday.toString()}&UNITID=${listFactory[_dropdownvalueFactory.value]}")
-          .then((value) {
-        RevenueModel? revenueModelRes = revenueModelFromJson(value.body);
+    await BaseClient.get(
+        "http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHANHTOAN_HANGNGAYByDay?NGAY=${formatDateAPIToday.toString()}&UNITID=${listFactory[_dropdownvalueFactory.value]}",
+        onSuccess: (response) {
+      RevenueModel? revenueModelRes = revenueModelFromJson(response.data);
 
-        if (revenueModelRes == null) {
-        } else {
-          for (var e in revenueModelRes.rcan!) {
-            _dataRcan.add(ChartRevenue(x: e!.chuKy.toString(), rcan: e.giaTri));
-          }
-
-          for (var e in revenueModelRes.rbp!) {
-            _dataRbp.add(ChartRevenue(x: e!.chuKy.toString(), rbp: e.giaTri));
-          }
-
-          for (var e in revenueModelRes.rcon!) {
-            _dataRcon.add(ChartRevenue(x: e!.chuKy.toString(), rcon: e.giaTri));
-          }
-
-          for (var e in revenueModelRes.rdt!) {
-            _dataRdt.add(ChartRevenue(x: e!.chuKy.toString(), rdt: e.giaTri));
-          }
-
-          for (var e in revenueModelRes.rdu!) {
-            _dataRdu.add(ChartRevenue(x: e!.chuKy.toString(), rdu: e.giaTri));
-          }
-
-          for (var e in revenueModelRes.rsmp!) {
-            _dataRsmp.add(ChartRevenue(x: e!.chuKy.toString(), rsmp: e.giaTri));
-          }
-
-          _thanhToanI.value =
-              revenueModelRes.thanhToanDienNangThiTruong.toString();
-
-          _thanhToanI1.value =
-              revenueModelRes.thanhToanTinhTheoGiaDienNangThiTruong.toString();
-
-          _thanhToanI2.value =
-              revenueModelRes.thanhToanTinhTheoGiaChao.toString();
-
-          _thanhToanI3.value =
-              revenueModelRes.thanhToanChoPhanSanLuongPhatTangThem.toString();
-
-          _thanhToanI4.value =
-              revenueModelRes.thanhToanSanLuongSaiKhac.toString();
-
-          _thanhToanII.value =
-              revenueModelRes.thanhToanCongSuatThitruong.toString();
-
-          _thanhToanIII.value =
-              revenueModelRes.thanhToanDichVuDuPhong.toString();
-
-          _thanhToanIV.value = revenueModelRes.thanhToanKhac.toString();
-
-          _sumPay.value = revenueModelRes.tong.toString();
+      if (revenueModelRes == null) {
+      } else {
+        for (var e in revenueModelRes.rcan!) {
+          _dataRcan.add(ChartRevenue(x: e!.chuKy.toString(), rcan: e.giaTri));
         }
-        update();
-      }).whenComplete(() {
-        hideLoading();
-      });
-    } catch (e) {
-      hideLoading();
-      CustomSnackbar.snackBar(
-          'error', 'Không có dữ liệu nhà máy $_dropdownvalueFactory');
-      debugPrintStack();
-    }
+
+        for (var e in revenueModelRes.rbp!) {
+          _dataRbp.add(ChartRevenue(x: e!.chuKy.toString(), rbp: e.giaTri));
+        }
+
+        for (var e in revenueModelRes.rcon!) {
+          _dataRcon.add(ChartRevenue(x: e!.chuKy.toString(), rcon: e.giaTri));
+        }
+
+        for (var e in revenueModelRes.rdt!) {
+          _dataRdt.add(ChartRevenue(x: e!.chuKy.toString(), rdt: e.giaTri));
+        }
+
+        for (var e in revenueModelRes.rdu!) {
+          _dataRdu.add(ChartRevenue(x: e!.chuKy.toString(), rdu: e.giaTri));
+        }
+
+        for (var e in revenueModelRes.rsmp!) {
+          _dataRsmp.add(ChartRevenue(x: e!.chuKy.toString(), rsmp: e.giaTri));
+        }
+
+        _thanhToanI.value =
+            revenueModelRes.thanhToanDienNangThiTruong.toString();
+
+        _thanhToanI1.value =
+            revenueModelRes.thanhToanTinhTheoGiaDienNangThiTruong.toString();
+
+        _thanhToanI2.value =
+            revenueModelRes.thanhToanTinhTheoGiaChao.toString();
+
+        _thanhToanI3.value =
+            revenueModelRes.thanhToanChoPhanSanLuongPhatTangThem.toString();
+
+        _thanhToanI4.value =
+            revenueModelRes.thanhToanSanLuongSaiKhac.toString();
+
+        _thanhToanII.value =
+            revenueModelRes.thanhToanCongSuatThitruong.toString();
+
+        _thanhToanIII.value = revenueModelRes.thanhToanDichVuDuPhong.toString();
+
+        _thanhToanIV.value = revenueModelRes.thanhToanKhac.toString();
+
+        _sumPay.value = revenueModelRes.tong.toString();
+      }
+      update();
+    });
   }
 }

@@ -281,9 +281,12 @@ class _ItemFunctions extends StatelessWidget {
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(42))),
-              child: Icon(
-                icon,
-                color: AppColors.secondColor,
+              child: DelayedReveal(
+                delay: const Duration(milliseconds: 300),
+                child: Icon(
+                  icon,
+                  color: AppColors.secondColor,
+                ),
               ),
             ),
             const SizedBox(width: 20),

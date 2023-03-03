@@ -18,54 +18,58 @@ class DropDownSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.primaryColor,
-              width: 2,
+    return DelayedReveal(
+      delay: const Duration(milliseconds: 300),
+      child: DropdownButtonFormField<String>(
+          decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.primaryColor,
+                width: 2,
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.primaryColor,
+                width: 2,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.primaryColor, width: 2.0),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
             ),
           ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.primaryColor,
-              width: 2,
-            ),
+          style: TextStyle(
+              color: AppColors.secondColor, //<-- SEE HERE
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
+          menuMaxHeight: 400,
+          value: dropDownValue,
+          focusColor: Colors.transparent,
+          // Down Arrow Icon
+          icon: Container(
+            alignment: Alignment.centerRight,
+            child:
+                Icon(Icons.keyboard_arrow_down, color: AppColors.primaryColor),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primaryColor, width: 2.0),
-          ),
-          errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red),
-          ),
-        ),
-        style: TextStyle(
-            color: AppColors.secondColor, //<-- SEE HERE
-            fontSize: 16,
-            fontWeight: FontWeight.bold),
-        menuMaxHeight: 400,
-        value: dropDownValue,
-        focusColor: Colors.transparent,
-        // Down Arrow Icon
-        icon: Container(
-          alignment: Alignment.centerRight,
-          child: Icon(Icons.keyboard_arrow_down, color: AppColors.primaryColor),
-        ),
-        isExpanded: true,
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        dropdownColor: const Color.fromARGB(255, 253, 254, 253),
-        // Array list of items
-        items: _buildDropdownMenuItems(dropdownList: listItem),
-        // After selecting the desired option,it will
-        // change button value to selected value
-        onChanged: (String? newValue) {
-          onChanged(newValue);
-          dropDownValue = newValue!;
+          isExpanded: true,
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          dropdownColor: const Color.fromARGB(255, 253, 254, 253),
+          // Array list of items
+          items: _buildDropdownMenuItems(dropdownList: listItem),
+          // After selecting the desired option,it will
+          // change button value to selected value
+          onChanged: (String? newValue) {
+            onChanged(newValue);
+            dropDownValue = newValue!;
 
-          // (context as Element).markNeedsBuild(); //Trick setState in Stl
-        });
+            // (context as Element).markNeedsBuild(); //Trick setState in Stl
+          }),
+    );
   }
 
   List<DropdownMenuItem<String>> _buildDropdownMenuItems(

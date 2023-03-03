@@ -9,11 +9,6 @@ class FactoryHomeController extends BaseController {
   final _dropdownValueFactory = 'Nhà máy'.obs;
   String get dropdownValueFactory => _dropdownValueFactory.value;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   void setValueFactory(String? value) {
     _dropdownValueFactory.value = value!;
   }

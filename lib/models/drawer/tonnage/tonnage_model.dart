@@ -4,8 +4,8 @@
 
 import 'dart:convert';
 
-List<TonnageModel> tonnageModelFromJson(String str) => List<TonnageModel>.from(
-    json.decode(str).map((x) => TonnageModel.fromJson(x)));
+List<TonnageModel> tonnageModelFromJson(List<dynamic> list) =>
+    List<TonnageModel>.from(list.map((x) => TonnageModel.fromJson(x)));
 
 String tonnageModelToJson(List<TonnageModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));

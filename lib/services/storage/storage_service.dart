@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_chart/controllers/check_network/check_network_controller.dart';
 
 import '/shared/constants/keys.dart';
 

@@ -1,10 +1,5 @@
-import 'dart:convert';
-
-List<DataCongSuat> dataCongSuatFromJson(String str) => List<DataCongSuat>.from(
-    json.decode(str).map((x) => DataCongSuat.fromJson(x)));
-
-String dataCongSuatToJson(List<DataCongSuat> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+List<DataCongSuat> dataCongSuatFromJson(List<dynamic> list) =>
+    List<DataCongSuat>.from(list.map((x) => DataCongSuat.fromJson(x)));
 
 class DataCongSuat {
   DataCongSuat({

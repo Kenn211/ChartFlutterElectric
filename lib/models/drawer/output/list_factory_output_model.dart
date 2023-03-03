@@ -4,9 +4,10 @@
 
 import 'dart:convert';
 
-List<ListFactoryOutputModel> listFactoryOutputModelFromJson(String str) =>
+List<ListFactoryOutputModel> listFactoryOutputModelFromJson(
+        List<dynamic> list) =>
     List<ListFactoryOutputModel>.from(
-        json.decode(str).map((x) => ListFactoryOutputModel.fromJson(x)));
+        list.map((x) => ListFactoryOutputModel.fromJson(x)));
 
 String listFactoryOutputModelToJson(List<ListFactoryOutputModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));

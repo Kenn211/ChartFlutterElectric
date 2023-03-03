@@ -26,13 +26,10 @@ class HydrologicalController extends BaseController {
   RxList<ChartHydrological> get dataMnc => _dataMnc;
 
   @override
-  void onReady() {
-    showLoading();
-  }
-
-  @override
   void onInit() {
-    fetchListLake();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchListLake().whenComplete(() => hideLoading());
+    });
     super.onInit();
   }
 
@@ -50,25 +47,20 @@ class HydrologicalController extends BaseController {
   }
 
   Future<void> fetchListLake() async {
-    try {
-      await BaseClient()
-          .get(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_HOCHUAByID?ID_HO=-1&TEN_HO=%27%27')
-          .then((value) {
-        dataLake = listLakeModelFromJson(value.body);
+    showLoading();
+    await BaseClient.get(
+      'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_HOCHUAByID?ID_HO=-1&TEN_HO=%27%27',
+      onSuccess: (response) {
+        dataLake = listLakeModelFromJson(response.data);
         for (var e in dataLake) {
           listLake.addAll({e.tenHo: e.idHo});
         }
         update();
-      }).whenComplete(() {
-        hideLoading();
-      });
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+      },
+    );
   }
 
-  void getDisplayData() {
+  void getDisplayData() async {
     if (dropdownvalueLake == 'Nhà máy') {
       _dataGHDuoi.value = [];
       _dataGHTren.value = [];
@@ -89,17 +81,15 @@ class HydrologicalController extends BaseController {
       _dataTTNam.value = [];
       _dataTTNamAgo.value = [];
       showLoading();
-      fetchLake();
+      await fetchLake().whenComplete(() => hideLoading());
     }
   }
 
   Future<void> fetchLake() async {
-    try {
-      await BaseClient()
-          .get(
-              'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/HOCHUA_THUYVAN_GET?ID_HO=$indexLake&NGAY=$formatDateAPIToday&NAM=2022')
-          .then((value) {
-        DataLakeModel dataLakeRes = dataLakeModelFromJson(value.body);
+    await BaseClient.get(
+      'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/HOCHUA_THUYVAN_GET?ID_HO=$indexLake&NGAY=$formatDateAPIToday&NAM=2022',
+      onSuccess: (response) {
+        DataLakeModel dataLakeRes = dataLakeModelFromJson(response.data);
         for (var e in dataLakeRes.mucnuocChet) {
           _dataMnc.add(ChartHydrological(x: e.waterDay, mnc: e.value));
         }
@@ -126,15 +116,7 @@ class HydrologicalController extends BaseController {
           _dataMndbt.add(ChartHydrological(x: e.waterDay, mndbt: e.value));
         }
         update();
-      }).whenComplete(() {
-        hideLoading();
-      });
-    } catch (e) {
-      CustomSnackbar.snackBar(
-          'error', 'Không có dữ liệu nhà máy $_dropdownvalueLake');
-      hideLoading();
-
-      debugPrint(e.toString());
-    }
+      },
+    );
   }
 }

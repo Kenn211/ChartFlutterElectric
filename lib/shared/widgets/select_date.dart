@@ -9,32 +9,34 @@ class SelectDate extends StatelessWidget {
   final String? text;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: onTap,
-        child: Container(
-          height: 48,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
+    return DelayedReveal(
+      delay: const Duration(milliseconds: 300),
+      child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            height: 48,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(4)),
-              border: Border.all(width: 2, color: AppColors.primaryColor)),
-          child: Row(
-            mainAxisAlignment: isStack == true
-                ? MainAxisAlignment.start
-                : MainAxisAlignment.center,
-            children: [
-              Icon(
-                CupertinoIcons.calendar,
-                color: Colors.black.withOpacity(0.6),
-              ),
-              const SizedBox(width: 5),
-              Row(children: [
+              border: Border.all(width: 2, color: AppColors.primaryColor),
+            ),
+            child: Row(
+              mainAxisAlignment: isStack == true
+                  ? MainAxisAlignment.start
+                  : MainAxisAlignment.center,
+              children: [
+                Icon(
+                  CupertinoIcons.calendar,
+                  color: Colors.black.withOpacity(0.6),
+                ),
+                const SizedBox(width: 5),
                 SizedBox(
                   child: Text(text!,
                       style: TextStyle(color: AppColors.secondColor)),
                 ),
-              ])
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+    );
   }
 }
