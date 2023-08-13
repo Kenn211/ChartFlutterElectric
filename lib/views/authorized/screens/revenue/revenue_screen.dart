@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:test_chart/core.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import '../../../../core.dart';
 
 class RevenueScreen extends GetView<RevenueController> {
   const RevenueScreen({super.key});
@@ -35,7 +35,7 @@ class RevenueScreen extends GetView<RevenueController> {
                     const SizedBox(height: 20),
                     Obx(() {
                       return SelectDate(
-                          text: DateFormat("dd-MM-yyyy")
+                          text: DateFormat('dd-MM-yyyy')
                               .format(controller.selectedDateTime)
                               .toString(),
                           onTap: controller.chooseDate);
@@ -86,44 +86,38 @@ class _ChartRevenue extends StatelessWidget {
                 groupName: 'Group A',
                 dataSource: controller.dataRcan,
                 name: 'Rcan',
-                xValueMapper: (ChartRevenue data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartRevenue data, _) =>
-                    data.rcan! < 0 ? 0 : data.rcan!),
+                xValueMapper: (data, _) => 'CK ${data.x}',
+                yValueMapper: (data, _) => data.rcan! < 0 ? 0 : data.rcan!),
             StackedColumnSeries<ChartRevenue, String>(
                 groupName: 'Group A',
                 dataSource: controller.dataRsmp,
                 name: 'Rsmp',
-                xValueMapper: (ChartRevenue data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartRevenue data, _) =>
-                    data.rsmp! < 0 ? 0 : data.rsmp!),
+                xValueMapper: (data, _) => 'CK ${data.x}',
+                yValueMapper: (data, _) => data.rsmp! < 0 ? 0 : data.rsmp!),
             StackedColumnSeries<ChartRevenue, String>(
                 groupName: 'Group A',
                 dataSource: controller.dataRbp,
                 name: 'Rbp',
-                xValueMapper: (ChartRevenue data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartRevenue data, _) =>
-                    data.rbp! < 0 ? 0 : data.rbp!),
+                xValueMapper: (data, _) => 'CK ${data.x}',
+                yValueMapper: (data, _) => data.rbp! < 0 ? 0 : data.rbp!),
             StackedColumnSeries<ChartRevenue, String>(
                 groupName: 'Group A',
                 dataSource: controller.dataRcon,
                 name: 'Rcon',
-                xValueMapper: (ChartRevenue data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartRevenue data, _) =>
-                    data.rcon! < 0 ? 0 : data.rcon!),
+                xValueMapper: (data, _) => 'CK ${data.x}',
+                yValueMapper: (data, _) => data.rcon! < 0 ? 0 : data.rcon!),
             StackedColumnSeries<ChartRevenue, String>(
                 groupName: 'Group A',
                 dataSource: controller.dataRdu,
                 name: 'Rdu',
-                xValueMapper: (ChartRevenue data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartRevenue data, _) =>
-                    data.rdu! < 0 ? 0 : data.rdu!),
+                xValueMapper: (data, _) => 'CK ${data.x}',
+                yValueMapper: (data, _) => data.rdu! < 0 ? 0 : data.rdu!),
             StackedColumnSeries<ChartRevenue, String>(
                 groupName: 'Group A',
                 dataSource: controller.dataRdt,
                 name: 'Rdt',
-                xValueMapper: (ChartRevenue data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartRevenue data, _) =>
-                    data.rdt! < 0 ? 0 : data.rdt!),
+                xValueMapper: (data, _) => 'CK ${data.x}',
+                yValueMapper: (data, _) => data.rdt! < 0 ? 0 : data.rdt!),
           ]);
     });
   }
@@ -141,7 +135,7 @@ class _TableRevenue extends StatelessWidget {
             1: FlexColumnWidth(4),
             2: FlexColumnWidth(4),
           },
-          border: TableBorder.all(width: 1.0, color: Colors.black),
+          border: TableBorder.all(width: 1, color: Colors.black),
           children: [
             controller.buildRow(
                 ['Mục', 'Khoản thanh toán', 'Thành tiền (đồng)'],

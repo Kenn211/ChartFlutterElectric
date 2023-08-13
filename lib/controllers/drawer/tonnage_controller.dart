@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
+import '../base_controller.dart';
 
 class TonnageController extends BaseController {
   final _dataChartCk = <ChartDataTonnage>[].obs;
@@ -14,10 +14,10 @@ class TonnageController extends BaseController {
   String get dropdownvalue => _dropdownvalue.value;
 
   final Map<String, dynamic> ragion = {
-    "Miền Bắc": 1,
-    "Miền Trung": 2,
-    "Miền Nam": 3,
-    "Quốc Gia": 150,
+    'Miền Bắc': 1,
+    'Miền Trung': 2,
+    'Miền Nam': 3,
+    'Quốc Gia': 150,
   };
 
   void setValueDropDown(String? valueFactory) {
@@ -33,32 +33,29 @@ class TonnageController extends BaseController {
     await BaseClient.get(
         'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_IAHByDay?NGAY=${formatDateAPIToday.toString()}&ID_NODE=${ragion[_dropdownvalue.value]}',
         onSuccess: (response) {
-      List<TonnageModel> tonnageModelRes = tonnageModelFromJson(response.data);
+      final tonnageModelRes = tonnageModelFromJson(response.data);
       if (tonnageModelRes.isEmpty) {
         hideLoading();
         CustomSnackbar.snackBar('error',
             'Không có dữ liệu phụ tải ${dropdownvalue.toString()} ngày này');
       } else {
-        for (var e in tonnageModelRes) {
+        for (final e in tonnageModelRes) {
           _dataChartCk.add(ChartDataTonnage(x: e.chuky, y2: e.giatri));
         }
         BaseClient.get(
             'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllPHUTAI_DAHByDay?NGAY=${formatDateAPITomorrow.toString()}&ID_NODE=${ragion[_dropdownvalue.value]}',
             onSuccess: (response) {
-          List<TonnageModel> tonnageModelRes1 =
-              tonnageModelFromJson(response.data);
+          final tonnageModelRes1 = tonnageModelFromJson(response.data);
           if (tonnageModelRes1.isEmpty) {
             debugPrintStack();
           } else {
-            for (var e in tonnageModelRes1) {
+            for (final e in tonnageModelRes1) {
               _dataChartDay.add(ChartDataTonnage(x: e.chuky, y1: e.giatri));
             }
           }
           update();
         });
       }
-    }).whenComplete(() {
-      hideLoading();
-    });
+    }).whenComplete(hideLoading);
   }
 }

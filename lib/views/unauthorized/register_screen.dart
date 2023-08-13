@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/controllers/auth/register_controller.dart';
-import 'package:test_chart/shared/constants/local_images_path.dart';
-import 'package:test_chart/shared/widgets/txt_button.dart';
+import '../../controllers/auth/register_controller.dart';
+import '../../shared/constants/local_images_path.dart';
+import '../../shared/widgets/txt_button.dart';
 
 class RegisterScreen extends GetView<RegisterController> {
   const RegisterScreen({super.key});
@@ -76,12 +76,12 @@ class _FormRegister extends StatefulWidget {
 }
 
 class __FormRegisterState extends State<_FormRegister> {
-  var emailController = TextEditingController();
-  var passController = TextEditingController();
-  var passConfirmController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController passConfirmController = TextEditingController();
 
-  var showPassword = true;
-  var showConfirmPass = true;
+  bool showPassword = true;
+  bool showConfirmPass = true;
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
 
 class AppBarCustom extends StatelessWidget {
   const AppBarCustom(
@@ -18,7 +18,7 @@ class AppBarCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appBar = AppBar(
+    final appBar = AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: elevationCus ?? 1,
@@ -29,9 +29,7 @@ class AppBarCustom extends StatelessWidget {
                 disabledColor: Colors.transparent,
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
-                onPressed: () {
-                  Get.back();
-                },
+                onPressed: Get.back,
                 icon: Icon(Icons.arrow_back_ios, color: AppColors.secondColor))
             : leading,
         actions: [

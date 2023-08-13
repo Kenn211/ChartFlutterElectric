@@ -17,18 +17,16 @@ class ListFactoryOutputModel {
     required this.unitid,
     required this.unitName,
   });
-
-  int unitid;
-  String unitName;
-
   factory ListFactoryOutputModel.fromJson(Map<String, dynamic> json) =>
       ListFactoryOutputModel(
-        unitid: json["UNITID"],
-        unitName: json["UNIT_NAME"],
+        unitid: json['UNITID'],
+        unitName: json['UNIT_NAME'],
       );
 
   Map<String, dynamic> toJson() => {
-        "UNITID": unitid,
-        "UNIT_NAME": unitName,
+        'UNITID': unitid,
+        'UNIT_NAME': unitName,
       };
+  int unitid;
+  String unitName;
 }

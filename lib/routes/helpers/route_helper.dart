@@ -1,22 +1,24 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_chart/core.dart';
-import 'package:test_chart/routes/bindings/auth/login_binding.dart';
-import 'package:test_chart/routes/bindings/home/home_binding.dart';
+import '../../core.dart';
+import '../bindings/auth/login_binding.dart';
+import '../bindings/home/home_binding.dart';
 
 class RouterHelper {
   // ==================================== ROUTER ===========================================//
+
+  RouterHelper._();
   static final prefs = SharedPreferences.getInstance();
 
-  static back() {
+  static void back() {
     Get.back();
   }
 
-  static toLogin() {
+  static void toLogin() {
     Get.to(() => const LoginScreen(), binding: LoginBinding());
   }
 
-  static getOffUntil() {
+  static void getOffUntil() {
     Get.offUntil(
         GetPageRoute(
             page: () => const HomePage(),
@@ -26,7 +28,7 @@ class RouterHelper {
         (route) => false);
   }
 
-  static getSelectCompany() async {
+  static Future<void> getSelectCompany() async {
     Get.put(SelectCompanyController());
 
     await Future.delayed(
@@ -44,13 +46,13 @@ class RouterHelper {
     );
   }
 
-  static onLogout() async {
-    final SharedPreferences storage = await prefs;
-    storage.remove(Constants.isLogged);
-    storage.remove(Constants.refreshToken);
-    storage.remove(Constants.accessToken);
-    storage.remove(Constants.provinceCache);
-    storage.remove(Constants.salesLocationCache);
-    Get.offAndToNamed(Routes.login);
+  static Future<void> onLogout() async {
+    final storage = await prefs;
+    await storage.remove(Constants.isLogged);
+    await storage.remove(Constants.refreshToken);
+    await storage.remove(Constants.accessToken);
+    await storage.remove(Constants.provinceCache);
+    await storage.remove(Constants.salesLocationCache);
+    await Get.offAndToNamed(Routes.login);
   }
 }

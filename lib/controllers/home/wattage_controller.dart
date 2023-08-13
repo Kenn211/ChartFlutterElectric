@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
+import '../base_controller.dart';
 
 class WattageController extends BaseController {
   final _dataCongSuat = <DataCongSuat>[].obs;
@@ -22,7 +22,7 @@ class WattageController extends BaseController {
   }
 
   void funcDisplayCS(String id) {
-    for (var i in _dataCongSuat) {
+    for (final i in _dataCongSuat) {
       if (i.idtb == id) {
         _displayCS.value = i.congsuat;
         _displayNameTM.value = i.tentb;

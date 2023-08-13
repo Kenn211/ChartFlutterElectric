@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 
 import '/services/storage/storage_service.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import '/shared/constants/keys.dart';
 
 class LanguagesController extends GetxController {
@@ -38,19 +38,23 @@ class LanguagesController extends GetxController {
     final String languageCode = optionsLocales[key]['languageCode'];
     final String countryCode = optionsLocales[key]['countryCode'];
     // Update App
-    Get.updateLocale(Locale(languageCode, countryCode));
+    await Get.updateLocale(Locale(languageCode, countryCode));
     // Update obs
     locale.value = Get.locale.toString();
     // Update storage
-    storage.write(Constants.languageCode, languageCode);
-    storage.write(Constants.countryCode, countryCode);
+    storage
+      // ignore: unawaited_futures
+      ..write(Constants.languageCode, languageCode)
+      // ignore: unawaited_futures
+      ..write(Constants.countryCode, countryCode);
   }
 
-  void setCurrentLocale(String locale) async {
+  Future<void> setCurrentLocale(String locale) async {
     Phoenix.rebirth(Get.context!);
-    updateLocale(locale).whenComplete(() {
-      Get.reset();
-      Get.put(StorageService());
+    await updateLocale(locale).whenComplete(() {
+      Get
+        ..reset()
+        ..put(StorageService());
     });
   }
 }

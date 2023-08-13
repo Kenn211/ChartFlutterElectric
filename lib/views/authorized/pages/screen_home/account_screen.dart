@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/core.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
+import '../../../../core.dart';
 
 class AccountScreen extends GetView<AccountController> {
   const AccountScreen({super.key});
@@ -72,7 +72,7 @@ class AccountScreen extends GetView<AccountController> {
 }
 
 class _InfoUser extends StatelessWidget {
-  const _InfoUser({Key? key, required this.title, required this.description})
+  const _InfoUser({required this.title, required this.description, Key? key})
       : super(key: key);
 
   final String title, description;
@@ -84,7 +84,7 @@ class _InfoUser extends StatelessWidget {
       width: double.infinity,
       decoration: const BoxDecoration(
           border: Border(
-        bottom: BorderSide(width: 1.0, color: Colors.black),
+        bottom: BorderSide(width: 1, color: Colors.black),
       )),
       child: Row(
         children: [
@@ -129,7 +129,7 @@ class BottomSheetExample extends StatelessWidget {
           onPressed: () {
             showModalBottomSheet<void>(
               context: context,
-              builder: (BuildContext context) {
+              builder: (context) {
                 return SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: SizedBox(

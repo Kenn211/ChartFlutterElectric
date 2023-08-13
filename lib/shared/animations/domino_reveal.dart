@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
 
 import './delayed_reveal.dart';
 
@@ -8,23 +9,23 @@ import './delayed_reveal.dart';
 //  (you can change the conditions of this to match your requirements)
 late Timer _dominoReset;
 Duration _dominoDelay = const Duration();
-_getDelay() {
+Duration _getDelay() {
   if (!_dominoReset.isActive) {
     _dominoReset = Timer(const Duration(milliseconds: 100), () {
       _dominoDelay = const Duration();
     });
   }
+  // ignore: join_return_with_assignment
   _dominoDelay += const Duration(milliseconds: 100);
   return _dominoDelay;
 }
 
 class DominoReveal extends StatelessWidget {
-  final Widget child;
-
   const DominoReveal({
-    Key? key,
     required this.child,
+    Key? key,
   }) : super(key: key);
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {

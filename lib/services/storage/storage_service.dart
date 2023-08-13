@@ -9,13 +9,13 @@ class StorageService extends GetxService {
   late String countryCode;
 
   Future<StorageService> init() async {
-    final SharedPreferences storage = await prefs;
+    final storage = await prefs;
     languageCode = storage.getString(Constants.languageCode) ?? 'vi';
     countryCode = storage.getString(Constants.countryCode) ?? 'VN';
     return this;
   }
 
-  static void saveToken({String? tokenString}) async {
+  static Future<void> saveToken({String? tokenString}) async {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(Constants.accessToken, tokenString!);
@@ -26,22 +26,23 @@ class StorageService extends GetxService {
     return prefs.getString(Constants.accessToken);
   }
 
-  void write(String key, dynamic value) async {
-    final SharedPreferences storage = await prefs;
+  // ignore: type_annotate_public_apis
+  Future<void> write(String key, value) async {
+    final storage = await prefs;
     if (value is bool) {
-      storage.setBool(key, value);
+      await storage.setBool(key, value);
     } else if (value is String) {
-      storage.setString(key, value);
+      await storage.setString(key, value);
     } else if (value is int) {
-      storage.setInt(key, value);
+      await storage.setInt(key, value);
     } else if (value is List<String>) {
-      storage.setStringList(key, value);
+      await storage.setStringList(key, value);
     }
   }
 
-  void remove(String key) async {
-    final SharedPreferences storage = await prefs;
-    storage.remove(key);
-    storage.reload();
+  Future<void> remove(String key) async {
+    final storage = await prefs;
+    await storage.remove(key);
+    await storage.reload();
   }
 }

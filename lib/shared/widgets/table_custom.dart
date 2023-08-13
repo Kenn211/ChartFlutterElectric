@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class TableCustom extends StatelessWidget {
   const TableCustom(
-      {super.key, required this.textTable, this.colorText = false});
+      {required this.textTable, super.key, this.colorText = false});
 
   final String textTable;
   final bool colorText;

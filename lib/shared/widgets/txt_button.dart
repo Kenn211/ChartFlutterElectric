@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
 
 class Button extends StatelessWidget {
   const Button(
-      {super.key,
-      required this.text,
+      {required this.text,
       required this.onTap,
+      super.key,
       this.showIcon = true});
 
   final String text;
@@ -36,9 +36,10 @@ class Button extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              showIcon == true
-                  ? const Icon(CupertinoIcons.refresh_circled)
-                  : const SizedBox(height: 0, width: 0),
+              if (showIcon == true)
+                const Icon(CupertinoIcons.refresh_circled)
+              else
+                const SizedBox(height: 0, width: 0),
               const SizedBox(
                 width: 5,
               ),

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ItemRegions extends StatelessWidget {
-  const ItemRegions({super.key, required this.colorRe, required this.text});
+  const ItemRegions({required this.colorRe, required this.text, super.key});
 
   final Color colorRe;
   final String text;

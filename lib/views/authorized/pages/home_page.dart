@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/core.dart';
-import 'package:test_chart/routes/bindings/index.dart';
-import 'package:test_chart/views/authorized/pages/screen_home/wattage_page.dart';
+import '../../../core.dart';
+import '../../../routes/bindings/index.dart';
+import 'screen_home/wattage_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -152,7 +152,7 @@ class HomePage extends StatelessWidget {
                   onTap: () {
                     Get.to(() => const FactoryHome(),
                         binding:
-                            BindingsBuilder.put(() => FactoryHomeController()));
+                            BindingsBuilder.put(FactoryHomeController.new));
                   },
                 ),
                 const SizedBox(height: 10),
@@ -247,8 +247,8 @@ class _ItemFunctions extends StatelessWidget {
   const _ItemFunctions(
       {required this.text,
       required this.textDesc,
-      this.onTap,
-      required this.icon});
+      required this.icon,
+      this.onTap});
   final String text, textDesc;
   final Function()? onTap;
   final IconData icon;

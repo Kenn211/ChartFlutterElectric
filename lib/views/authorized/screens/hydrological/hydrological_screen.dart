@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:test_chart/core.dart';
+import '../../../../core.dart';
 
 class HydrologicalScreen extends GetView<HydrologicalController> {
   const HydrologicalScreen({super.key});
@@ -35,7 +35,7 @@ class HydrologicalScreen extends GetView<HydrologicalController> {
                     ),
                     const SizedBox(height: 20),
                     Obx(() => SelectDate(
-                        text: DateFormat("dd-MM-yyyy")
+                        text: DateFormat('dd-MM-yyyy')
                             .format(controller.selectedDateTime)
                             .toString(),
                         onTap: controller.chooseDate)),
@@ -81,38 +81,38 @@ class _ChartHydrological extends StatelessWidget {
             LineSeries<ChartHydrological, String>(
                 dataSource: controller.dataGHTren,
                 name: 'GH trên',
-                xValueMapper: (ChartHydrological data, _) => data.x,
-                yValueMapper: (ChartHydrological data, _) => data.ghTren),
+                xValueMapper: (data, _) => data.x,
+                yValueMapper: (data, _) => data.ghTren),
             LineSeries<ChartHydrological, String>(
                 dataSource: controller.dataGHDuoi,
                 name: 'GH dưới',
-                xValueMapper: (ChartHydrological data, _) => data.x,
-                yValueMapper: (ChartHydrological data, _) => data.ghDuoi),
+                xValueMapper: (data, _) => data.x,
+                yValueMapper: (data, _) => data.ghDuoi),
             LineSeries<ChartHydrological, String>(
                 dataSource: controller.dataTTNam,
                 name: 'TT năm',
-                xValueMapper: (ChartHydrological data, _) => data.x,
-                yValueMapper: (ChartHydrological data, _) => data.ttNam),
+                xValueMapper: (data, _) => data.x,
+                yValueMapper: (data, _) => data.ttNam),
             LineSeries<ChartHydrological, String>(
                 dataSource: controller.dataKHNam,
                 name: 'KH năm',
-                xValueMapper: (ChartHydrological data, _) => data.x,
-                yValueMapper: (ChartHydrological data, _) => data.khNam),
+                xValueMapper: (data, _) => data.x,
+                yValueMapper: (data, _) => data.khNam),
             LineSeries<ChartHydrological, String>(
                 dataSource: controller.dataTTNamAgo,
                 name: 'TT năm 2022',
-                xValueMapper: (ChartHydrological data, _) => data.x,
-                yValueMapper: (ChartHydrological data, _) => data.ttNamAgo),
+                xValueMapper: (data, _) => data.x,
+                yValueMapper: (data, _) => data.ttNamAgo),
             LineSeries<ChartHydrological, String>(
                 dataSource: controller.dataMndbt,
                 name: 'MNDBT',
-                xValueMapper: (ChartHydrological data, _) => data.x,
-                yValueMapper: (ChartHydrological data, _) => data.mndbt),
+                xValueMapper: (data, _) => data.x,
+                yValueMapper: (data, _) => data.mndbt),
             LineSeries<ChartHydrological, String>(
                 dataSource: controller.dataMnc,
                 name: 'MNC',
-                xValueMapper: (ChartHydrological data, _) => data.x,
-                yValueMapper: (ChartHydrological data, _) => data.mnc),
+                xValueMapper: (data, _) => data.x,
+                yValueMapper: (data, _) => data.mnc),
           ]);
     });
   }

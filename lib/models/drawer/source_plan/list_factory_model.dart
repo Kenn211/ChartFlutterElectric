@@ -16,17 +16,17 @@ class ListFactoryModel {
     required this.tenNm,
   });
 
+  factory ListFactoryModel.fromJson(Map<String, dynamic> json) =>
+      ListFactoryModel(
+        idNm: json['ID_NM'],
+        tenNm: json['TEN_NM'],
+      );
+
   int idNm;
   String tenNm;
 
-  factory ListFactoryModel.fromJson(Map<String, dynamic> json) =>
-      ListFactoryModel(
-        idNm: json["ID_NM"],
-        tenNm: json["TEN_NM"],
-      );
-
   Map<String, dynamic> toJson() => {
-        "ID_NM": idNm,
-        "TEN_NM": tenNm,
+        'ID_NM': idNm,
+        'TEN_NM': tenNm,
       };
 }

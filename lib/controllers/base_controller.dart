@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_chart/shared/helpers/function_helper.dart';
-import 'package:intl/intl.dart';
+import '../core.dart';
 
-import 'package:test_chart/core.dart';
+import '../shared/helpers/function_helper.dart';
 
 abstract class BaseController extends GetxController {
   ///Table
@@ -55,7 +55,7 @@ abstract class BaseController extends GetxController {
   String formatDateAPITomorrow = '';
 
   Future<void> chooseDate() async {
-    DateTime? pickedDate = await showDatePicker(
+    final pickedDate = await showDatePicker(
         context: Get.context!,
         initialDate: _selectedDateTime.value,
         firstDate: DateTime(2000),
@@ -68,8 +68,8 @@ abstract class BaseController extends GetxController {
     if (pickedDate != null && pickedDate != _selectedDateTime.value) {
       _selectedDateTime.value = pickedDate;
       formatDateAPIToday =
-          DateFormat("yyyy-MM-dd").format(_selectedDateTime.value);
-      formatDateAPITomorrow = DateFormat("yyyy-MM-dd")
+          DateFormat('yyyy-MM-dd').format(_selectedDateTime.value);
+      formatDateAPITomorrow = DateFormat('yyyy-MM-dd')
           .format(_selectedDateTime.value.add(const Duration(days: 1)));
     }
   }
@@ -79,9 +79,6 @@ abstract class BaseController extends GetxController {
   final newPassFocus = FocusNode();
   final reNewFocus = FocusNode();
 
-  /// Creates the [KeyboardActionsConfig] to hook up the fields
-  /// and their focus nodes to our [FormKeyboardActions].
-  // ignore: no_leading_underscores_for_local_identifiers
   KeyboardActionsConfig buildKeyboardActionsConfig(BuildContext context) {
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
@@ -188,12 +185,16 @@ abstract class BaseController extends GetxController {
   late ImageProvider<Object> oBackground;
 
   void onChecked(bool? value) {
-    if (value != null) _checked.value = value;
+    if (value != null) {
+      _checked.value = value;
+    }
     update();
   }
 
   void onSelected(bool? value) {
-    if (value != null) _selected.value = value;
+    if (value != null) {
+      _selected.value = value;
+    }
     update();
   }
 
@@ -233,7 +234,7 @@ abstract class BaseController extends GetxController {
   }
 
   Future<String> currentLocaleLanguage() async {
-    final SharedPreferences storage = await prefs;
+    final storage = await prefs;
     final key = storage.getString(Constants.languageCode);
     final languageCode = (key == 'vi' || key == null) ? 'vi-VN' : 'en-EN';
     return languageCode;
@@ -244,9 +245,10 @@ abstract class BaseController extends GetxController {
   bool get isLoggedIn => _isLoggedIn.value;
 
   Future<bool> hasLoggedIn() async {
-    final SharedPreferences storage = await prefs;
+    final storage = await prefs;
     final storageValue = storage.getBool(Constants.isLogged);
     final hasLogedIn =
+        // ignore: avoid_bool_literals_in_conditional_expressions
         (storageValue != null && storageValue == true) ? true : false;
     return hasLogedIn;
   }

@@ -4,36 +4,37 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:test_chart/core.dart';
-import 'package:test_chart/services/networking/api_code_to_messages.dart';
+import '../../core.dart';
 
-import 'package:test_chart/shared/helpers/function_helper.dart';
+import '../../shared/helpers/function_helper.dart';
+import 'api_code_to_messages.dart';
 
-var flag = 0;
+int flag = 0;
 
 class BaseClient {
+  BaseClient._();
   static final Dio _dio = Dio();
   static const int TIME_OUT_DURATION = 30000;
 
   ///GET
-  static get(
+  static Future<void> get(
     String url, {
+    required Function(Response response) onSuccess,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? queryParameters,
     Function(ApiException)? onError,
-    required Function(Response response) onSuccess,
     Function(int value, int progress)? onReceiveProgress,
     Function? onLoading,
   }) async {
     try {
-      Map<String, dynamic> customHeaders = {};
+      final customHeaders = <String, dynamic>{};
       if (headers != null) {
         customHeaders.addAll(headers);
       }
       // 1) indicate loading state
       onLoading?.call();
       // 2) try to perform http request
-      var response = await _dio
+      final response = await _dio
           .get(
             url,
             onReceiveProgress: onReceiveProgress,
@@ -49,7 +50,7 @@ class BaseClient {
       await onSuccess(response);
     } on DioError catch (error) {
       // dio error (api reach the server but not performed successfully
-      _handleDioError(error: error, url: url, onError: onError);
+      await _handleDioError(error: error, url: url, onError: onError);
     } on SocketException {
       // No internet connection
       _handleSocketException(url: url, onError: onError);
@@ -63,10 +64,10 @@ class BaseClient {
   }
 
   /// handle unexpected error
-  static _handleUnexpectedException(
-      {Function(ApiException)? onError,
-      required String url,
-      required Object error}) {
+  static void _handleUnexpectedException(
+      {required String url,
+      required Object error,
+      Function(ApiException)? onError}) {
     onError?.call(ApiException(
           message: error.toString(),
           url: url,
@@ -75,8 +76,8 @@ class BaseClient {
   }
 
   /// handle timeout exception
-  static _handleTimeoutException(
-      {Function(ApiException)? onError, required String url}) {
+  static void _handleTimeoutException(
+      {required String url, Function(ApiException)? onError}) {
     onError?.call(ApiException(
           message: 'server_not_responding'.tr,
           url: url,
@@ -85,8 +86,8 @@ class BaseClient {
   }
 
   /// handle timeout exception
-  static _handleSocketException(
-      {Function(ApiException)? onError, required String url}) {
+  static void _handleSocketException(
+      {required String url, Function(ApiException)? onError}) {
     onError?.call(ApiException(
           message: 'no_internet'.tr,
           url: url,
@@ -95,10 +96,10 @@ class BaseClient {
   }
 
   /// handle Dio error
-  static _handleDioError(
+  static Future _handleDioError(
       {required DioError error,
-      Function(ApiException)? onError,
-      required String url}) async {
+      required String url,
+      Function(ApiException)? onError}) async {
     // no internet connection
     if (error.message!.toLowerCase().contains('socket')) {
       return onError?.call(ApiException(
@@ -109,11 +110,11 @@ class BaseClient {
     }
 
     // check if the error is 500/502 (server problem)
-    var statusCode = error.response?.statusCode;
+    final statusCode = error.response?.statusCode;
     debugPrint('statusCode $statusCode');
     if (statusCode == 500 || statusCode == 502) {
       flag++;
-      var exception = ApiException(
+      final exception = ApiException(
         message: 'server_error'.tr,
         url: url,
         statusCode: 500,
@@ -125,7 +126,7 @@ class BaseClient {
 
       return;
     }
-    var exception = ApiException(
+    final exception = ApiException(
         url: url,
         message: error.message!,
         response: error.response,
@@ -133,11 +134,11 @@ class BaseClient {
     return onError?.call(exception) ?? handleApiError(exception, statusCode);
   }
 
-  static handleApiError(ApiException apiException, [int? statusCode]) {
-    String msg = apiException.response?.data?['errorDescription'] ??
+  static void handleApiError(ApiException apiException, [int? statusCode]) {
+    final String msg = apiException.response?.data?['errorDescription'] ??
         apiException.response?.data?['message'] ??
         apiException.message;
-    String? code = apiException.response?.data?['error'];
+    final code = apiException.response?.data?['error'];
     if (code == 'invalid_grant' ||
         code == 'locked' ||
         code == 'status_locked') {
@@ -149,7 +150,7 @@ class BaseClient {
   }
 
   /// handle errors without response (500, out of time, no internet,..etc)
-  static _handleError(String msg) {
+  static void _handleError(String msg) {
     CustomSnackbar.snackBar('error', msg);
     FunctionHelper.hideLoading();
   }

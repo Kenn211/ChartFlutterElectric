@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
 
 class SelectDate extends StatelessWidget {
   const SelectDate({super.key, this.isStack = false, this.onTap, this.text});

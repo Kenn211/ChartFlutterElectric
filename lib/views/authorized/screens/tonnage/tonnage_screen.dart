@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:test_chart/core.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+// ignore: prefer_relative_imports
+import 'package:test_chart/core.dart';
 
 class TonnagePage extends GetView<TonnageController> {
   const TonnagePage({super.key});
@@ -33,7 +34,7 @@ class TonnagePage extends GetView<TonnageController> {
                       onChanged: controller.setValueDropDown),
                   const SizedBox(height: 20),
                   SelectDate(
-                    text: DateFormat("dd-MM-yyyy")
+                    text: DateFormat('dd-MM-yyyy')
                         .format(controller.selectedDateTime)
                         .toString(),
                     onTap: () {
@@ -102,15 +103,15 @@ class ChartTonnage extends StatelessWidget {
                   isVisible: false, useSeriesColor: true),
               dataSource: controller.dataChartCk,
               name: 'Chu kỳ tới',
-              xValueMapper: (ChartDataTonnage data, _) => data.x,
-              yValueMapper: (ChartDataTonnage data, _) => data.y2),
+              xValueMapper: (data, _) => data.x,
+              yValueMapper: (data, _) => data.y2),
           StackedAreaSeries<ChartDataTonnage, int>(
             dataLabelSettings:
                 const DataLabelSettings(isVisible: false, useSeriesColor: true),
             dataSource: controller.dataChartDay,
             name: 'Ngày tới',
-            xValueMapper: (ChartDataTonnage data, _) => data.x,
-            yValueMapper: (ChartDataTonnage data, _) => data.y1,
+            xValueMapper: (data, _) => data.x,
+            yValueMapper: (data, _) => data.y1,
           ),
         ],
       );
@@ -134,9 +135,10 @@ class _TableTonnage extends StatelessWidget {
               [
                 '${controller.dataChartCk[e].x}',
                 '${controller.dataChartCk[e].y2}',
-                controller.dataChartDay.length <= e
-                    ? ''
-                    : controller.dataChartDay[e].y1.toString()
+                if (controller.dataChartDay.length <= e)
+                  ''
+                else
+                  controller.dataChartDay[e].y1.toString()
               ],
             )
         ],

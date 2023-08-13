@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
-import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/core.dart';
-import 'package:test_chart/routes/helpers/route_helper.dart';
+
+import '../../core.dart';
+import '../../routes/helpers/route_helper.dart';
+import '../base_controller.dart';
 
 class SelectCompanyController extends BaseController {
   final Map<String, dynamic> listCompany = {
@@ -18,8 +19,8 @@ class SelectCompanyController extends BaseController {
     await BaseClient.get(
       'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_HOCHUAByID?ID_HO=-1&TEN_HO=%27%27',
       onSuccess: (response) {
-        var dataCompany = listLakeModelFromJson(response.data);
-        for (var e in dataCompany) {
+        final dataCompany = listLakeModelFromJson(response.data);
+        for (final e in dataCompany) {
           listCompany.addAll({e.tenHo: e.idHo});
         }
         hideLoading();

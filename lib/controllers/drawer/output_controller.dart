@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/core.dart';
 import 'package:get/get.dart';
+
+import '../../core.dart';
+import '../base_controller.dart';
 
 class OutputController extends BaseController {
   final _dataCAN = <ChartOutput>[].obs;
@@ -31,7 +32,7 @@ class OutputController extends BaseController {
   @override
   void onInit() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      fetchListFatoryOutput().whenComplete(() => hideLoading());
+      fetchListFatoryOutput().whenComplete(hideLoading);
     });
     super.onInit();
   }
@@ -44,9 +45,8 @@ class OutputController extends BaseController {
     await BaseClient.get(
       'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_DONVIByID?UNITID=-1&UNIT_NAME=',
       onSuccess: (response) {
-        List<ListFactoryOutputModel> dataFactoryRes =
-            listFactoryOutputModelFromJson(response.data);
-        for (var e in dataFactoryRes) {
+        final dataFactoryRes = listFactoryOutputModelFromJson(response.data);
+        for (final e in dataFactoryRes) {
           listFactory.addAll({e.unitName: e.unitid});
         }
         update();
@@ -54,12 +54,12 @@ class OutputController extends BaseController {
     );
   }
 
-  void getDisplayData() async {
+  Future<void> getDisplayData() async {
     if (dropdownvalueFactory == 'Nhà máy') {
       CustomSnackbar.snackBar('error', 'Vui lòng chọn nhà máy');
     } else if (dropdownvalueFactory != 'Nhà máy') {
       showLoading();
-      await fetchOutput().whenComplete(() => hideLoading());
+      await fetchOutput().whenComplete(hideLoading);
     }
   }
 
@@ -74,30 +74,30 @@ class OutputController extends BaseController {
     await BaseClient.get(
       'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHITRUONG_SAUVANHANHByDay2?NGAY=${formatDateAPIToday.toString()}&UNITID=${listFactory[_dropdownvalueFactory.value]}',
       onSuccess: (response) {
-        OutPutModel outputModel = outPutModelFromJson(response.data);
+        final outputModel = outPutModelFromJson(response.data);
 
         //
-        for (var e in outputModel.can) {
+        for (final e in outputModel.can) {
           _dataCAN.add(ChartOutput(x: e.chuKy.toString(), can: e.giaTri));
         }
 
-        for (var e in outputModel.smp) {
+        for (final e in outputModel.smp) {
           _dataSMP.add(ChartOutput(x: e.chuKy.toString(), smp: e.giaTri));
         }
 
-        for (var e in outputModel.gcln) {
+        for (final e in outputModel.gcln) {
           _dataGCLN.add(ChartOutput(x: e.chuKy.toString(), gcln: e.giaTri));
         }
 
-        for (var e in outputModel.gcnn) {
+        for (final e in outputModel.gcnn) {
           _dataGCNN.add(ChartOutput(x: e.chuKy.toString(), gcnn: e.giaTri));
         }
 
-        for (var e in outputModel.qcan) {
+        for (final e in outputModel.qcan) {
           _dataQCAN.add(ChartOutput(x: e.chuKy.toString(), qcan: e.giaTri));
         }
 
-        for (var e in outputModel.qlltt) {
+        for (final e in outputModel.qlltt) {
           _dataQLLTT.add(ChartOutput(x: e.chuKy.toString(), qlltt: e.giaTri));
         }
         update();

@@ -22,6 +22,17 @@ class ListLakeModel {
     required this.enable,
   });
 
+  factory ListLakeModel.fromJson(Map<String, dynamic> json) => ListLakeModel(
+        idHo: json['ID_HO'],
+        maHo: json['MA_HO'],
+        idNm: json['ID_NM'],
+        maNm: json['MA_NM'],
+        tenHo: json['TEN_HO'],
+        moTa: json['MO_TA'],
+        stt: json['STT'],
+        enable: json['Enable'],
+      );
+
   int idHo;
   String maHo;
   int idNm;
@@ -31,25 +42,14 @@ class ListLakeModel {
   int stt;
   bool enable;
 
-  factory ListLakeModel.fromJson(Map<String, dynamic> json) => ListLakeModel(
-        idHo: json["ID_HO"],
-        maHo: json["MA_HO"],
-        idNm: json["ID_NM"],
-        maNm: json["MA_NM"],
-        tenHo: json["TEN_HO"],
-        moTa: json["MO_TA"],
-        stt: json["STT"],
-        enable: json["Enable"],
-      );
-
   Map<String, dynamic> toJson() => {
-        "ID_HO": idHo,
-        "MA_HO": maHo,
-        "ID_NM": idNm,
-        "MA_NM": maNm,
-        "TEN_HO": tenHo,
-        "MO_TA": moTa,
-        "STT": stt,
-        "Enable": enable,
+        'ID_HO': idHo,
+        'MA_HO': maHo,
+        'ID_NM': idNm,
+        'MA_NM': maNm,
+        'TEN_HO': tenHo,
+        'MO_TA': moTa,
+        'STT': stt,
+        'Enable': enable,
       };
 }

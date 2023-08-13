@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
 
 class SelectCompanyScreen extends GetView<SelectCompanyController> {
   const SelectCompanyScreen({super.key});
@@ -30,8 +30,8 @@ class SelectCompanyScreen extends GetView<SelectCompanyController> {
                         fontWeight: FontWeight.bold,
                         shadows: [
                           Shadow(
-                            offset: const Offset(5.0, 5.0),
-                            blurRadius: 1.0,
+                            offset: const Offset(5, 5),
+                            blurRadius: 1,
                             color: Colors.grey.withOpacity(0.4),
                           ),
                         ],

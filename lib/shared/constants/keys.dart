@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Constants {
+  Constants._();
+
   static const isLogged = 'isLogged';
   static const accessToken = 'accessToken';
   static const refreshToken = 'refreshToken';
@@ -24,4 +26,7 @@ class Constants {
 
   //Id Widget update
   static const idDropDown = 'DropDown';
+
+  //biometric
+  static const useBiometric = 'true';
 }

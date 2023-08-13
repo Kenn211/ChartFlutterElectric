@@ -1,5 +1,5 @@
-import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
+import '../base_controller.dart';
 
 class AccountController extends BaseController {
   @override
@@ -19,7 +19,7 @@ class AccountController extends BaseController {
     await BaseClient.get(
       'https://mocki.io/v1/b92d89ca-2f3d-44cd-932c-957ccae17870',
       onSuccess: (response) {
-        AuthenModel? authen = authenModelFromJson(response.data);
+        final authen = authenModelFromJson(response.data);
         if (authen!.data!.token == tokenSaved) {
           userName.value = authen.data!.userName.toString();
           oldPassword.value = authen.data!.password.toString();
@@ -30,9 +30,9 @@ class AccountController extends BaseController {
   }
 
   void submitChangePass() {
-    String oldPass = oldPasswordController.text;
-    String newPass = passwordController.text;
-    String reNewPass = rePasswordController.text;
+    final oldPass = oldPasswordController.text;
+    final newPass = passwordController.text;
+    final reNewPass = rePasswordController.text;
     if (oldPass != oldPassword.value) {
       CustomSnackbar.snackBar('error', 'Sai mật khẩu cũ');
     } else if (newPass != reNewPass) {

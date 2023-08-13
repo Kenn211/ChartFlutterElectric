@@ -1,5 +1,5 @@
 import 'package:get/instance_manager.dart';
-import 'package:test_chart/controllers/languages/languages_controller.dart';
+import 'controllers/languages/languages_controller.dart';
 
 class CoreBinding extends Bindings {
   @override

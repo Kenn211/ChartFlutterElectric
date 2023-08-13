@@ -38,28 +38,30 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               border: const OutlineInputBorder(),
               labelText: widget.text,
             ),
+            // ignore: avoid_bool_literals_in_conditional_expressions
             obscureText: widget.obscurText == true ? showPassword : false,
           ),
-          widget.inputPass == true
-              ? Positioned(
-                  top: 0,
-                  bottom: 0,
-                  right: 0,
-                  child: IconButton(
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      disabledColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onPressed: () {
-                        setState(() {
-                          showPassword = !showPassword;
-                        });
-                      },
-                      icon: showPassword == false
-                          ? const Icon(CupertinoIcons.eye_fill)
-                          : const Icon(CupertinoIcons.eye_slash_fill)))
-              : const SizedBox(width: 0, height: 0)
+          if (widget.inputPass == true)
+            Positioned(
+                top: 0,
+                bottom: 0,
+                right: 0,
+                child: IconButton(
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    disabledColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                    icon: showPassword == false
+                        ? const Icon(CupertinoIcons.eye_fill)
+                        : const Icon(CupertinoIcons.eye_slash_fill)))
+          else
+            const SizedBox(width: 0, height: 0)
         ],
       ),
     );

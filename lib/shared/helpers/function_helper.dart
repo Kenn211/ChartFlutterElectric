@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/shared/app_shared.dart';
+import '../app_shared.dart';
 
 class FunctionHelper {
+  FunctionHelper._();
 // Handle save token/refresh token
   // static final prefs = SharedPreferences.getInstance();
   // static Future<void> refreshToken() async {
@@ -43,8 +44,8 @@ class FunctionHelper {
   //   return storage.getString(Constants.accessToken).toString();
   // }
 
-  static showError({required String error, String? stack}) {
-    return Get.dialog(
+  static void showError({required String error, String? stack}) {
+    Get.dialog(
       AlertDialog(
         title: Center(child: Text('default_error_title'.tr)),
         content: SingleChildScrollView(
@@ -55,7 +56,7 @@ class FunctionHelper {
         ),
         actions: [
           TextButton(
-            onPressed: () => Get.back(),
+            onPressed: Get.back,
             child: Text('agree'.tr),
           ),
         ],
@@ -95,9 +96,7 @@ class FunctionHelper {
       ),
       barrierDismissible: false,
     );
-    Future.delayed(const Duration(seconds: 30), () {
-      hideLoading();
-    });
+    Future.delayed(const Duration(seconds: 30), hideLoading);
   }
 
   static void hideLoading() {

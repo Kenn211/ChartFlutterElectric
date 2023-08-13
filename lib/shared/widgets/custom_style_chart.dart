@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
 
 class StyleChartCustom {
   const StyleChartCustom();

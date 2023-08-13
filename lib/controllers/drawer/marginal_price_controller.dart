@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
+import '../base_controller.dart';
 
 class MarginalPriceController extends BaseController {
   //IAH
@@ -49,13 +49,13 @@ class MarginalPriceController extends BaseController {
     await BaseClient.get(
         'http://103.78.88.74:207/api/API_GIABIEN_IAH/GetAllGIABIEN_IAHByDay?NGAY=${formatDateAPIToday.toString()}',
         onSuccess: (response) {
-      List<PriceModel> priceModelRes = priceModelFromJson(response.data);
+      final priceModelRes = priceModelFromJson(response.data);
       if (priceModelRes.isEmpty) {
         hideLoading();
         CustomSnackbar.snackBar('error',
             'Không có dữ liệu giá biên ngày ${formatDateAPIToday.toString()}');
       } else {
-        for (var e in priceModelRes) {
+        for (final e in priceModelRes) {
           if (e.idNode == 1) {
             _dataTableIAH.add(ItemTableMarginal(ck: e.chuky));
             _dataChartNorthIAH
@@ -75,11 +75,11 @@ class MarginalPriceController extends BaseController {
         BaseClient.get(
           'http://103.78.88.74:207/api/API_GIABIEN_IAH/GetAllGIABIEN_IAHByDay?NGAY=${formatDateAPITomorrow.toString()}',
           onSuccess: (response) {
-            List<PriceModel> priceModelRes1 = priceModelFromJson(response.data);
+            final priceModelRes1 = priceModelFromJson(response.data);
             if (priceModelRes1.isEmpty) {
               hideLoading();
             } else {
-              for (var e in priceModelRes1) {
+              for (final e in priceModelRes1) {
                 if (e.idNode == 1) {
                   _dataChartNorthDAH
                       .add(ChartData(x: 'Chu kỳ ${e.chuky}', y1: e.giatri));

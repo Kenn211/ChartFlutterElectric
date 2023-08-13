@@ -1,15 +1,15 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
 
 // ignore: must_be_immutable
 class DropDownSelect extends StatelessWidget {
   DropDownSelect(
-      {Key? key,
-      required this.listItem,
+      {required this.listItem,
       required this.dropDownValue,
-      required this.onChanged})
+      required this.onChanged,
+      Key? key})
       : super(key: key);
 
   late String dropDownValue;
@@ -37,7 +37,7 @@ class DropDownSelect extends StatelessWidget {
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.primaryColor, width: 2.0),
+              borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
             ),
             errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.red),
@@ -63,7 +63,7 @@ class DropDownSelect extends StatelessWidget {
           items: _buildDropdownMenuItems(dropdownList: listItem),
           // After selecting the desired option,it will
           // change button value to selected value
-          onChanged: (String? newValue) {
+          onChanged: (newValue) {
             onChanged(newValue);
             dropDownValue = newValue!;
 
@@ -74,7 +74,7 @@ class DropDownSelect extends StatelessWidget {
 
   List<DropdownMenuItem<String>> _buildDropdownMenuItems(
       {required Map<String, dynamic> dropdownList}) {
-    List<DropdownMenuItem<String>> list = [];
+    final list = <DropdownMenuItem<String>>[];
     LinkedHashMap.from(dropdownList).forEach((key, value) {
       list.add(DropdownMenuItem<String>(
         alignment: AlignmentDirectional.centerStart,

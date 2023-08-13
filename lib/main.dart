@@ -1,18 +1,19 @@
 import 'dart:async';
 
+// ignore: depend_on_referenced_packages
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_chart/core.dart';
 import 'package:get/get.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-// ignore: depend_on_referenced_packages
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:test_chart/shared/helpers/function_helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'core.dart';
 import 'firebase_options.dart';
+import 'shared/helpers/function_helper.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -29,11 +30,11 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseMessaging.instance.getToken();
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  final messaging = FirebaseMessaging.instance;
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   // ignore: unused_local_variable
-  NotificationSettings settings = await messaging.requestPermission(
+  final settings = await messaging.requestPermission(
     alert: true,
     announcement: false,
     badge: true,
@@ -43,25 +44,25 @@ Future<void> main() async {
     sound: true,
   );
 
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  FirebaseMessaging.onMessage.listen((message) {
     if (message.notification != null) {}
   });
 
   if (kDebugMode) {
     FlutterError.onError = (details) async {
-      await FunctionHelper.showError(
+      FunctionHelper.showError(
         error: details.exception.toString(),
         stack: details.stack.toString(),
       );
     };
     runZonedGuarded(
       () => runApp(Phoenix(child: const App())),
-      ((error, stack) async {
-        await FunctionHelper.showError(
+      (error, stack) async {
+        FunctionHelper.showError(
           error: error.toString(),
           stack: stack.toString(),
         );
-      }),
+      },
     );
   } else {
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
@@ -85,14 +86,14 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final storage = Get.find<StorageService>();
-  var languageCode = 'vi';
-  var countryCode = 'VN';
+  String languageCode = 'vi';
+  String countryCode = 'VN';
 
   Future<void> initFunction() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     languageCode = prefs.getString(Constants.languageCode) ?? 'vi';
     countryCode = prefs.getString(Constants.countryCode) ?? 'VN';
-    Get.find<LanguagesController>()
+    await Get.find<LanguagesController>()
         .updateLocale(Locale(languageCode, countryCode).toString());
   }
 

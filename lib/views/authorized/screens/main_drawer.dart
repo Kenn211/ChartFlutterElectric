@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/core.dart';
+import '../../../core.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
@@ -85,12 +85,12 @@ class MainDrawer extends StatelessWidget {
 
 class ItemDrawer extends StatelessWidget {
   const ItemDrawer({
-    super.key,
     required this.index,
     required this.iconItem,
     required this.text,
-    this.logout = false,
     required this.onTap,
+    super.key,
+    this.logout = false,
   });
 
   final int index;

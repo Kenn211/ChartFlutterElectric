@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
+import '../base_controller.dart';
 
 class RevenueController extends BaseController {
   final _dataRcan = <ChartRevenue>[].obs;
@@ -74,9 +74,8 @@ class RevenueController extends BaseController {
     await BaseClient.get(
       'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_DONVIByID?UNITID=-1&UNIT_NAME=',
       onSuccess: (response) {
-        List<ListFactoryOutputModel> dataFactoryRespon =
-            listFactoryOutputModelFromJson(response.data);
-        for (var e in dataFactoryRespon) {
+        final dataFactoryRespon = listFactoryOutputModelFromJson(response.data);
+        for (final e in dataFactoryRespon) {
           listFactory.addAll({e.unitName: e.unitid});
         }
         hideLoading();
@@ -85,12 +84,12 @@ class RevenueController extends BaseController {
     );
   }
 
-  void getDisplayRevenue() async {
+  Future<void> getDisplayRevenue() async {
     if (dropdownvalueFactory == 'Nhà máy') {
       CustomSnackbar.snackBar('error', 'Vui lòng chọn nhà máy');
     } else if (dropdownvalueFactory != 'Nhà máy') {
       showLoading();
-      await fetchRevenue().whenComplete(() => hideLoading());
+      await fetchRevenue().whenComplete(hideLoading);
     }
   }
 
@@ -103,33 +102,33 @@ class RevenueController extends BaseController {
     _dataRsmp.value = [];
 
     await BaseClient.get(
-        "http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHANHTOAN_HANGNGAYByDay?NGAY=${formatDateAPIToday.toString()}&UNITID=${listFactory[_dropdownvalueFactory.value]}",
+        'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllTHANHTOAN_HANGNGAYByDay?NGAY=${formatDateAPIToday.toString()}&UNITID=${listFactory[_dropdownvalueFactory.value]}',
         onSuccess: (response) {
-      RevenueModel? revenueModelRes = revenueModelFromJson(response.data);
+      final revenueModelRes = revenueModelFromJson(response.data);
 
       if (revenueModelRes == null) {
       } else {
-        for (var e in revenueModelRes.rcan!) {
+        for (final e in revenueModelRes.rcan!) {
           _dataRcan.add(ChartRevenue(x: e!.chuKy.toString(), rcan: e.giaTri));
         }
 
-        for (var e in revenueModelRes.rbp!) {
+        for (final e in revenueModelRes.rbp!) {
           _dataRbp.add(ChartRevenue(x: e!.chuKy.toString(), rbp: e.giaTri));
         }
 
-        for (var e in revenueModelRes.rcon!) {
+        for (final e in revenueModelRes.rcon!) {
           _dataRcon.add(ChartRevenue(x: e!.chuKy.toString(), rcon: e.giaTri));
         }
 
-        for (var e in revenueModelRes.rdt!) {
+        for (final e in revenueModelRes.rdt!) {
           _dataRdt.add(ChartRevenue(x: e!.chuKy.toString(), rdt: e.giaTri));
         }
 
-        for (var e in revenueModelRes.rdu!) {
+        for (final e in revenueModelRes.rdu!) {
           _dataRdu.add(ChartRevenue(x: e!.chuKy.toString(), rdu: e.giaTri));
         }
 
-        for (var e in revenueModelRes.rsmp!) {
+        for (final e in revenueModelRes.rsmp!) {
           _dataRsmp.add(ChartRevenue(x: e!.chuKy.toString(), rsmp: e.giaTri));
         }
 

@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
-import 'package:test_chart/core.dart';
+
+import '../../../controllers/home/lake_level_controller.dart';
 
 class LakeLevelBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<LakeLevelController>(() => LakeLevelController());
+    Get.lazyPut<LakeLevelController>(LakeLevelController.new);
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:test_chart/core.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import '../../../../core.dart';
 
 class OutputScreen extends GetView<OutputController> {
   const OutputScreen({super.key});
@@ -53,7 +53,7 @@ class OutputScreen extends GetView<OutputController> {
                         const SizedBox(height: 10),
                         Obx(() {
                           return SelectDate(
-                            text: DateFormat("dd-MM-yyyy")
+                            text: DateFormat('dd-MM-yyyy')
                                 .format(controller.selectedDateTime)
                                 .toString(),
                             onTap: () {
@@ -112,26 +112,26 @@ class _ChartOutPut extends StatelessWidget {
                 groupName: 'Group A',
                 dataSource: controller.dataSMP,
                 name: 'SMP',
-                xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartOutput data, _) => data.smp),
+                xValueMapper: (data, _) => 'CK ${data.x}',
+                yValueMapper: (data, _) => data.smp),
             StackedColumnSeries<ChartOutput, String>(
                 groupName: 'Group A',
                 dataSource: controller.dataCAN,
                 name: 'CAN',
-                xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
-                yValueMapper: (ChartOutput data, _) => data.can),
+                xValueMapper: (data, _) => 'CK ${data.x}',
+                yValueMapper: (data, _) => data.can),
             SplineSeries<ChartOutput, String>(
               markerSettings: const MarkerSettings(isVisible: false),
               dataSource: controller.dataGCLN,
-              xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
-              yValueMapper: (ChartOutput data, _) => data.gcln,
+              xValueMapper: (data, _) => 'CK ${data.x}',
+              yValueMapper: (data, _) => data.gcln,
               name: 'Giá chào lớn nhất',
             ),
             SplineSeries<ChartOutput, String>(
               markerSettings: const MarkerSettings(isVisible: false),
               dataSource: controller.dataGCNN,
-              xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
-              yValueMapper: (ChartOutput data, _) => data.gcnn,
+              xValueMapper: (data, _) => 'CK ${data.x}',
+              yValueMapper: (data, _) => data.gcnn,
               name: 'Giá chào nhỏ nhất',
             ),
           ]);
@@ -164,15 +164,15 @@ class _ChartOutPutQMQ extends StatelessWidget {
             SplineSeries<ChartOutput, String>(
               markerSettings: const MarkerSettings(isVisible: false),
               dataSource: controller.dataQCAN,
-              xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
-              yValueMapper: (ChartOutput data, _) => data.qcan,
+              xValueMapper: (data, _) => 'CK ${data.x}',
+              yValueMapper: (data, _) => data.qcan,
               name: 'Qmq',
             ),
             SplineSeries<ChartOutput, String>(
               markerSettings: const MarkerSettings(isVisible: false),
               dataSource: controller.dataQLLTT,
-              xValueMapper: (ChartOutput data, _) => 'CK ${data.x}',
-              yValueMapper: (ChartOutput data, _) => data.qlltt,
+              xValueMapper: (data, _) => 'CK ${data.x}',
+              yValueMapper: (data, _) => data.qlltt,
               name: 'Qlltt',
             ),
           ],

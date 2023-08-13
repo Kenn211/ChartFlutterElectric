@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
+import '../base_controller.dart';
 
 class SourcePlanController extends BaseController {
   //Categories Factory
@@ -31,12 +31,11 @@ class SourcePlanController extends BaseController {
 
   Future<void> fetchListFatory() async {
     showLoading();
-    BaseClient.get(
+    await BaseClient.get(
         'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllHT_NHAMAYByID?ID_NM=-1&TEN_NM=',
         onSuccess: (response) {
-      List<ListFactoryModel> dataFactoryRespon =
-          listFactoryModelFromJson(response.data);
-      for (var e in dataFactoryRespon) {
+      final dataFactoryRespon = listFactoryModelFromJson(response.data);
+      for (final e in dataFactoryRespon) {
         listFactory.addAll({e.tenNm: e.idNm});
       }
       hideLoading();
@@ -63,13 +62,14 @@ class SourcePlanController extends BaseController {
     await BaseClient.get(
         'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_IAHByDay2?NGAY=${formatDateAPIToday.toString()}&ID_NM=${listFactory[_dropdownvalueFactory.value]}',
         onSuccess: (response) {
-      SourcePlanModel planModel = sourcePlanModelFromJson(response.data);
+      final planModel = sourcePlanModelFromJson(response.data);
 
       if (planModel.toMay.isEmpty) {
         hideLoading();
         CustomSnackbar.snackBar('error', 'Không có dữ liệu ngày này');
       } else {
-        for (var e in planModel.toMay) {
+        // ignore: prefer_foreach
+        for (final e in planModel.toMay) {
           _dataToMayIAH.add(e);
         }
 
@@ -77,10 +77,13 @@ class SourcePlanController extends BaseController {
         BaseClient.get(
             'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/GetAllKHVH_DAHByDay2?NGAY=${formatDateAPITomorrow.toString()}&ID_NM=${listFactory[_dropdownvalueFactory.value]}',
             onSuccess: (response) {
-          SourcePlanModel planModel1 = sourcePlanModelFromJson(response.data);
-          for (var e in planModel1.toMay) {
+          final planModel1 = sourcePlanModelFromJson(response.data);
+
+          // ignore: prefer_foreach
+          for (final e in planModel1.toMay) {
             _dataToMayDAH.add(e);
           }
+
           hideLoading();
           update();
         });

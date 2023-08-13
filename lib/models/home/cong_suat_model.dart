@@ -8,19 +8,19 @@ class DataCongSuat {
     required this.congsuat,
   });
 
+  factory DataCongSuat.fromJson(Map<String, dynamic> json) => DataCongSuat(
+        idtb: json['IDTB'],
+        tentb: json['TENTB'],
+        congsuat: json['CONGSUAT'],
+      );
+
   String idtb;
   String tentb;
   double congsuat;
 
-  factory DataCongSuat.fromJson(Map<String, dynamic> json) => DataCongSuat(
-        idtb: json["IDTB"],
-        tentb: json["TENTB"],
-        congsuat: json["CONGSUAT"],
-      );
-
   Map<String, dynamic> toJson() => {
-        "IDTB": idtb,
-        "TENTB": tentb,
-        "CONGSUAT": congsuat,
+        'IDTB': idtb,
+        'TENTB': tentb,
+        'CONGSUAT': congsuat,
       };
 }

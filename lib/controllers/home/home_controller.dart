@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/core.dart';
-import 'package:test_chart/routes/helpers/route_helper.dart';
+
+import '../../core.dart';
+import '../../routes/helpers/route_helper.dart';
+import '../base_controller.dart';
+import '../biometric/biometric_auth.dart';
 
 class HomeController extends BaseController {
   final _selectedIndex = RxInt(0);
@@ -15,8 +18,10 @@ class HomeController extends BaseController {
 
   @override
   void onInit() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getDataCongSuat();
+    });
     super.onInit();
-    getDataCongSuat();
   }
 
   void openDrawer() {
@@ -26,9 +31,14 @@ class HomeController extends BaseController {
   void handleLogout() {
     showLoading();
     Future.delayed(const Duration(seconds: 1), () async {
-      RouterHelper.onLogout();
+      await RouterHelper.onLogout();
       hideLoading();
     });
+  }
+
+  Future<void> handleCheckBiometric() async {
+    final authenBiometric = await BiometricAuth().authenticate();
+    if (authenBiometric) {}
   }
 
   void setDrawerIndex(int index) {
@@ -60,13 +70,13 @@ class HomeController extends BaseController {
 
   Future<void> getDataCongSuat() async {
     _dataCongSuat.value = [];
-    BaseClient.get(
+    await BaseClient.get(
         'http://appapi.quanlycongviec-nldc.vn/api/API_GIABIEN_IAH/CONGSUATPHAT_NHAMY_GET?MaDV=G25600',
         onSuccess: (response) {
       _dataCongSuat.value = dataCongSuatFromJson(response.data);
       _displayDataCS.value = _dataCongSuat[0].congsuat;
-      update();
     });
+    update();
   }
 
   void toSelectCompany() {
@@ -75,9 +85,7 @@ class HomeController extends BaseController {
 
   Future<void> getDataLakeLevel(int id) async {
     showLoading();
-    await Future.delayed(const Duration(seconds: 2), () {
-      hideLoading();
-    });
+    await Future.delayed(const Duration(seconds: 2), hideLoading);
     // try {
     //   await BaseClient()
     //       .get(

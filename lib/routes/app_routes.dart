@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:test_chart/views/authorized/pages/screen_home/wattage_page.dart';
 
-import 'bindings/index.dart';
 import '/views/app_views.dart';
+import '../views/authorized/pages/screen_home/wattage_page.dart';
+import 'bindings/index.dart';
 
 part 'app_paths.dart';
 

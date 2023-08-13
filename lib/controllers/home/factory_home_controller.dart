@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
-import 'package:test_chart/controllers/base_controller.dart';
-import 'package:test_chart/core.dart';
+import '../../core.dart';
+
+import '../base_controller.dart';
 
 class FactoryHomeController extends BaseController {
   final Map<String, dynamic> listFactory = {
@@ -17,8 +18,6 @@ class FactoryHomeController extends BaseController {
     final home = Get.find<HomeController>();
     await Future.wait(
             [home.getDataLakeLevel(listFactory[_dropdownValueFactory.value])])
-        .whenComplete(() {
-      Get.back();
-    });
+        .whenComplete(Get.back);
   }
 }

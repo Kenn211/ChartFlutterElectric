@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/core.dart';
+
+import '../../../../controllers/biometric/biometric_auth.dart';
+import '../../../../core.dart';
 
 class LakeLevelScreen extends GetView<LakeLevelController> {
   const LakeLevelScreen({super.key});
@@ -15,6 +17,15 @@ class LakeLevelScreen extends GetView<LakeLevelController> {
           title: 'lake_level'.tr,
           canBack: true,
         ),
+      ),
+      floatingActionButton: IconButton(
+        icon: const Icon(Icons.abc),
+        onPressed: () async {
+          final authenticate = await BiometricAuth().authenticate();
+          if (authenticate) {
+            print('đăng nhập thành công');
+          }
+        },
       ),
     );
   }

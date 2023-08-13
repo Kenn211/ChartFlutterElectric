@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:get/get.dart';
-import 'package:test_chart/core.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
+
+import '../../../../core.dart';
 
 class WattagePage extends GetView<WattageController> {
   const WattagePage({super.key});
@@ -90,7 +91,7 @@ class _TableWattage extends StatelessWidget {
             0: FlexColumnWidth(4),
             1: FlexColumnWidth(4),
           },
-          border: TableBorder.all(width: 1.0, color: Colors.black),
+          border: TableBorder.all(width: 1, color: Colors.black),
           children: [
             controller
                 .buildRow(['Tên tổ máy/nhà máy', 'Công suất'], isHeader: true),

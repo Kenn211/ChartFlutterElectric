@@ -14,14 +14,14 @@ class AuthenModel {
     this.data,
   });
 
-  Data? data;
-
   factory AuthenModel.fromJson(Map<String, dynamic> json) => AuthenModel(
-        data: Data.fromJson(json["data"]),
+        data: Data.fromJson(json['data']),
       );
 
+  Data? data;
+
   Map<String, dynamic> toJson() => {
-        "data": data!.toJson(),
+        'data': data!.toJson(),
       };
 }
 
@@ -34,25 +34,25 @@ class Data {
     this.chainId,
   });
 
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        userName: json['userName'],
+        updatedAt: DateTime.parse(json['updated_at']),
+        token: json['token'],
+        password: json['password'],
+        chainId: json['chain_id'],
+      );
+
   String? userName;
   DateTime? updatedAt;
   String? token;
   String? password;
   int? chainId;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        userName: json["userName"],
-        updatedAt: DateTime.parse(json["updated_at"]),
-        token: json["token"],
-        password: json["password"],
-        chainId: json["chain_id"],
-      );
-
   Map<String, dynamic> toJson() => {
-        "userName": userName,
-        "updated_at": updatedAt?.toIso8601String(),
-        "token": token,
-        "password": password,
-        "chain_id": chainId,
+        'userName': userName,
+        'updated_at': updatedAt?.toIso8601String(),
+        'token': token,
+        'password': password,
+        'chain_id': chainId,
       };
 }

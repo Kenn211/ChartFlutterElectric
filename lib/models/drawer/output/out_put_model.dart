@@ -20,6 +20,17 @@ class OutPutModel {
     required this.ngay,
   });
 
+  factory OutPutModel.fromJson(Map<String, dynamic> json) => OutPutModel(
+        can: List<Can>.from(json['CAN'].map(Can.fromJson)),
+        smp: List<Can>.from(json['SMP'].map(Can.fromJson)),
+        gcnn: List<Can>.from(json['GCNN'].map(Can.fromJson)),
+        gcln: List<Can>.from(json['GCLN'].map(Can.fromJson)),
+        qcan: List<Can>.from(json['QCAN'].map(Can.fromJson)),
+        qlltt: List<Can>.from(json['QLLTT'].map(Can.fromJson)),
+        unitid: json['UNITID'],
+        ngay: DateTime.parse(json['NGAY']),
+      );
+
   List<Can> can;
   List<Can> smp;
   List<Can> gcnn;
@@ -29,26 +40,15 @@ class OutPutModel {
   int unitid;
   DateTime ngay;
 
-  factory OutPutModel.fromJson(Map<String, dynamic> json) => OutPutModel(
-        can: List<Can>.from(json["CAN"].map((x) => Can.fromJson(x))),
-        smp: List<Can>.from(json["SMP"].map((x) => Can.fromJson(x))),
-        gcnn: List<Can>.from(json["GCNN"].map((x) => Can.fromJson(x))),
-        gcln: List<Can>.from(json["GCLN"].map((x) => Can.fromJson(x))),
-        qcan: List<Can>.from(json["QCAN"].map((x) => Can.fromJson(x))),
-        qlltt: List<Can>.from(json["QLLTT"].map((x) => Can.fromJson(x))),
-        unitid: json["UNITID"],
-        ngay: DateTime.parse(json["NGAY"]),
-      );
-
   Map<String, dynamic> toJson() => {
-        "CAN": List<dynamic>.from(can.map((x) => x.toJson())),
-        "SMP": List<dynamic>.from(smp.map((x) => x.toJson())),
-        "GCNN": List<dynamic>.from(gcnn.map((x) => x.toJson())),
-        "GCLN": List<dynamic>.from(gcln.map((x) => x.toJson())),
-        "QCAN": List<dynamic>.from(qcan.map((x) => x.toJson())),
-        "QLLTT": List<dynamic>.from(qlltt.map((x) => x.toJson())),
-        "UNITID": unitid,
-        "NGAY": ngay.toIso8601String(),
+        'CAN': List<dynamic>.from(can.map((x) => x.toJson())),
+        'SMP': List<dynamic>.from(smp.map((x) => x.toJson())),
+        'GCNN': List<dynamic>.from(gcnn.map((x) => x.toJson())),
+        'GCLN': List<dynamic>.from(gcln.map((x) => x.toJson())),
+        'QCAN': List<dynamic>.from(qcan.map((x) => x.toJson())),
+        'QLLTT': List<dynamic>.from(qlltt.map((x) => x.toJson())),
+        'UNITID': unitid,
+        'NGAY': ngay.toIso8601String(),
       };
 }
 
@@ -58,16 +58,16 @@ class Can {
     required this.giaTri,
   });
 
+  factory Can.fromJson(Map<String, dynamic> json) => Can(
+        chuKy: json['CHU_KY'],
+        giaTri: json['GIA_TRI'].toDouble(),
+      );
+
   int chuKy;
   double giaTri;
 
-  factory Can.fromJson(Map<String, dynamic> json) => Can(
-        chuKy: json["CHU_KY"],
-        giaTri: json["GIA_TRI"].toDouble(),
-      );
-
   Map<String, dynamic> toJson() => {
-        "CHU_KY": chuKy,
-        "GIA_TRI": giaTri,
+        'CHU_KY': chuKy,
+        'GIA_TRI': giaTri,
       };
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:test_chart/core.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import '../../../../core.dart';
 
 class MarginalPriceScreen extends GetView<MarginalPriceController> {
   const MarginalPriceScreen({super.key});
@@ -48,7 +48,7 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
                       children: [
                         Obx(() {
                           return SelectDate(
-                            text: DateFormat("dd-MM-yyyy")
+                            text: DateFormat('dd-MM-yyyy')
                                 .format(controller.selectedDateTime)
                                 .toString(),
                             onTap: controller.chooseDate,
@@ -93,9 +93,12 @@ class MarginalPriceScreen extends GetView<MarginalPriceController> {
             const _ChartColumnDAH(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
+              child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: const [SizedBox(height: 20), _TableMarginalDAH()],
+                children: [
+                  SizedBox(height: 20),
+                  _TableMarginalDAH(),
+                ],
               ),
             )
           ],
@@ -126,29 +129,29 @@ class _ChartColumnIAH extends StatelessWidget {
               SplineSeries<ChartData, String>(
                   markerSettings: const MarkerSettings(isVisible: false),
                   dataSource: controller.dataChartNorthIAH,
-                  xValueMapper: (ChartData data, _) => data.x,
-                  yValueMapper: (ChartData data, _) => data.y1,
+                  xValueMapper: (data, _) => data.x,
+                  yValueMapper: (data, _) => data.y1,
                   name: 'Miền Bắc',
                   color: Colors.green),
               SplineSeries<ChartData, String>(
                   markerSettings: const MarkerSettings(isVisible: false),
                   dataSource: controller.dataChartCentralIAH,
-                  xValueMapper: (ChartData data, _) => data.x,
-                  yValueMapper: (ChartData data, _) => data.y2,
+                  xValueMapper: (data, _) => data.x,
+                  yValueMapper: (data, _) => data.y2,
                   name: 'Miền Trung',
                   color: Colors.blue),
               SplineSeries<ChartData, String>(
                   markerSettings: const MarkerSettings(isVisible: false),
                   dataSource: controller.dataChartSouthIAH,
-                  xValueMapper: (ChartData data, _) => data.x,
-                  yValueMapper: (ChartData data, _) => data.y3,
+                  xValueMapper: (data, _) => data.x,
+                  yValueMapper: (data, _) => data.y3,
                   name: 'Miền Nam',
                   color: Colors.black),
               SplineSeries<ChartData, String>(
                   markerSettings: const MarkerSettings(isVisible: false),
                   dataSource: controller.dataChartNationIAH,
-                  xValueMapper: (ChartData data, _) => data.x,
-                  yValueMapper: (ChartData data, _) => data.y4,
+                  xValueMapper: (data, _) => data.x,
+                  yValueMapper: (data, _) => data.y4,
                   name: 'Quốc gia',
                   color: Colors.amberAccent)
             ]);
@@ -178,29 +181,29 @@ class _ChartColumnDAH extends StatelessWidget {
             SplineSeries<ChartData, String>(
                 markerSettings: const MarkerSettings(isVisible: false),
                 dataSource: controller.dataChartNorthDAH,
-                xValueMapper: (ChartData data, _) => data.x,
-                yValueMapper: (ChartData data, _) => data.y1,
+                xValueMapper: (data, _) => data.x,
+                yValueMapper: (data, _) => data.y1,
                 name: 'Miền Bắc',
                 color: Colors.green),
             SplineSeries<ChartData, String>(
                 markerSettings: const MarkerSettings(isVisible: false),
                 dataSource: controller.dataChartCentralDAH,
-                xValueMapper: (ChartData data, _) => data.x,
-                yValueMapper: (ChartData data, _) => data.y2,
+                xValueMapper: (data, _) => data.x,
+                yValueMapper: (data, _) => data.y2,
                 name: 'Miền Trung',
                 color: Colors.blue),
             SplineSeries<ChartData, String>(
                 markerSettings: const MarkerSettings(isVisible: false),
                 dataSource: controller.dataChartSouthDAH,
-                xValueMapper: (ChartData data, _) => data.x,
-                yValueMapper: (ChartData data, _) => data.y3,
+                xValueMapper: (data, _) => data.x,
+                yValueMapper: (data, _) => data.y3,
                 name: 'Miền Nam',
                 color: Colors.black),
             SplineSeries<ChartData, String>(
                 markerSettings: const MarkerSettings(isVisible: false),
                 dataSource: controller.dataChartNationDAH,
-                xValueMapper: (ChartData data, _) => data.x,
-                yValueMapper: (ChartData data, _) => data.y4,
+                xValueMapper: (data, _) => data.x,
+                yValueMapper: (data, _) => data.y4,
                 name: 'Giá bên mua',
                 color: Colors.amberAccent)
           ],
@@ -217,7 +220,7 @@ class _TableMarginalIAH extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<MarginalPriceController>(builder: (controller) {
       return Table(
-          border: TableBorder.all(width: 1.0, color: Colors.black),
+          border: TableBorder.all(width: 1, color: Colors.black),
           children: [
             controller
                 .buildRow(['CK', 'MB', 'MT', 'MN', 'GBM'], isHeader: true),

@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import '../app_shared.dart';
 
 class CustomSnackbar {
-  static void snackBar(String type, String message) async {
+  CustomSnackbar._();
+
+  static void snackBar(String type, String message) {
     Get.snackbar(type == 'error' ? 'error'.tr : 'success'.tr, message,
         snackPosition: SnackPosition.TOP,
         backgroundColor: type == 'error' ? Colors.red : Colors.green,
@@ -13,7 +15,7 @@ class CustomSnackbar {
         margin: const EdgeInsets.all(20));
   }
 
-  static void showSuccessToast(String title, String message) async {
+  static void showSuccessToast(String title, String message) {
     Get.snackbar(
       title,
       message,

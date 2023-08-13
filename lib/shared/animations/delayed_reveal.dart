@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-class DelayedReveal extends StatefulWidget {
-  final Widget child;
-  final Duration delay;
+import 'package:flutter/material.dart';
 
+class DelayedReveal extends StatefulWidget {
   const DelayedReveal({
-    Key? key,
     required this.child,
     required this.delay,
+    Key? key,
   }) : super(key: key);
+  final Widget child;
+  final Duration delay;
 
   @override
   State createState() => _DelayedRevealState();
@@ -51,7 +51,7 @@ class _DelayedRevealState extends State<DelayedReveal>
         return Opacity(
           opacity: _animation.value,
           child: Transform.translate(
-            offset: Offset(0.0, (1 - _animation.value) * 20.0),
+            offset: Offset(0, (1 - _animation.value) * 20.0),
             child: child,
           ),
         );
