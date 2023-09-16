@@ -12,21 +12,21 @@ dependencies:
   flutter:
     sdk: flutter
   
-  #check network
+  # check network
   connectivity_plus: ^3.0.3
   
-  #icon
+  # icon
   cupertino_icons: ^1.0.2
 
-  #sync
+  # sync
   syncfusion_flutter_charts:
   syncfusion_flutter_gauges: ^20.4.51 
 
   # Local Storage
-  shared_preferences: 
+  shared_preferences: ^2.2.1
 
-  #Call API
-  dio:
+  # Call API
+  dio: ^5.3.2
 
   flutter_screenutil: ^5.6.0
 
@@ -34,20 +34,26 @@ dependencies:
   flutter_phoenix: ^1.1.0
 
   # State Management
-  get: 
-
+  get: ^4.6.5
+  
   #
-  intl: 
+  intl: ^0.18.0
 
-  #keyboard_action
+  # keyboard_action
   keyboard_actions: 
 
-  #firebase
+  # firebase
   firebase_messaging: ^14.2.3
   firebase_crashlytics: ^3.0.14
 
-  #biometric
+  # biometric
   local_auth: ^2.1.6
+
+  # model
+  json_serializable: ^6.7.1
+
+  # flutter native splash
+  flutter_native_splash: ^2.3.2
 
 dev_dependencies:
   flutter_test:
@@ -55,14 +61,23 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
   build_runner: ^2.1.8
-  flutter_launcher_icons: ^0.11.0
+  flutter_launcher_icons: ^0.13.1
 
   flutter_localizations:
     sdk: flutter 
 
+flutter_native_splash:
+  color: "#ffffff"
+  android: true
+  ios: true
+  image: assets/images/logo.png
+  web: false
+
+
 flutter_icons:
   android: 'launcher_icon'
   ios: true
+  web: false
   image_path: "assets/icons/logo_app_electric.png"
   remove_alpha_ios: true
 

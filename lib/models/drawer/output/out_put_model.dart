@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+// ignore: avoid_annotating_with_dynamic
 OutPutModel outPutModelFromJson(dynamic str) => OutPutModel.fromJson(str);
 
 String outPutModelToJson(OutPutModel data) => json.encode(data.toJson());

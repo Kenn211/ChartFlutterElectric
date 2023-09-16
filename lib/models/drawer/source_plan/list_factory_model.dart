@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 List<ListFactoryModel> listFactoryModelFromJson(List<dynamic> list) =>
+    // ignore: unnecessary_lambdas
     List<ListFactoryModel>.from(list.map((x) => ListFactoryModel.fromJson(x)));
 
 String listFactoryModelToJson(List<ListFactoryModel> data) =>

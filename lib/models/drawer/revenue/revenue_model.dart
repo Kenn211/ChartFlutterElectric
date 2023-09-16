@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+// ignore: avoid_annotating_with_dynamic
 RevenueModel? revenueModelFromJson(dynamic str) => RevenueModel.fromJson(str);
 
 String revenueModelToJson(RevenueModel? data) => json.encode(data!.toJson());

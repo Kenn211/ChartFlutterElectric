@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 List<TonnageModel> tonnageModelFromJson(List<dynamic> list) =>
+    // ignore: unnecessary_lambdas
     List<TonnageModel>.from(list.map((x) => TonnageModel.fromJson(x)));
 
 String tonnageModelToJson(List<TonnageModel> data) =>

@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+// ignore: avoid_annotating_with_dynamic
 SourcePlanModel sourcePlanModelFromJson(dynamic str) =>
     SourcePlanModel.fromJson(str);
 
@@ -47,6 +48,7 @@ class ToMay {
   });
 
   factory ToMay.fromJson(Map<String, dynamic> json) => ToMay(
+        // ignore: unnecessary_lambdas
         chuky: List<Chuky>.from(json['CHUKY'].map((x) => Chuky.fromJson(x))),
         idTm: json['ID_TM'],
         tenTm: json['TEN_TM'],

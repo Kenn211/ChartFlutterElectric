@@ -1,4 +1,5 @@
 List<DataCongSuat> dataCongSuatFromJson(List<dynamic> list) =>
+    // ignore: unnecessary_lambdas
     List<DataCongSuat>.from(list.map((x) => DataCongSuat.fromJson(x)));
 
 class DataCongSuat {

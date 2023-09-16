@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 List<PriceModel> priceModelFromJson(List<dynamic> list) =>
+    // ignore: unnecessary_lambdas
     List<PriceModel>.from(list.map((x) => PriceModel.fromJson(x)));
 
 String priceModelToJson(List<PriceModel> data) =>

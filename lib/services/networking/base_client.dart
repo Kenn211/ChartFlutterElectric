@@ -48,6 +48,7 @@ class BaseClient {
           );
       // 3) return response (api done successfully)
       await onSuccess(response);
+      // ignore: deprecated_member_use
     } on DioError catch (error) {
       // dio error (api reach the server but not performed successfully
       await _handleDioError(error: error, url: url, onError: onError);
@@ -97,6 +98,7 @@ class BaseClient {
 
   /// handle Dio error
   static Future _handleDioError(
+      // ignore: deprecated_member_use
       {required DioError error,
       required String url,
       Function(ApiException)? onError}) async {
